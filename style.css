@@ -189,6 +189,20 @@ a:hover .arrow, button:hover .arrow{transform:translateX(4px);}
 .media-frame img{width:100%; height:100%; object-fit:cover; transform:scale(1.04); transition:transform 1.2s cubic-bezier(.22,1,.36,1);}
 .split-media.is-visible .media-frame img{transform:scale(1);}
 
+/* ---- Our Company (Who We Are / Mission / Business Principles) ---- */
+#our-company .section-head{margin-bottom:0;}
+#our-company .section-head .lead{margin-bottom:18px;}
+#our-company .section-head .lead:last-child{margin-bottom:0;}
+.mission-block{max-width:760px; margin:44px 0 56px; padding:28px clamp(20px,3vw,36px); border-left:3px solid var(--gold-deep); background:rgba(23,62,46,.05);}
+.mission-block .eyebrow{margin-bottom:10px;}
+.mission-block .lead{margin-bottom:0;}
+.principles-heading{font-size:clamp(20px,2.2vw,26px); margin-bottom:24px;}
+.principles-grid{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+.principle-card{padding:26px 24px; border-radius:16px; border:1px solid var(--line-on-light); background:#fff;}
+.principle-num{display:block; font-family:var(--ff-mono); font-size:11px; color:var(--gold-deep); margin-bottom:10px;}
+.principle-card h4{font-size:17px; margin-bottom:10px;}
+.principle-card p{font-size:14px; line-height:1.6; color:var(--text-on-light); max-width:48ch;}
+
 /* ---- feature cards (Fairway / Course Equipment) ---- */
 .feature-cards{display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-bottom:24px;}
 .feature-card{position:relative; display:block; border-radius:18px; overflow:hidden; aspect-ratio:6/5; box-shadow:0 24px 50px rgba(0,0,0,.22);}
@@ -300,6 +314,7 @@ a:hover .arrow, button:hover .arrow{transform:translateX(4px);}
   .brand-row.reverse .brand-media, .brand-row.reverse .brand-copy{order:initial;}
   .sf-result{grid-template-columns:1fr;}
   .sf-result-media{aspect-ratio:16/9;}
+  .principles-grid{grid-template-columns:1fr;}
 }
 @media (max-width:760px){
   .nav-links{display:none;}
