@@ -1,5 +1,4 @@
-/* SJK Guahan — Course Map
-   Main application logic extracted from the original single-file page.
+/* SJK Guahan — Golf carts, course equipment & turf solutions
    Header and footer are loaded from header.html and footer.html.
 */
 
@@ -22,103 +21,83 @@ async function loadPartial(targetId, fileName) {
   }
 }
 
-const BASE_W = 2752;
-const BASE_H = 1536;
-const MIN_ZOOM = 0.5;
-const MAX_ZOOM = 3;
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-let zoom = 1;
-let mapInitialized = false;
-
-/* ================= HOME HERO CAROUSEL ================= */
+/* ================= HERO CAROUSEL ================= */
 
 const HERO_SLIDES = [
   {
     eyebrow: "SJK Guahan",
-    headline: "Powering Outdoor Excellence",
-    subtitle: "Dependable equipment and innovative solutions engineered to perform — from golf and turf care to construction, delivered across the Philippines.",
-    cta: "Explore Our Brands",
-    target: "brands",
+    headline: "Powering Every Round. Maintaining Every Course.",
+    subtitle: "Golf carts, course equipment, turf solutions, and professional golf services — all in one place.",
+    ctaPrimary: { label: "Explore Solutions", href: "#find-solution" },
+    ctaSecondary: { label: "Our Services", href: "#course-care" },
     img: "images/carousel/slide-1.jpg",
-    alt: "Row of Club Car golf carts parked on a misty golf course at dawn"
+    alt: "Row of golf carts parked on a misty golf course at dawn"
   },
   {
     eyebrow: "Golf Carts PH",
-    headline: "Ride Beyond the Ordinary",
-    subtitle: "Comfort, style, and performance in every journey — premium golf carts built for the course and beyond.",
-    cta: "Discover Golf Carts PH",
-    target: "brands",
+    headline: "Ride The Fairway.",
+    subtitle: "Reliable transportation solutions built for golf courses, resorts, communities, and businesses.",
+    ctaPrimary: { label: "Explore Golf Carts", href: "#fairway" },
+    ctaSecondary: { label: "Request A Quote", href: "#quote" },
     img: "images/carousel/slide-2.jpg",
     alt: "White golf cart parked beneath large trees on a lush fairway"
   },
   {
     eyebrow: "Jacobsen",
-    headline: "Precision That Perfects Every Turf",
+    headline: "Precision For Every Inch Of Turf.",
     subtitle: "Advanced turf care technology engineered for exceptional cut quality and consistent, tournament-ready results.",
-    cta: "See Jacobsen Equipment",
-    target: "brands",
+    ctaPrimary: { label: "Explore Course Equipment", href: "#course-equipment" },
+    ctaSecondary: { label: "Request A Quote", href: "#quote" },
     img: "images/carousel/slide-3.jpg",
     alt: "Jacobsen fairway mower with operator cutting a golf course under cloudy skies"
   },
   {
     eyebrow: "Wacker Neuson",
-    headline: "Built to Conquer Every Job",
+    headline: "Built To Conquer Every Job.",
     subtitle: "Powerful, dependable machines engineered to perform wherever the work takes you — from tight sites to heavy terrain.",
-    cta: "View Wacker Neuson",
-    target: "brands",
+    ctaPrimary: { label: "Explore Course Equipment", href: "#course-equipment" },
+    ctaSecondary: { label: "Our Services", href: "#course-care" },
     img: "images/carousel/slide-4.jpg",
     alt: "Wacker Neuson mini excavator digging at a construction site"
   }
 ];
 
-function buildHeroCarouselHTML() {
-  const total = HERO_SLIDES.length;
-
-  const slides = HERO_SLIDES.map((s, i) => {
+function buildHeroSlidesHTML() {
+  return HERO_SLIDES.map((s, i) => {
     const words = s.headline.split(" ").map((w, wi) => `<span class="hc-word" style="--wi:${wi}">${w}</span>`).join(" ");
     return `
-    <div class="hc-slide" data-index="${i}" role="group" aria-roledescription="slide" aria-label="${i + 1} of ${total}">
-      <div class="hc-media"><img src="${s.img}" alt="${s.alt}" draggable="false" loading="${i === 0 ? "eager" : "lazy"}"></div>
+    <div class="hc-slide" data-index="${i}" role="group" aria-roledescription="slide" aria-label="${i + 1} of ${HERO_SLIDES.length}">
+      <div class="hc-media"><img src="${s.img}" alt="${s.alt}" draggable="false" loading="${i === 0 ? "eager" : "lazy"}" fetchpriority="${i === 0 ? "high" : "auto"}"></div>
       <div class="hc-scrim"></div>
       <div class="hc-glow" aria-hidden="true"></div>
       <div class="hc-content">
         <span class="hc-eyebrow">${s.eyebrow}</span>
-        <h2 class="hc-headline">${words}</h2>
+        <h1 class="hc-headline">${words}</h1>
         <p class="hc-subtitle">${s.subtitle}</p>
         <div class="hc-cta">
-          <button type="button" class="hc-btn" data-target-hole="${s.target}">
-            ${s.cta}
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </button>
+          <a href="${s.ctaPrimary.href}" class="btn btn-primary">${s.ctaPrimary.label} <span class="arrow">→</span></a>
+          <a href="${s.ctaSecondary.href}" class="btn btn-outline-light">${s.ctaSecondary.label}</a>
         </div>
       </div>
     </div>`;
   }).join("");
+}
 
-  const dots = HERO_SLIDES.map((_, i) =>
+function buildHeroDotsHTML() {
+  return HERO_SLIDES.map((_, i) =>
     `<button type="button" class="hc-dot${i === 0 ? " active" : ""}" data-goto="${i}" aria-label="Go to slide ${i + 1}" aria-current="${i === 0}"><span class="hc-dot-fill"></span></button>`
   ).join("");
-
-  return `
-    <div class="hero-carousel" id="heroCarousel" role="region" aria-roledescription="carousel" aria-label="SJK Guahan highlights">
-      <div class="hc-track" id="hcTrack">${slides}</div>
-      <button type="button" class="hc-arrow prev" aria-label="Previous slide">
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
-      </button>
-      <button type="button" class="hc-arrow next" aria-label="Next slide">
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
-      </button>
-      <div class="hc-footer">
-        <div class="hc-dots" id="hcDots">${dots}</div>
-        <div class="hc-counter"><span class="cur" id="hcCur">01</span><span class="sep">/</span><span>${String(total).padStart(2, "0")}</span></div>
-      </div>
-      <span class="sr-only" aria-live="polite" id="hcLiveRegion"></span>
-    </div>`;
 }
 
 function initHeroCarousel() {
   const root = document.getElementById("heroCarousel");
   if (!root) return;
+
+  document.getElementById("hcTrack").innerHTML = buildHeroSlidesHTML();
+  document.getElementById("hcDots").innerHTML = buildHeroDotsHTML();
+  document.getElementById("hcTotal").textContent = String(HERO_SLIDES.length).padStart(2, "0");
 
   const track = document.getElementById("hcTrack");
   const slides = Array.from(root.querySelectorAll(".hc-slide"));
@@ -128,7 +107,6 @@ function initHeroCarousel() {
   const prevBtn = root.querySelector(".hc-arrow.prev");
   const nextBtn = root.querySelector(".hc-arrow.next");
   const total = slides.length;
-  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const canHoverFine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
   const AUTOPLAY_MS = 7000;
   root.style.setProperty("--autoplay-ms", `${AUTOPLAY_MS}ms`);
@@ -171,19 +149,11 @@ function initHeroCarousel() {
   nextBtn.addEventListener("click", () => next(true));
   dots.forEach((d) => d.addEventListener("click", () => goTo(Number(d.dataset.goto), true)));
 
-  root.querySelectorAll(".hc-btn").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const hole = btn.dataset.targetHole;
-      if (hole && window.goToHole) window.goToHole(hole);
-    });
-  });
-
   // The carousel fills the entire viewport, so a canvas-wide mouseenter/mouseleave
-  // pause would trigger the moment it opens under a stationary cursor and never
-  // resume (there is no "outside" to leave to). Pause on hover only over the
-  // interactive controls instead, where a deliberate hover is meaningful.
+  // pause would trigger the moment the page loads under a stationary cursor and
+  // never resume. Pause on hover only over the interactive controls instead.
   function isHoverPauseTarget(el) {
-    return !!(el && el.closest && el.closest(".hc-arrow, .hc-footer, .hc-btn"));
+    return !!(el && el.closest && el.closest(".hc-arrow, .hc-footer, .btn"));
   }
   root.addEventListener("pointerover", (e) => {
     if (isHoverPauseTarget(e.target)) stopAutoplay();
@@ -207,7 +177,7 @@ function initHeroCarousel() {
 
   root.addEventListener("pointerdown", (e) => {
     if (e.pointerType === "mouse" && e.button !== 0) return;
-    if (e.target.closest(".hc-arrow, .hc-dot, .hc-btn")) return;
+    if (e.target.closest(".hc-arrow, .hc-dot, .btn")) return;
     dragging = true;
     dragStartX = e.clientX;
     dragDeltaX = 0;
@@ -263,180 +233,254 @@ function initHeroCarousel() {
   startAutoplay();
 }
 
-function initLanding() {
-  const landingPage = document.getElementById("landingPage");
-  const startBtn = document.getElementById("startBtn");
+/* ================= FLOATING NAV ================= */
 
-  startBtn.addEventListener("click", () => {
-    landingPage.classList.add("parting");
-    setTimeout(() => landingPage.classList.add("leaving"), 250);
-    setTimeout(() => {
-      document.body.classList.remove("pre-start");
-      document.body.classList.add("started");
-      if (!mapInitialized) {
-        initMap();
-        mapInitialized = true;
-      }
-    }, 700);
-  });
+function initNav() {
+  const nav = document.getElementById("siteNav");
+  const toggle = document.getElementById("navToggle");
+  const mobile = document.getElementById("navMobile");
+  if (!nav) return;
+
+  function onScroll() {
+    nav.classList.toggle("is-scrolled", window.scrollY > 40);
+  }
+  onScroll();
+  window.addEventListener("scroll", onScroll, { passive: true });
+
+  if (toggle && mobile) {
+    function closeMenu() {
+      toggle.classList.remove("is-open");
+      mobile.classList.remove("is-open");
+      toggle.setAttribute("aria-expanded", "false");
+    }
+    function toggleMenu() {
+      const open = toggle.classList.toggle("is-open");
+      mobile.classList.toggle("is-open", open);
+      toggle.setAttribute("aria-expanded", String(open));
+    }
+    toggle.addEventListener("click", toggleMenu);
+    mobile.querySelectorAll("a").forEach((a) => a.addEventListener("click", closeMenu));
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 760) closeMenu();
+    });
+  }
 }
 
-function initMap() {
-  const viewport = document.getElementById("mapViewport");
-  const wrap = document.getElementById("courseWrap");
+/* ================= SCROLL-REVEAL ================= */
 
-  function setZoom(newZoom, anchorX, anchorY) {
-    const rect = viewport.getBoundingClientRect();
-    const minCoverZoom = Math.max(rect.width / BASE_W, rect.height / BASE_H);
-    const effectiveMin = Math.max(MIN_ZOOM, minCoverZoom);
-    newZoom = Math.min(MAX_ZOOM, Math.max(effectiveMin, newZoom));
-    if (anchorX === undefined) {
-      anchorX = rect.left + rect.width / 2;
-      anchorY = rect.top + rect.height / 2;
-    }
+function initRevealAnimations() {
+  const els = document.querySelectorAll(".reveal");
+  if (!els.length) return;
 
-    const contentX = viewport.scrollLeft + (anchorX - rect.left);
-    const contentY = viewport.scrollTop + (anchorY - rect.top);
-    const ratioX = contentX / (BASE_W * zoom);
-    const ratioY = contentY / (BASE_H * zoom);
-
-    zoom = newZoom;
-    wrap.style.width = BASE_W * zoom + "px";
-    wrap.style.height = BASE_H * zoom + "px";
-
-    const maxScrollLeft = BASE_W * zoom - rect.width;
-    const maxScrollTop = BASE_H * zoom - rect.height;
-    const nextScrollLeft = ratioX * (BASE_W * zoom) - (anchorX - rect.left);
-    const nextScrollTop = ratioY * (BASE_H * zoom) - (anchorY - rect.top);
-    viewport.scrollLeft = Math.min(Math.max(nextScrollLeft, 0), Math.max(maxScrollLeft, 0));
-    viewport.scrollTop = Math.min(Math.max(nextScrollTop, 0), Math.max(maxScrollTop, 0));
+  if (reduceMotion || !("IntersectionObserver" in window)) {
+    els.forEach((el) => el.classList.add("is-visible"));
+    return;
   }
 
-  // Mouse wheel zoom, centered on the cursor.
-  viewport.addEventListener("wheel", (e) => {
-    e.preventDefault();
-    const factor = e.deltaY < 0 ? 1.12 : 1 / 1.12;
-    setZoom(zoom * factor, e.clientX, e.clientY);
-  }, { passive: false });
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-visible");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: "0px 0px -8% 0px" });
 
-  // Click-and-drag panning (mouse).
-  let isDragging = false;
-  let dragStartX = 0, dragStartY = 0, scrollStartX = 0, scrollStartY = 0;
+  els.forEach((el) => observer.observe(el));
+}
 
-  viewport.addEventListener("mousedown", (e) => {
-    if (e.target.closest(".flag-btn")) return;
-    e.preventDefault();
-    isDragging = true;
-    viewport.classList.add("grabbing");
-    dragStartX = e.clientX;
-    dragStartY = e.clientY;
-    scrollStartX = viewport.scrollLeft;
-    scrollStartY = viewport.scrollTop;
-  });
+/* ================= JOURNEY PROGRESS RAIL ================= */
 
-  window.addEventListener("mousemove", (e) => {
-    if (!isDragging) return;
-    viewport.scrollLeft = scrollStartX - (e.clientX - dragStartX);
-    viewport.scrollTop = scrollStartY - (e.clientY - dragStartY);
-  });
+function initJourneyRail() {
+  const rail = document.getElementById("journeyRail");
+  const hero = document.getElementById("hero");
+  if (!rail || !hero) return;
 
-  window.addEventListener("mouseup", () => {
-    isDragging = false;
-    viewport.classList.remove("grabbing");
-  });
+  const items = Array.from(rail.querySelectorAll("li"));
+  const stageTargets = { tee: "#hero", fairway: "#fairway", green: "#course-equipment", care: "#course-care", clubhouse: "#brands" };
+  const sections = Array.from(document.querySelectorAll("[data-stage]"));
 
-  // Touch: one-finger pan, two-finger pinch zoom.
-  let touchMode = null;
-  let pinchStartDist = 0;
-  let pinchStartZoom = 1;
-  let panStartX = 0, panStartY = 0, panScrollX = 0, panScrollY = 0;
-
-  function touchDist(touches) {
-    const dx = touches[0].clientX - touches[1].clientX;
-    const dy = touches[0].clientY - touches[1].clientY;
-    return Math.hypot(dx, dy);
-  }
-
-  viewport.addEventListener("touchstart", (e) => {
-    if (e.touches.length === 1 && !e.target.closest(".flag-btn")) {
-      touchMode = "pan";
-      panStartX = e.touches[0].clientX;
-      panStartY = e.touches[0].clientY;
-      panScrollX = viewport.scrollLeft;
-      panScrollY = viewport.scrollTop;
-    } else if (e.touches.length === 2) {
-      touchMode = "pinch";
-      pinchStartDist = touchDist(e.touches);
-      pinchStartZoom = zoom;
-    }
-  }, { passive: true });
-
-  viewport.addEventListener("touchmove", (e) => {
-    if (touchMode === "pan" && e.touches.length === 1) {
-      e.preventDefault();
-      viewport.scrollLeft = panScrollX - (e.touches[0].clientX - panStartX);
-      viewport.scrollTop = panScrollY - (e.touches[0].clientY - panStartY);
-    } else if (touchMode === "pinch" && e.touches.length === 2) {
-      e.preventDefault();
-      const dist = touchDist(e.touches);
-      const mid = {
-        x: (e.touches[0].clientX + e.touches[1].clientX) / 2,
-        y: (e.touches[0].clientY + e.touches[1].clientY) / 2
-      };
-      setZoom(pinchStartZoom * (dist / pinchStartDist), mid.x, mid.y);
-    }
-  }, { passive: false });
-
-  viewport.addEventListener("touchend", () => {
-    touchMode = null;
-  });
-
-  // Flags: minimal navigation feedback (highlight + HUD label + placeholder overlay).
-  const overlayScrim = document.getElementById("overlayScrim");
-  const contentCard = document.getElementById("contentCard");
-  const cardBody = document.getElementById("cardBody");
-  const closeCard = document.getElementById("closeCard");
-
-  function openCard(label, hole) {
-    contentCard.classList.toggle("home-fullscreen", hole === "home");
-    if (hole === "home") {
-      cardBody.innerHTML = buildHeroCarouselHTML();
-      initHeroCarousel();
-    } else {
-      cardBody.innerHTML = `<span class="eyebrow">${label}</span><h2>${label}</h2><p>Content for this page is coming soon.</p>`;
-    }
-    overlayScrim.classList.add("show");
-    contentCard.classList.add("show");
-  }
-
-  function closeOverlay() {
-    overlayScrim.classList.remove("show");
-    contentCard.classList.remove("show");
-  }
-
-  function selectHole(hole) {
-    const btn = document.querySelector(`.flag-btn[data-hole="${hole}"]`);
-    if (btn) btn.click();
-  }
-  window.goToHole = selectHole;
-
-  document.querySelectorAll(".flag-btn").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      document.querySelectorAll(".flag-btn.current").forEach((b) => b.classList.remove("current"));
-      btn.classList.add("current");
-
-      const label = btn.querySelector(".hint").textContent;
-      const currentLabel = document.getElementById("currentLabel");
-      if (currentLabel) currentLabel.textContent = label.toUpperCase();
-
-      openCard(label, btn.dataset.hole);
+  items.forEach((li) => {
+    li.addEventListener("click", () => {
+      const target = document.querySelector(stageTargets[li.dataset.stage]);
+      if (target) target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
     });
   });
 
-  closeCard.addEventListener("click", closeOverlay);
-  overlayScrim.addEventListener("click", closeOverlay);
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && contentCard.classList.contains("show")) closeOverlay();
+  function setActiveStage(stage) {
+    items.forEach((li) => li.classList.toggle("is-active", li.dataset.stage === stage));
+  }
+
+  const heroObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      rail.classList.toggle("is-visible", !entry.isIntersecting);
+    });
+  }, { threshold: 0.1 });
+  heroObserver.observe(hero);
+
+  if ("IntersectionObserver" in window) {
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) setActiveStage(entry.target.dataset.stage);
+      });
+    }, { threshold: 0.5 });
+    sections.forEach((s) => sectionObserver.observe(s));
+  }
+}
+
+/* ================= COURSE CARE — SERVICE JOURNEY ================= */
+
+function initServiceJourney() {
+  const root = document.getElementById("serviceJourney");
+  if (!root) return;
+
+  const steps = Array.from(root.querySelectorAll(".sj-step"));
+  const panels = Array.from(root.querySelectorAll(".sj-panel"));
+  const fill = document.getElementById("sjRailFill");
+  const total = steps.length;
+  const desktopQuery = window.matchMedia("(min-width:901px)");
+  let activeIndex = 0;
+  let scrollDriven = false;
+
+  function setActive(i) {
+    activeIndex = Math.max(0, Math.min(total - 1, i));
+    steps.forEach((s, idx) => s.classList.toggle("is-active", idx === activeIndex));
+    panels.forEach((p, idx) => p.classList.toggle("is-active", idx === activeIndex));
+    fill.style.width = `${((activeIndex + 1) / total) * 100}%`;
+  }
+
+  steps.forEach((step, i) => {
+    step.addEventListener("click", () => {
+      setActive(i);
+      if (desktopQuery.matches && !reduceMotion) {
+        const rect = root.getBoundingClientRect();
+        const scrollable = root.offsetHeight - window.innerHeight;
+        if (scrollable > 0) {
+          const targetY = window.scrollY + rect.top + (i / total) * scrollable + 1;
+          window.scrollTo({ top: targetY, behavior: "smooth" });
+        }
+      }
+    });
+  });
+
+  let ticking = false;
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      ticking = false;
+      if (!scrollDriven) return;
+      const rect = root.getBoundingClientRect();
+      const scrollable = root.offsetHeight - window.innerHeight;
+      if (scrollable <= 0) return;
+      const progress = Math.min(1, Math.max(0, -rect.top / scrollable));
+      setActive(Math.min(total - 1, Math.floor(progress * total)));
+    });
+  }
+
+  function syncMode() {
+    scrollDriven = desktopQuery.matches && !reduceMotion;
+  }
+  syncMode();
+  desktopQuery.addEventListener("change", syncMode);
+  window.addEventListener("scroll", onScroll, { passive: true });
+
+  setActive(0);
+}
+
+/* ================= FIND YOUR SOLUTION ================= */
+
+const SOLUTIONS = [
+  {
+    eyebrow: "Move Players",
+    title: "Golf Carts",
+    description: "Premium passenger and utility golf carts for courses, resorts, and communities.",
+    img: "images/carousel/slide-1.jpg",
+    alt: "Row of golf carts on a golf course",
+    ctaHref: "#fairway"
+  },
+  {
+    eyebrow: "Maintain Turf",
+    title: "Turf Equipment",
+    description: "Precision mowing and turf care technology for tournament-ready results.",
+    img: "images/carousel/slide-3.jpg",
+    alt: "Fairway mower cutting turf",
+    ctaHref: "#course-equipment"
+  },
+  {
+    eyebrow: "Maintain The Course",
+    title: "Utility & Maintenance Equipment",
+    description: "Dependable utility vehicles and maintenance equipment to keep every corner of your course in shape.",
+    img: "images/carousel/slide-2.jpg",
+    alt: "Utility golf cart on course grounds",
+    ctaHref: "#course-equipment"
+  },
+  {
+    eyebrow: "Build Or Improve",
+    title: "Construction Equipment",
+    description: "Powerful, dependable machines built to conquer every job — from tight sites to heavy terrain.",
+    img: "images/carousel/slide-4.jpg",
+    alt: "Mini excavator at a construction site",
+    ctaHref: "#course-equipment"
+  },
+  {
+    eyebrow: "Service Equipment",
+    title: "Service & Support",
+    description: "Preventive maintenance, repair, parts, and after-sales support to keep your equipment running.",
+    img: "images/carousel/slide-3.jpg",
+    alt: "Technician operating turf equipment",
+    ctaHref: "#course-care"
+  }
+];
+
+function buildSolutionResultHTML(s) {
+  return `
+    <div class="sf-result-media"><img src="${s.img}" alt="${s.alt}" loading="lazy"></div>
+    <div class="sf-result-copy">
+      <span class="eyebrow">${s.eyebrow}</span>
+      <h3>${s.title}</h3>
+      <p>${s.description}</p>
+      <a href="${s.ctaHref}" class="btn btn-primary">Explore <span class="arrow">→</span></a>
+    </div>`;
+}
+
+function initSolutionFinder() {
+  const root = document.getElementById("solutionFinder");
+  if (!root) return;
+
+  const options = Array.from(root.querySelectorAll(".sf-option"));
+  const result = document.getElementById("sfResult");
+
+  function select(i) {
+    options.forEach((o, idx) => {
+      o.classList.toggle("is-active", idx === i);
+      o.setAttribute("aria-selected", String(idx === i));
+    });
+    result.innerHTML = buildSolutionResultHTML(SOLUTIONS[i]);
+  }
+
+  options.forEach((opt, i) => opt.addEventListener("click", () => select(i)));
+  select(0);
+}
+
+/* ================= REQUEST A QUOTE ================= */
+
+function initQuoteForm() {
+  const form = document.getElementById("quoteForm");
+  const status = document.getElementById("formStatus");
+  if (!form || !status) return;
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+    // Front-end only for now — no backend is wired up yet.
+    status.classList.add("show");
+    form.reset();
+    status.setAttribute("tabindex", "-1");
+    status.focus({ preventScroll: true });
   });
 }
 
@@ -446,7 +490,13 @@ async function initSite() {
     loadPartial("site-footer", "footer.html")
   ]);
 
-  initLanding();
+  initNav();
+  initHeroCarousel();
+  initJourneyRail();
+  initRevealAnimations();
+  initServiceJourney();
+  initSolutionFinder();
+  initQuoteForm();
 }
 
 document.addEventListener("DOMContentLoaded", initSite);

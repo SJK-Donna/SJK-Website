@@ -3,89 +3,332 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SJK Guahan — The Course Map</title>
-<meta name="description" content="SJK Guahan: click a flag on the course map to navigate — Home, Our Company, Our Brands, Our Partner, Contact Us. No traditional menu, just the course.">
+<title>SJK Guahan — Golf Carts, Course Equipment &amp; Turf Solutions</title>
+<meta name="description" content="SJK Guahan powers golf courses across the Philippines with golf carts, course and turf equipment, construction machinery, and full-service support — from consultation to after-sales care.">
 <link rel="stylesheet" href="style.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 </head>
-<body class="pre-start">
-
-<div id="landingPage">
-  <img class="landing-cloud cloud-left" src="images/sprites/cloud-landing.png" alt="" aria-hidden="true">
-  <img class="landing-cloud cloud-right" src="images/sprites/cloud-landing.png" alt="" aria-hidden="true">
-  <div class="hero-card">
-    <img class="hero-logo" src="images/sprites/hero-logo.png" alt="SJK Guahan">
-    <p class="hero-tagline">Discover Your Course to Success</p>
-    <button id="startBtn">Start Your Journey</button>
-  </div>
-</div>
-
-<div id="mapViewport">
-  <div id="courseWrap">
-
-    <img id="courseImg" src="images/course-map-scene.jpg" alt="SJK Guahan course map">
-
-    <div id="windSweep" aria-hidden="true"></div>
-
-    <img class="scene-cloud" id="cloud1" src="images/sprites/cloud1.png" alt="" aria-hidden="true" style="left:2%; top:0%; width:9%; height:8%;">
-    <img class="scene-cloud" id="cloud2" src="images/sprites/cloud2.png" alt="" aria-hidden="true" style="left:25.5%; top:1.5%; width:6%; height:6%;">
-    <img class="scene-cloud" id="cloud3" src="images/sprites/cloud3.png" alt="" aria-hidden="true" style="left:36%; top:0%; width:11.5%; height:5.5%;">
-    <img class="scene-cloud" id="cloud4" src="images/sprites/cloud4.png" alt="" aria-hidden="true" style="left:63.5%; top:1.5%; width:5.5%; height:4%;">
-    <img class="scene-cloud" id="cloud5" src="images/sprites/cloud5.png" alt="" aria-hidden="true" style="left:86.5%; top:0.5%; width:9.5%; height:6%;">
-
-    <img class="scene-tree tree-a" src="images/sprites/tree-home.png" alt="" aria-hidden="true" style="left:11.5%; top:6%; width:10.5%; height:19.5%;">
-    <img class="scene-tree tree-b" src="images/sprites/tree-pines.png" alt="" aria-hidden="true" style="left:43%; top:13%; width:16%; height:21%;">
-    <img class="scene-tree tree-c" src="images/sprites/tree-partners-bush.png" alt="" aria-hidden="true" style="left:75.5%; top:31%; width:11.5%; height:12%;">
-    <img class="scene-tree tree-d" src="images/sprites/tree-contact-bush.png" alt="" aria-hidden="true" style="left:84.5%; top:76%; width:15%; height:21%;">
-
-    <div id="pondShimmer" aria-hidden="true" style="left:63%; top:40%; width:33%; height:30%;"></div>
-
-    <svg id="fish" viewBox="0 0 60 26" aria-hidden="true" style="left:76%; top:52%; width:5%; height:2.5%;">
-      <path d="M2 13c8-9 26-9 34-2 5-4 12-6 19-4-3 3-3 8 0 12-7 2-14 0-19-4-8 7-26 7-34-2z" fill="#22384a" fill-opacity=".5"></path>
-      <circle cx="9" cy="12" r="1.1" fill="#eaf4ff" fill-opacity=".6"></circle>
-    </svg>
-
-    <img class="scene-cart" id="cart1" src="images/sprites/cart1.png" alt="" aria-hidden="true" style="left:28%; top:38%; width:7%; height:8.5%;">
-    <img class="scene-cart" id="cart2" src="images/sprites/cart2.png" alt="" aria-hidden="true" style="left:89%; top:35.5%; width:6%; height:7%;">
-
-    <img id="duckPair" src="images/sprites/duck-pair.png" alt="" aria-hidden="true" style="left:83.0%; top:42.0%; width:8.5%; height:6.5%;">
-
-    <svg id="ballTrail" viewBox="0 0 2752 1536" preserveAspectRatio="xMidYMid slice"></svg>
-
-    <!-- flags: invisible hotspots placed over the flags drawn in the background image. -->
-    <button class="flag-btn" data-hole="home" data-x="19.0" data-y="17.2" style="left:19.0%; top:17.2%;">
-      <span class="hint">Home</span>
-    </button>
-    <button class="flag-btn" data-hole="brands" data-x="50.5" data-y="43.0" style="left:50.5%; top:43.0%;">
-      <span class="hint">Our Brands</span>
-    </button>
-    <button class="flag-btn" data-hole="company" data-x="74.5" data-y="28.7" style="left:74.5%; top:28.7%;">
-      <span class="hint">Our Company</span>
-    </button>
-    <button class="flag-btn" data-hole="partner" data-x="81.0" data-y="56.0" style="left:81.0%; top:56.0%;">
-      <span class="hint">Our Partners</span>
-    </button>
-    <button class="flag-btn" data-hole="contact" data-x="59.75" data-y="78.9" style="left:59.75%; top:78.9%;">
-      <span class="hint">Contact Us</span>
-    </button>
-
-    <div id="ball"></div>
-  </div>
-
-</div>
+<body>
 
 <div id="site-header"></div>
 
+<main id="main">
+
+  <!-- ============ HERO — full-screen, 100vw x 100vh ============ -->
+  <section id="hero" class="hero" aria-label="Introduction">
+    <div class="hero-carousel" id="heroCarousel" role="region" aria-roledescription="carousel" aria-label="SJK Guahan highlights">
+      <div class="hc-track" id="hcTrack"></div>
+      <button type="button" class="hc-arrow prev" aria-label="Previous slide">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+      </button>
+      <button type="button" class="hc-arrow next" aria-label="Next slide">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
+      <div class="hc-footer">
+        <div class="hc-dots" id="hcDots"></div>
+        <div class="hc-counter"><span class="cur" id="hcCur">01</span><span class="sep">/</span><span id="hcTotal">04</span></div>
+      </div>
+      <span class="sr-only" aria-live="polite" id="hcLiveRegion"></span>
+    </div>
+
+    <a href="#tee-off" class="scroll-cue" aria-label="Scroll to learn more">
+      <span class="scroll-cue-mouse"><span></span></span>
+      <span class="scroll-cue-label">Scroll</span>
+    </a>
+  </section>
+
+  <!-- ============ SECTION 01 — TEE OFF ============ -->
+  <section id="tee-off" class="section section-light stage-tee" data-stage="tee">
+    <div class="section-inner split">
+      <div class="split-copy reveal">
+        <span class="eyebrow">01 — Tee Off</span>
+        <h2 class="display-lg">Tee Off With Confidence.</h2>
+        <p class="lead">Powering Outdoor Excellence — dependable equipment and innovative solutions engineered to perform, from golf and turf care to construction, delivered across the Philippines.</p>
+        <ul class="pillars">
+          <li>Golf Carts &amp; Fleet Solutions</li>
+          <li>Course &amp; Turf Equipment</li>
+          <li>Construction Machinery</li>
+          <li>Nationwide Service &amp; Support</li>
+        </ul>
+        <a href="#find-solution" class="btn btn-primary">Discover Our Solutions <span class="arrow">→</span></a>
+      </div>
+      <div class="split-media reveal">
+        <div class="media-frame parallax-img">
+          <img src="images/carousel/slide-2.jpg" alt="Golf cart parked beneath trees on a fairway" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 02 — FAIRWAY / GOLF CARTS ============ -->
+  <section id="fairway" class="section section-dark stage-fairway" data-stage="fairway">
+    <div class="section-inner">
+      <div class="section-head reveal">
+        <span class="eyebrow">02 — Fairway</span>
+        <h2 class="display-lg">Ride The Fairway.</h2>
+        <p class="lead">Reliable transportation solutions built for golf courses, resorts, communities, and businesses.</p>
+      </div>
+
+      <div class="feature-cards reveal">
+        <a href="#quote" class="feature-card">
+          <div class="feature-media"><img src="images/carousel/slide-1.jpg" alt="Row of golf carts parked on a misty golf course at dawn" loading="lazy"></div>
+          <div class="feature-overlay">
+            <h3>Golf Carts</h3>
+            <p>Premium passenger carts for courses, resorts, and communities.</p>
+            <span class="explore-link">Explore <span class="arrow">→</span></span>
+          </div>
+        </a>
+        <a href="#quote" class="feature-card">
+          <div class="feature-media"><img src="images/carousel/slide-2.jpg" alt="White golf cart parked beneath large trees" loading="lazy"></div>
+          <div class="feature-overlay">
+            <h3>Fleet Solutions</h3>
+            <p>Multi-unit fleets configured and supported for large properties.</p>
+            <span class="explore-link">Explore <span class="arrow">→</span></span>
+          </div>
+        </a>
+      </div>
+
+      <ul class="chip-row category-chips reveal">
+        <li>Passenger Vehicles</li>
+        <li>Utility Vehicles</li>
+        <li>Mini Buses</li>
+      </ul>
+
+      <a href="#quote" class="btn btn-outline reveal">Explore Golf Carts <span class="arrow">→</span></a>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 03 — COURSE EQUIPMENT ============ -->
+  <section id="course-equipment" class="section section-light stage-green" data-stage="green">
+    <div class="section-inner">
+      <div class="section-head reveal">
+        <span class="eyebrow">03 — Course Equipment</span>
+        <h2 class="display-lg">Precision For Every Inch Of Turf.</h2>
+        <p class="lead">Premium equipment engineered for exceptional cut quality, consistent results, and demanding job sites.</p>
+      </div>
+
+      <div class="feature-cards reveal">
+        <a href="#quote" class="feature-card">
+          <div class="feature-media"><img src="images/carousel/slide-3.jpg" alt="Jacobsen fairway mower cutting a golf course" loading="lazy"></div>
+          <div class="feature-overlay">
+            <h3>Mowing</h3>
+            <p>Advanced turf care technology for tournament-ready results.</p>
+            <span class="explore-link">Explore <span class="arrow">→</span></span>
+          </div>
+        </a>
+        <a href="#quote" class="feature-card">
+          <div class="feature-media"><img src="images/carousel/slide-4.jpg" alt="Wacker Neuson mini excavator at a construction site" loading="lazy"></div>
+          <div class="feature-overlay">
+            <h3>Construction</h3>
+            <p>Powerful, dependable machines built to conquer every job.</p>
+            <span class="explore-link">Explore <span class="arrow">→</span></span>
+          </div>
+        </a>
+      </div>
+
+      <ul class="chip-row category-chips reveal">
+        <li>Turf Care</li>
+        <li>Debris &amp; Materials Handling</li>
+        <li>Utility Vehicles</li>
+        <li>Auxiliary Equipment</li>
+      </ul>
+
+      <p class="featured-brands reveal">Featured brands: <a href="#brands">Jacobsen</a> · <a href="#brands">Wacker Neuson</a></p>
+      <a href="#quote" class="btn btn-outline reveal">Explore Course Equipment <span class="arrow">→</span></a>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 04 — COURSE CARE / SERVICES ============ -->
+  <section id="course-care" class="section section-dark stage-care" data-stage="care">
+    <div class="section-inner">
+      <div class="section-head reveal">
+        <span class="eyebrow">04 — Course Care</span>
+        <h2 class="display-lg">More Than Equipment.<br>We Keep Your Course Moving.</h2>
+      </div>
+
+      <div class="service-journey" id="serviceJourney">
+        <div class="sj-inner">
+          <div class="sj-rail">
+            <button type="button" class="sj-step is-active" data-step="0"><span class="sj-num">01</span><span class="sj-name">Consult</span></button>
+            <button type="button" class="sj-step" data-step="1"><span class="sj-num">02</span><span class="sj-name">Supply</span></button>
+            <button type="button" class="sj-step" data-step="2"><span class="sj-num">03</span><span class="sj-name">Deliver</span></button>
+            <button type="button" class="sj-step" data-step="3"><span class="sj-num">04</span><span class="sj-name">Install</span></button>
+            <button type="button" class="sj-step" data-step="4"><span class="sj-num">05</span><span class="sj-name">Maintain</span></button>
+            <button type="button" class="sj-step" data-step="5"><span class="sj-num">06</span><span class="sj-name">Support</span></button>
+            <span class="sj-rail-fill" id="sjRailFill"></span>
+          </div>
+
+          <div class="sj-panels">
+            <article class="sj-panel is-active" data-panel="0">
+              <span class="sj-panel-num">01</span>
+              <h3>Consult</h3>
+              <p>We assess your course, fleet, or job site and recommend the right equipment mix for your operation.</p>
+            </article>
+            <article class="sj-panel" data-panel="1">
+              <span class="sj-panel-num">02</span>
+              <h3>Supply</h3>
+              <p>Access trusted, proven brands across golf carts, turf care, and construction equipment.</p>
+            </article>
+            <article class="sj-panel" data-panel="2">
+              <span class="sj-panel-num">03</span>
+              <h3>Deliver</h3>
+              <p>Delivery coordinated around your schedule, wherever your course or site is located.</p>
+            </article>
+            <article class="sj-panel" data-panel="3">
+              <span class="sj-panel-num">04</span>
+              <h3>Install</h3>
+              <p>Professional setup and commissioning so your equipment is ready to perform from day one.</p>
+            </article>
+            <article class="sj-panel" data-panel="4">
+              <span class="sj-panel-num">05</span>
+              <h3>Maintain</h3>
+              <p>Preventive maintenance programs designed to keep your equipment running at its best.</p>
+            </article>
+            <article class="sj-panel" data-panel="5">
+              <span class="sj-panel-num">06</span>
+              <h3>Support</h3>
+              <p>Parts, repair, and after-sales support whenever your operation needs it.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FIND YOUR SOLUTION ============ -->
+  <section id="find-solution" class="section section-light stage-care" data-stage="care">
+    <div class="section-inner">
+      <div class="section-head reveal">
+        <span class="eyebrow">Find Your Solution</span>
+        <h2 class="display-lg">What Does Your Course Need?</h2>
+      </div>
+
+      <div class="solution-finder reveal" id="solutionFinder">
+        <div class="sf-options" role="tablist" aria-label="What does your course need?">
+          <button type="button" class="sf-option is-active" data-option="0" role="tab" aria-selected="true">
+            <span class="sf-title">Move Players</span>
+            <span class="sf-sub">→ Golf Carts</span>
+          </button>
+          <button type="button" class="sf-option" data-option="1" role="tab" aria-selected="false">
+            <span class="sf-title">Maintain Turf</span>
+            <span class="sf-sub">→ Turf Equipment</span>
+          </button>
+          <button type="button" class="sf-option" data-option="2" role="tab" aria-selected="false">
+            <span class="sf-title">Maintain The Course</span>
+            <span class="sf-sub">→ Utility / Maintenance Equipment</span>
+          </button>
+          <button type="button" class="sf-option" data-option="3" role="tab" aria-selected="false">
+            <span class="sf-title">Build Or Improve</span>
+            <span class="sf-sub">→ Construction Equipment</span>
+          </button>
+          <button type="button" class="sf-option" data-option="4" role="tab" aria-selected="false">
+            <span class="sf-title">Service Equipment</span>
+            <span class="sf-sub">→ Service &amp; Support</span>
+          </button>
+        </div>
+
+        <div class="sf-result" id="sfResult">
+          <!-- populated by script.js -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BRANDS ============ -->
+  <section id="brands" class="section section-dark stage-clubhouse" data-stage="clubhouse">
+    <div class="section-inner">
+      <div class="section-head reveal">
+        <span class="eyebrow">Our Brands</span>
+        <h2 class="display-lg">Trusted Brands. Proven Performance.</h2>
+      </div>
+
+      <div class="brand-row reveal">
+        <div class="brand-media"><img src="images/carousel/slide-1.jpg" alt="Row of Club Car golf carts on a golf course" loading="lazy"></div>
+        <div class="brand-copy">
+          <span class="brand-word">Golf Carts PH</span>
+          <p>Premium Club Car golf carts and utility vehicles for courses, resorts, and communities across the Philippines.</p>
+          <ul class="chip-row"><li>Golf Carts</li><li>Utility Vehicles</li></ul>
+          <a href="#fairway" class="explore-link">Explore <span class="arrow">→</span></a>
+        </div>
+      </div>
+
+      <div class="brand-row reverse reveal">
+        <div class="brand-media"><img src="images/carousel/slide-3.jpg" alt="Jacobsen fairway mower with operator" loading="lazy"></div>
+        <div class="brand-copy">
+          <span class="brand-word">Jacobsen</span>
+          <p>Precision turf care technology trusted on courses that demand tournament-ready results.</p>
+          <ul class="chip-row"><li>Mowing</li><li>Turf Care</li></ul>
+          <a href="#course-equipment" class="explore-link">Explore <span class="arrow">→</span></a>
+        </div>
+      </div>
+
+      <div class="brand-row reveal">
+        <div class="brand-media"><img src="images/carousel/slide-4.jpg" alt="Wacker Neuson mini excavator at a job site" loading="lazy"></div>
+        <div class="brand-copy">
+          <span class="brand-word">Wacker Neuson</span>
+          <p>Durable construction and compaction equipment built for demanding job sites.</p>
+          <ul class="chip-row"><li>Construction</li><li>Compaction</li><li>Utility</li></ul>
+          <a href="#course-equipment" class="explore-link">Explore <span class="arrow">→</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ REQUEST A QUOTE ============ -->
+  <section id="quote" class="section section-light stage-clubhouse" data-stage="clubhouse">
+    <div class="section-inner narrow">
+      <div class="section-head center reveal">
+        <span class="eyebrow">Talk To Our Team</span>
+        <h2 class="display-lg">Request A Quote.</h2>
+        <p class="lead">Tell us what your course or job site needs — we'll follow up with the right equipment and solution.</p>
+      </div>
+
+      <form id="quoteForm" class="quote-form reveal" novalidate>
+        <div class="form-row">
+          <div class="field">
+            <label for="qName">Name</label>
+            <input type="text" id="qName" name="name" required autocomplete="name">
+          </div>
+          <div class="field">
+            <label for="qCompany">Company / Course Name</label>
+            <input type="text" id="qCompany" name="company" autocomplete="organization">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="qEmail">Email</label>
+            <input type="email" id="qEmail" name="email" required autocomplete="email">
+          </div>
+          <div class="field">
+            <label for="qPhone">Phone</label>
+            <input type="tel" id="qPhone" name="phone" autocomplete="tel">
+          </div>
+        </div>
+        <div class="field">
+          <label for="qInterest">I'm interested in</label>
+          <select id="qInterest" name="interest">
+            <option>Golf Carts</option>
+            <option>Course Equipment</option>
+            <option>Services &amp; Support</option>
+            <option>Brands &amp; Parts</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="qMessage">Message (optional)</label>
+          <textarea id="qMessage" name="message" rows="4"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Request A Quote</button>
+        <p class="form-status" id="formStatus" role="status">Thanks — our team will reach out shortly.</p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
 <div id="site-footer"></div>
-
-<div id="overlayScrim"></div>
-<div id="contentCard">
-  <button id="closeCard" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
-  <div id="cardBody"></div>
-</div>
-
 
 <script src="script.js" defer></script>
 </body>
