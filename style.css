@@ -304,15 +304,35 @@ a:hover .arrow, button:hover .arrow{transform:translateX(4px);}
    have it actually render behind it) instead of layering by paint order. */
 .ps-scene{position:absolute; inset:0; transform-style:preserve-3d; transform:rotateY(0deg) rotateX(0deg); transition:transform .5s ease-out; will-change:transform;}
 
-.ps-structure{position:absolute; left:50%; top:50%; width:min(26vw,260px); height:min(34vw,320px); transform:translate3d(-50%,-50%,0) scale(.85); transform-style:preserve-3d; border-radius:24px; overflow:hidden;
+.ps-structure{position:absolute; left:50%; top:50%; width:min(26vw,260px); height:min(34vw,320px); transform:translate3d(-50%,-50%,0) scale(.85); transform-style:preserve-3d;
+  opacity:0; transition:opacity .9s ease, transform 1s cubic-bezier(.22,1,.36,1);
+}
+.partner-showcase.is-active .ps-structure{opacity:1; transform:translate3d(-50%,-50%,0) scale(1);}
+
+/* .ps-cube gives the display real volume: a front face plus right/left/top
+   faces folded back from it (a "box net" hinge — each side face pivots 90deg
+   from the front face's shared edge) so the structure reads as an actual 3D
+   object from an angle instead of a flat rectangle. */
+.ps-cube{position:absolute; inset:0; --depth:46px; transform-style:preserve-3d; transform:rotateX(-9deg) rotateY(24deg);}
+.ps-face{position:absolute; top:0; left:0; width:100%; height:100%; backface-visibility:hidden;}
+
+.ps-face-front{border-radius:24px; overflow:hidden;
   background:linear-gradient(155deg, #14231b 0%, #1a2e22 55%, #10201a 100%);
   border:1px solid rgba(232,197,99,.22);
   box-shadow:0 40px 90px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.1), inset 0 0 60px rgba(232,197,99,.05);
-  opacity:0; transition:opacity .9s ease, transform 1s cubic-bezier(.22,1,.36,1);
 }
-.ps-structure::before{content:""; position:absolute; inset:18px; border:1px solid rgba(255,255,255,.1); border-radius:14px;}
-.ps-structure::after{content:""; position:absolute; left:50%; top:18px; bottom:18px; width:1px; background:rgba(255,255,255,.08);}
-.partner-showcase.is-active .ps-structure{opacity:1; transform:translate3d(-50%,-50%,0) scale(1);}
+.ps-face-front::before{content:""; position:absolute; inset:18px; border:1px solid rgba(255,255,255,.1); border-radius:14px;}
+.ps-face-front::after{content:""; position:absolute; left:50%; top:18px; bottom:18px; width:1px; background:rgba(255,255,255,.08);}
+
+.ps-face-right{width:var(--depth); height:100%; left:100%; transform-origin:0 50%; transform:rotateY(90deg);
+  background:linear-gradient(180deg, #16261c 0%, #060b08 100%); border-radius:0 10px 10px 0;
+}
+.ps-face-left{width:var(--depth); height:100%; left:calc(var(--depth) * -1); transform-origin:100% 50%; transform:rotateY(-90deg);
+  background:linear-gradient(180deg, #101c15 0%, #050907 100%); border-radius:10px 0 0 10px;
+}
+.ps-face-top{width:100%; height:var(--depth); top:calc(var(--depth) * -1); transform-origin:50% 100%; transform:rotateX(90deg);
+  background:linear-gradient(180deg, rgba(232,197,99,.16) 0%, #1c3324 65%, #16281d 100%); border-radius:12px 12px 0 0;
+}
 .ps-structure-glow{position:absolute; left:50%; bottom:-10%; width:160%; height:50%; transform:translateX(-50%); border-radius:50%; filter:blur(30px);
   background:radial-gradient(closest-side, rgba(232,197,99,.3), rgba(63,125,84,.2) 55%, transparent 75%);
   animation:psGlowPulse 6s ease-in-out infinite;
@@ -325,15 +345,30 @@ a:hover .arrow, button:hover .arrow{transform:translateX(4px);}
 }
 .partner-showcase.is-active .ps-panel{opacity:1;}
 
-.ps-panel-face{position:relative; aspect-ratio:4/3; border-radius:14px; background:#fff; box-shadow:0 24px 48px rgba(0,0,0,.4);
+.ps-panel-face{position:relative; aspect-ratio:4/3; border-radius:14px; background:#fff; overflow:hidden;
+  box-shadow:0 24px 48px rgba(0,0,0,.4), 0 0 26px rgba(232,197,99,.12);
   display:flex; align-items:center; justify-content:center; padding:14px;
   transition:box-shadow .3s ease;
   cursor:pointer;
 }
-.ps-panel.is-hot .ps-panel-face{box-shadow:0 34px 70px rgba(0,0,0,.5);}
-.ps-panel-face img{max-width:100%; max-height:100%; width:auto; height:auto; object-fit:contain;}
+.ps-panel.is-hot .ps-panel-face{box-shadow:0 34px 70px rgba(0,0,0,.5), 0 0 40px rgba(232,197,99,.22);}
+.ps-panel-face img{max-width:100%; max-height:100%; width:auto; height:auto; object-fit:contain; position:relative; z-index:1;}
 
-.ps-info{position:absolute; inset:0; border-radius:14px; padding:12px; display:flex; flex-direction:column; justify-content:flex-end; gap:2px;
+/* A slow light sweep across each lit card, like a backlit exhibit screen —
+   staggered per card via --i so they don't all catch the light at once. */
+.ps-panel-face::before{content:""; position:absolute; inset:-40%; z-index:0; pointer-events:none;
+  background:linear-gradient(115deg, transparent 40%, rgba(255,255,255,.65) 50%, transparent 60%);
+  transform:translateX(-120%); opacity:0;
+  animation:psSheen 8s ease-in-out infinite; animation-delay:calc(var(--i,0) * .9s + 2s);
+}
+.ps-panel.is-hot .ps-panel-face::before{animation-play-state:paused; opacity:0;}
+@keyframes psSheen{
+  0%, 92%{transform:translateX(-120%); opacity:0;}
+  95%{opacity:.8;}
+  100%{transform:translateX(120%); opacity:0;}
+}
+
+.ps-info{position:absolute; inset:0; z-index:1; border-radius:14px; padding:12px; display:flex; flex-direction:column; justify-content:flex-end; gap:2px;
   background:linear-gradient(0deg, rgba(10,16,14,.92) 0%, rgba(10,16,14,.55) 55%, transparent 100%);
   opacity:0; transition:opacity .3s ease;
 }
@@ -373,6 +408,7 @@ a:hover .arrow, button:hover .arrow{transform:translateX(4px);}
   .ps-structure-glow{animation:none;}
   .ps-panel{transition:opacity .3s ease; opacity:1;}
   .ps-panel-face{transition:none;}
+  .ps-panel-face::before{animation:none; opacity:0;}
   .pm-media img{transition:none;}
 }
 
