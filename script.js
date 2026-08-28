@@ -297,7 +297,10 @@ function initJourneyRail() {
   if (!rail || !hero) return;
 
   const items = Array.from(rail.querySelectorAll("li"));
-  const stageTargets = { tee: "#hero", fairway: "#fairway", green: "#course-equipment", care: "#course-care", clubhouse: "#brands" };
+  // "tee" points at the Tee Off section rather than the hero itself: jumping back to
+  // the hero would re-trigger heroObserver below and hide/disable the rail again,
+  // leaving it stuck unclickable until the user manually scrolled past the hero.
+  const stageTargets = { tee: "#tee-off", fairway: "#fairway", green: "#course-equipment", care: "#course-care", clubhouse: "#brands" };
   const sections = Array.from(document.querySelectorAll("[data-stage]"));
 
   items.forEach((li) => {
@@ -319,11 +322,17 @@ function initJourneyRail() {
   heroObserver.observe(hero);
 
   if ("IntersectionObserver" in window) {
+    // A fixed 50%-of-target-height threshold breaks down for very tall sections
+    // (e.g. the 420vh scroll-driven Course Care track): 50% of a huge element is
+    // more screen space than the viewport has, so it would never "activate" near
+    // its own top or bottom. Watch a thin band at the vertical center of the
+    // viewport instead — whichever section currently crosses that line is active,
+    // regardless of how tall or short it is.
     const sectionObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) setActiveStage(entry.target.dataset.stage);
       });
-    }, { threshold: 0.5 });
+    }, { threshold: 0, rootMargin: "-45% 0px -45% 0px" });
     sections.forEach((s) => sectionObserver.observe(s));
   }
 }
