@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SJK Guahan — The Course Map</title>
+<meta name="description" content="SJK Guahan: click a flag on the course map to navigate — Home, Our Company, Our Brands, Our Partner, Contact Us. No traditional menu, just the course.">
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+</head>
+<body class="pre-start">
+
+<div id="landingPage">
+  <img class="landing-cloud cloud-left" src="images/sprites/cloud-landing.png" alt="" aria-hidden="true">
+  <img class="landing-cloud cloud-right" src="images/sprites/cloud-landing.png" alt="" aria-hidden="true">
+  <div class="hero-card">
+    <img class="hero-logo" src="images/sprites/hero-logo.png" alt="SJK Guahan">
+    <p class="hero-tagline">Discover Your Course to Success</p>
+    <button id="startBtn">Start Your Journey</button>
+  </div>
+</div>
+
+<div id="mapViewport">
+  <div id="courseWrap">
+
+    <img id="courseImg" src="images/course-map-scene.jpg" alt="SJK Guahan course map">
+
+    <div id="windSweep" aria-hidden="true"></div>
+
+    <img class="scene-cloud" id="cloud1" src="images/sprites/cloud1.png" alt="" aria-hidden="true" style="left:2%; top:0%; width:9%; height:8%;">
+    <img class="scene-cloud" id="cloud2" src="images/sprites/cloud2.png" alt="" aria-hidden="true" style="left:25.5%; top:1.5%; width:6%; height:6%;">
+    <img class="scene-cloud" id="cloud3" src="images/sprites/cloud3.png" alt="" aria-hidden="true" style="left:36%; top:0%; width:11.5%; height:5.5%;">
+    <img class="scene-cloud" id="cloud4" src="images/sprites/cloud4.png" alt="" aria-hidden="true" style="left:63.5%; top:1.5%; width:5.5%; height:4%;">
+    <img class="scene-cloud" id="cloud5" src="images/sprites/cloud5.png" alt="" aria-hidden="true" style="left:86.5%; top:0.5%; width:9.5%; height:6%;">
+
+    <img class="scene-tree tree-a" src="images/sprites/tree-home.png" alt="" aria-hidden="true" style="left:11.5%; top:6%; width:10.5%; height:19.5%;">
+    <img class="scene-tree tree-b" src="images/sprites/tree-pines.png" alt="" aria-hidden="true" style="left:43%; top:13%; width:16%; height:21%;">
+    <img class="scene-tree tree-c" src="images/sprites/tree-partners-bush.png" alt="" aria-hidden="true" style="left:75.5%; top:31%; width:11.5%; height:12%;">
+    <img class="scene-tree tree-d" src="images/sprites/tree-contact-bush.png" alt="" aria-hidden="true" style="left:84.5%; top:76%; width:15%; height:21%;">
+
+    <div id="pondShimmer" aria-hidden="true" style="left:63%; top:40%; width:33%; height:30%;"></div>
+
+    <svg id="fish" viewBox="0 0 60 26" aria-hidden="true" style="left:76%; top:52%; width:5%; height:2.5%;">
+      <path d="M2 13c8-9 26-9 34-2 5-4 12-6 19-4-3 3-3 8 0 12-7 2-14 0-19-4-8 7-26 7-34-2z" fill="#22384a" fill-opacity=".5"></path>
+      <circle cx="9" cy="12" r="1.1" fill="#eaf4ff" fill-opacity=".6"></circle>
+    </svg>
+
+    <img class="scene-cart" id="cart1" src="images/sprites/cart1.png" alt="" aria-hidden="true" style="left:28%; top:38%; width:7%; height:8.5%;">
+    <img class="scene-cart" id="cart2" src="images/sprites/cart2.png" alt="" aria-hidden="true" style="left:89%; top:35.5%; width:6%; height:7%;">
+
+    <img id="duckPair" src="images/sprites/duck-pair.png" alt="" aria-hidden="true" style="left:83.0%; top:42.0%; width:8.5%; height:6.5%;">
+
+    <svg id="ballTrail" viewBox="0 0 2752 1536" preserveAspectRatio="xMidYMid slice"></svg>
+
+    <!-- flags: invisible hotspots placed over the flags drawn in the background image. -->
+    <button class="flag-btn" data-hole="home" data-x="19.0" data-y="17.2" style="left:19.0%; top:17.2%;">
+      <span class="hint">Home</span>
+    </button>
+    <button class="flag-btn" data-hole="brands" data-x="50.5" data-y="43.0" style="left:50.5%; top:43.0%;">
+      <span class="hint">Our Brands</span>
+    </button>
+    <button class="flag-btn" data-hole="company" data-x="74.5" data-y="28.7" style="left:74.5%; top:28.7%;">
+      <span class="hint">Our Company</span>
+    </button>
+    <button class="flag-btn" data-hole="partner" data-x="81.0" data-y="56.0" style="left:81.0%; top:56.0%;">
+      <span class="hint">Our Partners</span>
+    </button>
+    <button class="flag-btn" data-hole="contact" data-x="59.75" data-y="78.9" style="left:59.75%; top:78.9%;">
+      <span class="hint">Contact Us</span>
+    </button>
+
+    <div id="ball"></div>
+  </div>
+
+</div>
+
+<div id="site-header"></div>
+
+<div id="site-footer"></div>
+
+<div id="overlayScrim"></div>
+<div id="contentCard">
+  <button id="closeCard" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+  <div id="cardBody"></div>
+</div>
+
+
+<script src="script.js" defer></script>
+</body>
+</html>
