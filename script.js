@@ -450,17 +450,35 @@ function initSolutionFinder() {
 
   const options = Array.from(root.querySelectorAll(".sf-option"));
   const result = document.getElementById("sfResult");
+  let current = -1;
+  let swapping = false;
 
-  function select(i) {
+  function select(i, animate) {
+    if (i === current || swapping) return;
+    current = i;
     options.forEach((o, idx) => {
       o.classList.toggle("is-active", idx === i);
       o.setAttribute("aria-selected", String(idx === i));
     });
-    result.innerHTML = buildSolutionResultHTML(SOLUTIONS[i]);
+
+    if (!animate || reduceMotion) {
+      result.innerHTML = buildSolutionResultHTML(SOLUTIONS[i]);
+      return;
+    }
+
+    swapping = true;
+    result.classList.add("is-swapping");
+    setTimeout(() => {
+      result.innerHTML = buildSolutionResultHTML(SOLUTIONS[i]);
+      requestAnimationFrame(() => {
+        result.classList.remove("is-swapping");
+        swapping = false;
+      });
+    }, 280);
   }
 
-  options.forEach((opt, i) => opt.addEventListener("click", () => select(i)));
-  select(0);
+  options.forEach((opt, i) => opt.addEventListener("click", () => select(i, true)));
+  select(0, false);
 }
 
 /* ================= REQUEST A QUOTE ================= */
