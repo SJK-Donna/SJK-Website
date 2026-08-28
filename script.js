@@ -555,7 +555,6 @@ function initPartnerShowcase() {
 
   panelsList.innerHTML = buildPartnerPanelsHTML();
   const panels = Array.from(panelsList.children);
-  const N = panels.length;
 
   // Entrance choreography: structure and panels fade in once scrolled into view.
   if ("IntersectionObserver" in window) {
@@ -572,42 +571,83 @@ function initPartnerShowcase() {
     showcase.classList.add("is-active");
   }
 
-  const ORBIT_MS = 34000; // one full lap per panel, slow and elegant
+  // Each card travels its own Lissajous-like path through the shared space —
+  // distinct period, starting phase, per-axis radii and a secondary wobble
+  // frequency — instead of every card riding one shared orbit at one shared
+  // speed. A single shared orbit is what read as "everything rotating
+  // together as one object" (a carousel); independent paths are what make
+  // cards drift apart, cross in front of and behind each other and the
+  // structure, and settle into the foreground/background at different times.
   const RADIUS_X = 250;
   const RADIUS_Z = 190;
   const RADIUS_Y = 40;
-  const SCALE_JITTER = [1, 0.92, 1.06, 0.95, 1.1, 0.9, 1.02, 0.96];
+  const MAX_TILT_Y = 9; // degrees of self-rotation — kept small so logos never distort
+  const MAX_TILT_X = 5;
 
-  // Tablet gets a tighter orbit + calmer rotation so the scene stays coherent
-  // inside a narrower section width, without changing the composition itself.
+  function seededRandom(seed) {
+    return function next() {
+      seed = (seed + 0x6d2b79f5) | 0;
+      let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  // Deterministic per-card variety (stable across reloads, no layout jank).
+  const cardParams = panels.map((_, i) => {
+    const rand = seededRandom(1000 + i * 97);
+    return {
+      periodMs: 24000 + rand() * 20000, // 24s–44s: every card laps at its own speed
+      freqRatio: 1.35 + rand() * 0.5, // secondary wobble, a non-integer ratio so the path doesn't close into a simple loop
+      phase: rand() * Math.PI * 2,
+      rx: RADIUS_X * (0.7 + rand() * 0.6),
+      rz: RADIUS_Z * (0.65 + rand() * 0.75),
+      ry: RADIUS_Y * (0.5 + rand() * 1.1),
+      wobble: 0.2 + rand() * 0.25,
+      baseScale: 0.86 + rand() * 0.3,
+      tilt: 0.6 + rand() * 0.8
+    };
+  });
+
+  // Tablet gets a tighter, calmer scene so it stays coherent inside a
+  // narrower section width, without changing the composition itself.
   const tabletQuery = window.matchMedia("(max-width:1099px)");
   let sceneScale = tabletQuery.matches ? 0.72 : 1;
   tabletQuery.addEventListener("change", (e) => { sceneScale = e.matches ? 0.72 : 1; });
 
   let hoverIndex = -1;
-  const phases = panels.map((_, i) => i / N); // even spread around the loop
+  const frozenT = panels.map(() => null); // per-card local-time snapshot while hovered/focused
 
-  function placePanel(li, i, phase) {
-    const angle = phase * Math.PI * 2;
+  function placePanel(li, i, tMs) {
+    const p = cardParams[i];
     const isHot = i === hoverIndex;
-    const x = Math.cos(angle) * RADIUS_X * sceneScale;
-    const z = Math.sin(angle) * RADIUS_Z * sceneScale + (isHot ? 90 : 0);
-    const y = Math.sin(angle * 2 + i) * RADIUS_Y * sceneScale;
-    const scale = SCALE_JITTER[i % SCALE_JITTER.length] * (isHot ? 1.12 : 1);
-    li.style.transform = `translate3d(-50%,-50%,0) translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, ${z.toFixed(1)}px) scale(${scale.toFixed(3)})`;
+    const a1 = (tMs / p.periodMs) * Math.PI * 2 + p.phase;
+    const a2 = a1 * p.freqRatio + p.phase * 0.5;
+
+    const x = (Math.cos(a1) * p.rx + Math.cos(a2 * 0.85) * p.rx * p.wobble * 0.5) * sceneScale;
+    const z = (Math.sin(a1) * p.rz + Math.sin(a2 * 0.7) * p.rz * p.wobble) * sceneScale + (isHot ? 90 : 0);
+    const y = (Math.sin(a1 * 1.3 + p.phase) * p.ry + Math.sin(a2) * p.ry * 0.3) * sceneScale;
+
+    // A gentle turn toward/away from the viewer based on where the card
+    // currently sits, not a spin — capped low so the logo stays legible.
+    const rotY = Math.max(-MAX_TILT_Y, Math.min(MAX_TILT_Y, (x / (p.rx * 1.4 || 1)) * MAX_TILT_Y * p.tilt));
+    const rotX = Math.max(-MAX_TILT_X, Math.min(MAX_TILT_X, (-y / (p.ry * 1.4 || 1)) * MAX_TILT_X * p.tilt));
+    const scale = p.baseScale * (isHot ? 1.12 : 1);
+
+    li.style.transform = `translate3d(-50%,-50%,0) translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, ${z.toFixed(1)}px) rotateY(${rotY.toFixed(2)}deg) rotateX(${rotX.toFixed(2)}deg) scale(${scale.toFixed(3)})`;
     li.classList.toggle("is-hot", isHot);
   }
 
   panels.forEach((li, i) => {
     li.addEventListener("mouseenter", () => { hoverIndex = i; });
-    li.addEventListener("mouseleave", () => { hoverIndex = -1; });
+    li.addEventListener("mouseleave", () => { hoverIndex = -1; frozenT[i] = null; });
     li.addEventListener("focusin", () => { hoverIndex = i; });
-    li.addEventListener("focusout", () => { hoverIndex = -1; });
+    li.addEventListener("focusout", () => { hoverIndex = -1; frozenT[i] = null; });
   });
 
   if (reduceMotion) {
-    // Static arrangement: one frame, no ongoing motion.
-    panels.forEach((li, i) => placePanel(li, i, phases[i]));
+    // Static arrangement: one frame per card, no ongoing motion.
+    panels.forEach((li, i) => placePanel(li, i, 0));
   } else {
     let rafId;
     let startTime = null;
@@ -615,10 +655,15 @@ function initPartnerShowcase() {
       if (startTime === null) startTime = now;
       const t = now - startTime;
       panels.forEach((li, i) => {
-        // A hovered panel holds its position instead of continuing to orbit,
-        // so the "lift toward viewer" reads clearly rather than fighting motion.
-        if (i !== hoverIndex) phases[i] = ((t / ORBIT_MS) + i / N) % 1;
-        placePanel(li, i, phases[i]);
+        // A hovered/focused card holds its position instead of continuing to
+        // travel, so the "lift toward viewer" reads clearly rather than
+        // fighting the ongoing motion.
+        if (i === hoverIndex) {
+          if (frozenT[i] === null) frozenT[i] = t;
+        } else {
+          frozenT[i] = null;
+        }
+        placePanel(li, i, frozenT[i] !== null ? frozenT[i] : t);
       });
       rafId = requestAnimationFrame(frame);
     }
