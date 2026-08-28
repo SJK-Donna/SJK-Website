@@ -514,41 +514,50 @@ function initQuoteForm() {
 /* ================= OUR PARTNERS — 3D DIGITAL SHOWCASE ================= */
 
 const PARTNERS = [
-  { src: "images/partners/8.png", name: "Manila Golf", cat: "Golf Club", x: "-190px", y: "-120px", z: "40px", r: "-10deg", s: 1.08 },
-  { src: "images/partners/1.png", name: "Amanpulo", cat: "Luxury Resort", x: "70px", y: "-190px", z: "-50px", r: "6deg", s: 0.88 },
-  { src: "images/partners/6.png", name: "Forest Hills Golf & Country Club", cat: "Golf & Country Club", x: "-260px", y: "60px", z: "-20px", r: "-5deg", s: 0.95 },
-  { src: "images/partners/2.png", name: "FedEx", cat: "Logistics Partner", x: "230px", y: "-20px", z: "60px", r: "10deg", s: 1.1 },
-  { src: "images/partners/4.png", name: "Anvaya Cove Golf & Sports Club", cat: "Golf & Sports Club", x: "-110px", y: "190px", z: "-40px", r: "-9deg", s: 0.9 },
-  { src: "images/partners/3.png", name: "The Farm at San Benito", cat: "Wellness Resort", x: "170px", y: "170px", z: "20px", r: "7deg", s: 1.0 },
-  { src: "images/partners/5.png", name: "Valley Golf", cat: "Golf Course", x: "-20px", y: "-230px", z: "10px", r: "2deg", s: 1.0 },
-  { src: "images/partners/7.png", name: "Mimosa Plus Golf Course", cat: "Golf Course", x: "40px", y: "230px", z: "-25px", r: "-6deg", s: 0.92 }
+  { src: "images/partners/8.png", name: "Manila Golf", cat: "Golf Club" },
+  { src: "images/partners/1.png", name: "Amanpulo", cat: "Luxury Resort" },
+  { src: "images/partners/6.png", name: "Forest Hills Golf & Country Club", cat: "Golf & Country Club" },
+  { src: "images/partners/2.png", name: "FedEx", cat: "Logistics Partner" },
+  { src: "images/partners/4.png", name: "Anvaya Cove Golf & Sports Club", cat: "Golf & Sports Club" },
+  { src: "images/partners/3.png", name: "The Farm at San Benito", cat: "Wellness Resort" },
+  { src: "images/partners/5.png", name: "Valley Golf", cat: "Golf Course" },
+  { src: "images/partners/7.png", name: "Mimosa Plus Golf Course", cat: "Golf Course" }
 ];
 
 function buildPartnerPanelsHTML() {
   return PARTNERS.map((p, i) => `
-    <li class="ps-panel" style="--i:${i}; --x:${p.x}; --y:${p.y}; --z:${p.z}; --r:${p.r}; --s:${p.s};">
-      <div class="ps-panel-float">
-        <a class="ps-panel-face" href="#quote" aria-label="${p.name} — ${p.cat}. Request a quote.">
-          <img src="${p.src}" alt="${p.name}" loading="lazy">
-          <span class="ps-info">
-            <span class="ps-cat">${p.cat}</span>
-            <span class="ps-name">${p.name}</span>
-            <span class="ps-cta">Explore <span class="arrow">→</span></span>
-          </span>
-        </a>
-      </div>
+    <li class="ps-panel" style="--i:${i};">
+      <a class="ps-panel-face" href="#quote" aria-label="${p.name} — ${p.cat}. Request a quote.">
+        <img src="${p.src}" alt="${p.name}" loading="lazy">
+        <span class="ps-info">
+          <span class="ps-cat">${p.cat}</span>
+          <span class="ps-name">${p.name}</span>
+          <span class="ps-cta">Explore <span class="arrow">→</span></span>
+        </span>
+      </a>
     </li>`).join("");
 }
 
+// The showcase is a single shared 3D space (see .ps-scene / .ps-panels in
+// style.css, both transform-style:preserve-3d): the central structure sits
+// fixed at translateZ(0), and every panel continuously orbits it on an
+// elliptical path in the X/Z plane. Because they share one 3D context the
+// browser depth-sorts them for real — a panel with a more negative Z than
+// the structure actually renders behind it, and apparent size comes from
+// CSS perspective doing its job on translateZ, not a manually keyframed
+// scale. This is one continuous slow loop, not a carousel: there is no
+// "current slide," just orbit phase.
 function initPartnerShowcase() {
   const showcase = document.getElementById("partnerShowcase");
-  const stage = document.getElementById("psStage");
+  const scene = document.getElementById("psScene");
   const panelsList = document.getElementById("psPanels");
-  if (!showcase || !stage || !panelsList) return;
+  if (!showcase || !scene || !panelsList) return;
 
   panelsList.innerHTML = buildPartnerPanelsHTML();
+  const panels = Array.from(panelsList.children);
+  const N = panels.length;
 
-  // Entrance choreography: structure and panels animate in once scrolled into view.
+  // Entrance choreography: structure and panels fade in once scrolled into view.
   if ("IntersectionObserver" in window) {
     const io = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -563,46 +572,97 @@ function initPartnerShowcase() {
     showcase.classList.add("is-active");
   }
 
-  if (reduceMotion) return;
+  const ORBIT_MS = 34000; // one full lap per panel, slow and elegant
+  const RADIUS_X = 250;
+  const RADIUS_Z = 190;
+  const RADIUS_Y = 40;
+  const SCALE_JITTER = [1, 0.92, 1.06, 0.95, 1.1, 0.9, 1.02, 0.96];
 
-  // Subtle scroll-linked rotation of the whole scene, plus a light mouse parallax tilt.
-  const desktopQuery = window.matchMedia("(min-width:700px)");
-  let scrollRot = 0;
-  let mouseRotX = 0;
-  let mouseRotY = 0;
-  let ticking = false;
+  // Tablet gets a tighter orbit + calmer rotation so the scene stays coherent
+  // inside a narrower section width, without changing the composition itself.
+  const tabletQuery = window.matchMedia("(max-width:1099px)");
+  let sceneScale = tabletQuery.matches ? 0.72 : 1;
+  tabletQuery.addEventListener("change", (e) => { sceneScale = e.matches ? 0.72 : 1; });
 
-  function applyTransform() {
-    stage.style.transform = `rotateY(${(scrollRot + mouseRotY).toFixed(2)}deg) rotateX(${(-mouseRotX).toFixed(2)}deg)`;
+  let hoverIndex = -1;
+  const phases = panels.map((_, i) => i / N); // even spread around the loop
+
+  function placePanel(li, i, phase) {
+    const angle = phase * Math.PI * 2;
+    const isHot = i === hoverIndex;
+    const x = Math.cos(angle) * RADIUS_X * sceneScale;
+    const z = Math.sin(angle) * RADIUS_Z * sceneScale + (isHot ? 90 : 0);
+    const y = Math.sin(angle * 2 + i) * RADIUS_Y * sceneScale;
+    const scale = SCALE_JITTER[i % SCALE_JITTER.length] * (isHot ? 1.12 : 1);
+    li.style.transform = `translate3d(-50%,-50%,0) translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, ${z.toFixed(1)}px) scale(${scale.toFixed(3)})`;
+    li.classList.toggle("is-hot", isHot);
   }
 
-  function onScroll() {
-    if (!desktopQuery.matches || ticking) return;
-    ticking = true;
-    requestAnimationFrame(() => {
-      ticking = false;
+  panels.forEach((li, i) => {
+    li.addEventListener("mouseenter", () => { hoverIndex = i; });
+    li.addEventListener("mouseleave", () => { hoverIndex = -1; });
+    li.addEventListener("focusin", () => { hoverIndex = i; });
+    li.addEventListener("focusout", () => { hoverIndex = -1; });
+  });
+
+  if (reduceMotion) {
+    // Static arrangement: one frame, no ongoing motion.
+    panels.forEach((li, i) => placePanel(li, i, phases[i]));
+  } else {
+    let rafId;
+    let startTime = null;
+    function frame(now) {
+      if (startTime === null) startTime = now;
+      const t = now - startTime;
+      panels.forEach((li, i) => {
+        // A hovered panel holds its position instead of continuing to orbit,
+        // so the "lift toward viewer" reads clearly rather than fighting motion.
+        if (i !== hoverIndex) phases[i] = ((t / ORBIT_MS) + i / N) % 1;
+        placePanel(li, i, phases[i]);
+      });
+      rafId = requestAnimationFrame(frame);
+    }
+    rafId = requestAnimationFrame(frame);
+
+    // Subtle scroll-linked rotation of the whole scene, plus a light mouse parallax tilt.
+    const desktopQuery = window.matchMedia("(min-width:700px)");
+    let scrollRot = 0;
+    let mouseRotX = 0;
+    let mouseRotY = 0;
+    let ticking = false;
+
+    function applySceneTransform() {
+      scene.style.transform = `rotateY(${(scrollRot + mouseRotY).toFixed(2)}deg) rotateX(${(-mouseRotX).toFixed(2)}deg)`;
+    }
+
+    function onScroll() {
+      if (!desktopQuery.matches || ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        ticking = false;
+        const rect = showcase.getBoundingClientRect();
+        const progress = 1 - Math.min(1, Math.max(0, rect.top / window.innerHeight));
+        scrollRot = (progress - 0.5) * 12 * sceneScale; // -6deg .. 6deg across the section's scroll range, tighter on tablet
+        applySceneTransform();
+      });
+    }
+
+    showcase.addEventListener("mousemove", (e) => {
+      if (!desktopQuery.matches) return;
       const rect = showcase.getBoundingClientRect();
-      const progress = 1 - Math.min(1, Math.max(0, rect.top / window.innerHeight));
-      scrollRot = (progress - 0.5) * 12; // -6deg .. 6deg across the section's scroll range
-      applyTransform();
+      mouseRotY = ((e.clientX - rect.left) / rect.width - 0.5) * 8 * sceneScale;
+      mouseRotX = ((e.clientY - rect.top) / rect.height - 0.5) * 8 * sceneScale;
+      applySceneTransform();
     });
+    showcase.addEventListener("mouseleave", () => {
+      mouseRotX = 0;
+      mouseRotY = 0;
+      applySceneTransform();
+    });
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
   }
-
-  showcase.addEventListener("mousemove", (e) => {
-    if (!desktopQuery.matches) return;
-    const rect = showcase.getBoundingClientRect();
-    mouseRotY = ((e.clientX - rect.left) / rect.width - 0.5) * 8;
-    mouseRotX = ((e.clientY - rect.top) / rect.height - 0.5) * 8;
-    applyTransform();
-  });
-  showcase.addEventListener("mouseleave", () => {
-    mouseRotX = 0;
-    mouseRotY = 0;
-    applyTransform();
-  });
-
-  window.addEventListener("scroll", onScroll, { passive: true });
-  onScroll();
 }
 
 function initPartnerMobile() {
@@ -616,9 +676,17 @@ function initPartnerMobile() {
   const totalEl = document.getElementById("pmTotal");
   const prevBtn = root.querySelector(".pm-prev");
   const nextBtn = root.querySelector(".pm-next");
+  const dotsRoot = document.getElementById("pmDots");
 
   let index = 0;
   totalEl.textContent = String(PARTNERS.length).padStart(2, "0");
+
+  if (dotsRoot) {
+    dotsRoot.innerHTML = PARTNERS.map((p, i) =>
+      `<button type="button" class="pm-dot" role="tab" aria-label="Go to ${p.name}" aria-selected="${i === 0 ? "true" : "false"}"></button>`
+    ).join("");
+  }
+  const dots = dotsRoot ? Array.from(dotsRoot.children) : [];
 
   function render() {
     const p = PARTNERS[index];
@@ -627,6 +695,11 @@ function initPartnerMobile() {
     nameEl.textContent = p.name;
     catEl.textContent = p.cat;
     curEl.textContent = String(index + 1).padStart(2, "0");
+    dots.forEach((dot, i) => {
+      const active = i === index;
+      dot.classList.toggle("is-active", active);
+      dot.setAttribute("aria-selected", active ? "true" : "false");
+    });
   }
   function go(delta) {
     index = (index + delta + PARTNERS.length) % PARTNERS.length;
@@ -635,6 +708,7 @@ function initPartnerMobile() {
 
   prevBtn.addEventListener("click", () => go(-1));
   nextBtn.addEventListener("click", () => go(1));
+  dots.forEach((dot, i) => dot.addEventListener("click", () => { index = i; render(); }));
   render();
 }
 
