@@ -527,40 +527,26 @@ const PARTNERS = [
 function buildPartnerPanelsHTML() {
   return PARTNERS.map((p, i) => `
     <li class="ps-panel" style="--i:${i};">
-      <div class="ps-panel-bob">
-        <a class="ps-panel-face" href="#quote" aria-label="${p.name} — ${p.cat}. Request a quote.">
-          <img src="${p.src}" alt="${p.name}" loading="lazy">
-          <span class="ps-info">
-            <span class="ps-cat">${p.cat}</span>
-            <span class="ps-name">${p.name}</span>
-            <span class="ps-cta">Explore <span class="arrow">→</span></span>
-          </span>
-        </a>
-      </div>
+      <a class="ps-panel-face" href="#quote" aria-label="${p.name} — ${p.cat}. Request a quote.">
+        <img src="${p.src}" alt="${p.name}" loading="lazy">
+        <span class="ps-info">
+          <span class="ps-cat">${p.cat}</span>
+          <span class="ps-name">${p.name}</span>
+          <span class="ps-cta">Explore <span class="arrow">→</span></span>
+        </span>
+      </a>
     </li>`).join("");
 }
 
-// Fixed placement for each of the 8 cards inside the open room (see .ps-room
-// in style.css): most are mounted flush against the back or left wall at
-// varying depth/height, and two sit further forward as featured pieces —
-// a still, gallery-mounted composition rather than cards orbiting a solid
-// object. x/y/z/rotY are defined in the same coordinate frame as the walls
-// (the fixed camera tilt lives on .ps-scene, shared by both), so a card's
-// rotateY matches the wall it's mounted on and actually lines up with it.
-const WALL_SLOTS = [
-  { x: -150, y: -46, z: -164, rotY: 0, scale: 1 },    // back wall
-  { x: -46, y: 34, z: -150, rotY: 0, scale: 0.94 },   // back wall
-  { x: 66, y: -26, z: -158, rotY: 0, scale: 1 },      // back wall
-  { x: 156, y: 40, z: -140, rotY: 0, scale: 0.92 },   // back wall
-  // Left-wall cards are angled toward the wall (not a true flush 90deg
-  // mount) so they stay readable against the camera's own yaw — a full
-  // perpendicular mount would put them almost edge-on to this camera.
-  { x: -206, y: -22, z: -72, rotY: -30, scale: 0.9 }, // left wall
-  { x: -212, y: 46, z: -134, rotY: -30, scale: 0.9 }, // left wall
-  { x: -84, y: 22, z: 44, rotY: 0, scale: 1.15 },     // featured, foreground
-  { x: 104, y: -14, z: 62, rotY: 0, scale: 1.2 }      // featured, foreground
-];
-
+// The showcase is a single shared 3D space (see .ps-scene / .ps-panels in
+// style.css, both transform-style:preserve-3d): the central structure sits
+// fixed at translateZ(0), and every panel continuously orbits it on an
+// elliptical path in the X/Z plane. Because they share one 3D context the
+// browser depth-sorts them for real — a panel with a more negative Z than
+// the structure actually renders behind it, and apparent size comes from
+// CSS perspective doing its job on translateZ, not a manually keyframed
+// scale. This is one continuous slow loop, not a carousel: there is no
+// "current slide," just orbit phase.
 function initPartnerShowcase() {
   const showcase = document.getElementById("partnerShowcase");
   const scene = document.getElementById("psScene");
@@ -569,6 +555,7 @@ function initPartnerShowcase() {
 
   panelsList.innerHTML = buildPartnerPanelsHTML();
   const panels = Array.from(panelsList.children);
+  const N = panels.length;
 
   // Entrance choreography: structure and panels fade in once scrolled into view.
   if ("IntersectionObserver" in window) {
@@ -585,30 +572,59 @@ function initPartnerShowcase() {
     showcase.classList.add("is-active");
   }
 
-  // Tablet gets a tighter room so the composition stays coherent inside a
-  // narrower section width, without changing which wall each card sits on.
+  const ORBIT_MS = 34000; // one full lap per panel, slow and elegant
+  const RADIUS_X = 250;
+  const RADIUS_Z = 190;
+  const RADIUS_Y = 40;
+  const SCALE_JITTER = [1, 0.92, 1.06, 0.95, 1.1, 0.9, 1.02, 0.96];
+
+  // Tablet gets a tighter orbit + calmer rotation so the scene stays coherent
+  // inside a narrower section width, without changing the composition itself.
   const tabletQuery = window.matchMedia("(max-width:1099px)");
-  let sceneScale = tabletQuery.matches ? 0.68 : 1;
+  let sceneScale = tabletQuery.matches ? 0.72 : 1;
+  tabletQuery.addEventListener("change", (e) => { sceneScale = e.matches ? 0.72 : 1; });
 
-  function placePanels() {
-    panels.forEach((li, i) => {
-      const s = WALL_SLOTS[i % WALL_SLOTS.length];
-      const x = (s.x * sceneScale).toFixed(1);
-      const y = (s.y * sceneScale).toFixed(1);
-      const z = (s.z * sceneScale).toFixed(1);
-      li.style.transform = `translate3d(-50%,-50%,0) translate3d(${x}px, ${y}px, ${z}px) rotateY(${s.rotY}deg) scale(${s.scale})`;
-    });
+  let hoverIndex = -1;
+  const phases = panels.map((_, i) => i / N); // even spread around the loop
+
+  function placePanel(li, i, phase) {
+    const angle = phase * Math.PI * 2;
+    const isHot = i === hoverIndex;
+    const x = Math.cos(angle) * RADIUS_X * sceneScale;
+    const z = Math.sin(angle) * RADIUS_Z * sceneScale + (isHot ? 90 : 0);
+    const y = Math.sin(angle * 2 + i) * RADIUS_Y * sceneScale;
+    const scale = SCALE_JITTER[i % SCALE_JITTER.length] * (isHot ? 1.12 : 1);
+    li.style.transform = `translate3d(-50%,-50%,0) translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, ${z.toFixed(1)}px) scale(${scale.toFixed(3)})`;
+    li.classList.toggle("is-hot", isHot);
   }
-  placePanels();
-  tabletQuery.addEventListener("change", (e) => { sceneScale = e.matches ? 0.68 : 1; placePanels(); });
 
-  // The camera's fixed tilt (also set as .ps-scene's resting transform in
-  // CSS, so a reduced-motion visitor still sees the room at this angle) —
-  // scroll/mouse add small deltas on top of it, they never replace it.
-  const BASE_ROT_Y = 16;
-  const BASE_ROT_X = -6;
+  panels.forEach((li, i) => {
+    li.addEventListener("mouseenter", () => { hoverIndex = i; });
+    li.addEventListener("mouseleave", () => { hoverIndex = -1; });
+    li.addEventListener("focusin", () => { hoverIndex = i; });
+    li.addEventListener("focusout", () => { hoverIndex = -1; });
+  });
 
-  if (!reduceMotion) {
+  if (reduceMotion) {
+    // Static arrangement: one frame, no ongoing motion.
+    panels.forEach((li, i) => placePanel(li, i, phases[i]));
+  } else {
+    let rafId;
+    let startTime = null;
+    function frame(now) {
+      if (startTime === null) startTime = now;
+      const t = now - startTime;
+      panels.forEach((li, i) => {
+        // A hovered panel holds its position instead of continuing to orbit,
+        // so the "lift toward viewer" reads clearly rather than fighting motion.
+        if (i !== hoverIndex) phases[i] = ((t / ORBIT_MS) + i / N) % 1;
+        placePanel(li, i, phases[i]);
+      });
+      rafId = requestAnimationFrame(frame);
+    }
+    rafId = requestAnimationFrame(frame);
+
+    // Subtle scroll-linked rotation of the whole scene, plus a light mouse parallax tilt.
     const desktopQuery = window.matchMedia("(min-width:700px)");
     let scrollRot = 0;
     let mouseRotX = 0;
@@ -616,7 +632,7 @@ function initPartnerShowcase() {
     let ticking = false;
 
     function applySceneTransform() {
-      scene.style.transform = `rotateY(${(BASE_ROT_Y + scrollRot + mouseRotY).toFixed(2)}deg) rotateX(${(BASE_ROT_X - mouseRotX).toFixed(2)}deg)`;
+      scene.style.transform = `rotateY(${(scrollRot + mouseRotY).toFixed(2)}deg) rotateX(${(-mouseRotX).toFixed(2)}deg)`;
     }
 
     function onScroll() {
@@ -626,7 +642,7 @@ function initPartnerShowcase() {
         ticking = false;
         const rect = showcase.getBoundingClientRect();
         const progress = 1 - Math.min(1, Math.max(0, rect.top / window.innerHeight));
-        scrollRot = (progress - 0.5) * 10 * sceneScale; // a few degrees either way across the section's scroll range
+        scrollRot = (progress - 0.5) * 12 * sceneScale; // -6deg .. 6deg across the section's scroll range, tighter on tablet
         applySceneTransform();
       });
     }
@@ -634,8 +650,8 @@ function initPartnerShowcase() {
     showcase.addEventListener("mousemove", (e) => {
       if (!desktopQuery.matches) return;
       const rect = showcase.getBoundingClientRect();
-      mouseRotY = ((e.clientX - rect.left) / rect.width - 0.5) * 6 * sceneScale;
-      mouseRotX = ((e.clientY - rect.top) / rect.height - 0.5) * 6 * sceneScale;
+      mouseRotY = ((e.clientX - rect.left) / rect.width - 0.5) * 8 * sceneScale;
+      mouseRotX = ((e.clientY - rect.top) / rect.height - 0.5) * 8 * sceneScale;
       applySceneTransform();
     });
     showcase.addEventListener("mouseleave", () => {

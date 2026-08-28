@@ -295,53 +295,46 @@ a:hover .arrow, button:hover .arrow{transform:translateX(4px);}
     repeating-radial-gradient(circle at 78% 68%, transparent 0, transparent 40px, rgba(255,255,255,.06) 41px, transparent 42px, transparent 82px);
 }
 
-.ps-stage{position:relative; z-index:1; height:clamp(480px,58vw,680px); perspective:1500px; perspective-origin:50% 42%;}
+.ps-stage{position:relative; z-index:1; height:clamp(480px,58vw,680px); perspective:1500px; perspective-origin:50% 50%;}
 
-/* .ps-scene is the single shared 3D context and camera: the fixed tilt that
-   reveals the room's left wall and floor lives here (not on the room alone)
-   so every panel — wall-mounted or featured — sits in the SAME tilted
-   coordinate frame as the walls themselves, and actually lines up with them. */
-.ps-scene{position:absolute; inset:0; transform-style:preserve-3d; transform:rotateY(16deg) rotateX(-6deg); transition:transform .5s ease-out; will-change:transform;}
+/* .ps-scene is the single shared 3D context: the central structure and every
+   panel are direct-ish descendants of it with transform-style:preserve-3d
+   held unbroken down the chain, so the browser depth-sorts them against each
+   other for real (a panel's translateZ can put it behind the structure and
+   have it actually render behind it) instead of layering by paint order. */
+.ps-scene{position:absolute; inset:0; transform-style:preserve-3d; transform:rotateY(0deg) rotateX(0deg); transition:transform .5s ease-out; will-change:transform;}
 
-.ps-structure{position:absolute; left:50%; top:50%; width:min(48vw,520px); height:min(34vw,340px); transform:translate3d(-50%,-50%,0) scale(.85); transform-style:preserve-3d;
+.ps-structure{position:absolute; left:50%; top:50%; width:min(26vw,260px); height:min(34vw,320px); transform:translate3d(-50%,-50%,0) scale(.85); transform-style:preserve-3d;
   opacity:0; transition:opacity .9s ease, transform 1s cubic-bezier(.22,1,.36,1);
 }
 .partner-showcase.is-active .ps-structure{opacity:1; transform:translate3d(-50%,-50%,0) scale(1);}
 
-/* .ps-room is an open interior, not a closed box: a back wall and a left
-   wall folded back from the room's front opening (the same "box net" hinge
-   — each wall pivots 90deg from the edge it shares with the opening) plus a
-   floor folded down from the bottom edge. There is no front or right face,
-   so the shared camera tilt above looks straight into the room. */
-.ps-room{position:absolute; inset:0; --depth:210px; transform-style:preserve-3d;}
+/* .ps-cube gives the display real volume: a front face plus right/left/top
+   faces folded back from it (a "box net" hinge — each side face pivots 90deg
+   from the front face's shared edge) so the structure reads as an actual 3D
+   object from an angle instead of a flat rectangle. */
+.ps-cube{position:absolute; inset:0; --depth:46px; transform-style:preserve-3d; transform:rotateX(-9deg) rotateY(24deg);}
 .ps-face{position:absolute; top:0; left:0; width:100%; height:100%; backface-visibility:hidden;}
 
-.ps-face-back{transform:translateZ(calc(var(--depth) * -1)); border-radius:16px; overflow:hidden;
+.ps-face-front{border-radius:24px; overflow:hidden;
   background:linear-gradient(155deg, #14231b 0%, #1a2e22 55%, #10201a 100%);
-  border:1px solid rgba(232,197,99,.16);
-  box-shadow:inset 0 0 90px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.08);
+  border:1px solid rgba(232,197,99,.22);
+  box-shadow:0 40px 90px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.1), inset 0 0 60px rgba(232,197,99,.05);
 }
-/* Faint fairway contour lines on the back wall — the golf-course cue. */
-.ps-face-back::before{content:""; position:absolute; inset:0; opacity:.5; pointer-events:none;
-  background-image:
-    repeating-radial-gradient(circle at 30% 25%, transparent 0, transparent 26px, rgba(232,197,99,.09) 27px, transparent 28px, transparent 54px),
-    repeating-radial-gradient(circle at 75% 70%, transparent 0, transparent 30px, rgba(255,255,255,.05) 31px, transparent 32px, transparent 62px);
-}
+.ps-face-front::before{content:""; position:absolute; inset:18px; border:1px solid rgba(255,255,255,.1); border-radius:14px;}
+.ps-face-front::after{content:""; position:absolute; left:50%; top:18px; bottom:18px; width:1px; background:rgba(255,255,255,.08);}
 
+.ps-face-right{width:var(--depth); height:100%; left:100%; transform-origin:0 50%; transform:rotateY(90deg);
+  background:linear-gradient(180deg, #16261c 0%, #060b08 100%); border-radius:0 10px 10px 0;
+}
 .ps-face-left{width:var(--depth); height:100%; left:calc(var(--depth) * -1); transform-origin:100% 50%; transform:rotateY(-90deg);
-  background:linear-gradient(180deg, #101c15 0%, #050907 100%);
+  background:linear-gradient(180deg, #101c15 0%, #050907 100%); border-radius:10px 0 0 10px;
 }
-
-/* Folded down from the room's bottom edge — a glossy fairway-green floor
-   with a soft light pool and faint mow stripes, standing in for the
-   reflective floor in the reference video. */
-.ps-face-floor{width:100%; height:calc(var(--depth) * 1.7); top:100%; transform-origin:50% 0; transform:rotateX(-90deg); overflow:hidden;
-  background:
-    repeating-linear-gradient(100deg, rgba(255,255,255,.05) 0 20px, rgba(0,0,0,.06) 20px 40px),
-    linear-gradient(180deg, #234030 0%, #0e1912 80%);
+.ps-face-top{width:100%; height:var(--depth); top:calc(var(--depth) * -1); transform-origin:50% 100%; transform:rotateX(90deg);
+  background:linear-gradient(180deg, rgba(232,197,99,.16) 0%, #1c3324 65%, #16281d 100%); border-radius:12px 12px 0 0;
 }
-.ps-structure-glow{position:absolute; left:50%; top:8%; width:120%; height:80%; transform:translateX(-50%); border-radius:50%; filter:blur(26px);
-  background:radial-gradient(closest-side, rgba(232,197,99,.28), rgba(63,125,84,.18) 55%, transparent 78%);
+.ps-structure-glow{position:absolute; left:50%; bottom:-10%; width:160%; height:50%; transform:translateX(-50%); border-radius:50%; filter:blur(30px);
+  background:radial-gradient(closest-side, rgba(232,197,99,.3), rgba(63,125,84,.2) 55%, transparent 75%);
   animation:psGlowPulse 6s ease-in-out infinite;
 }
 @keyframes psGlowPulse{0%,100%{opacity:.85;} 50%{opacity:1;}}
@@ -352,19 +345,13 @@ a:hover .arrow, button:hover .arrow{transform:translateX(4px);}
 }
 .partner-showcase.is-active .ps-panel{opacity:1;}
 
-/* A small idle bob lives on this inner wrapper — never the same element as
-   the position transform (set once by JS) or the hover transform below —
-   so the three never fight over the transform property. */
-.ps-panel-bob{transform-style:preserve-3d; animation:psWallFloat 6s ease-in-out infinite; animation-delay:calc(var(--i,0) * .35s);}
-@keyframes psWallFloat{0%,100%{transform:translateY(0);} 50%{transform:translateY(-6px);}}
-
 .ps-panel-face{position:relative; aspect-ratio:4/3; border-radius:14px; background:#fff; overflow:hidden;
   box-shadow:0 24px 48px rgba(0,0,0,.4), 0 0 26px rgba(232,197,99,.12);
   display:flex; align-items:center; justify-content:center; padding:14px;
-  transition:transform .35s cubic-bezier(.22,1,.36,1), box-shadow .3s ease;
+  transition:box-shadow .3s ease;
   cursor:pointer;
 }
-.ps-panel-face:hover, .ps-panel-face:focus-within{transform:translateZ(44px) scale(1.08); box-shadow:0 34px 70px rgba(0,0,0,.5), 0 0 40px rgba(232,197,99,.22);}
+.ps-panel.is-hot .ps-panel-face{box-shadow:0 34px 70px rgba(0,0,0,.5), 0 0 40px rgba(232,197,99,.22);}
 .ps-panel-face img{max-width:100%; max-height:100%; width:auto; height:auto; object-fit:contain; position:relative; z-index:1;}
 
 /* A slow light sweep across each lit card, like a backlit exhibit screen —
@@ -374,7 +361,7 @@ a:hover .arrow, button:hover .arrow{transform:translateX(4px);}
   transform:translateX(-120%); opacity:0;
   animation:psSheen 8s ease-in-out infinite; animation-delay:calc(var(--i,0) * .9s + 2s);
 }
-.ps-panel-face:hover::before, .ps-panel-face:focus-within::before{animation-play-state:paused; opacity:0;}
+.ps-panel.is-hot .ps-panel-face::before{animation-play-state:paused; opacity:0;}
 @keyframes psSheen{
   0%, 92%{transform:translateX(-120%); opacity:0;}
   95%{opacity:.8;}
@@ -385,16 +372,15 @@ a:hover .arrow, button:hover .arrow{transform:translateX(4px);}
   background:linear-gradient(0deg, rgba(10,16,14,.92) 0%, rgba(10,16,14,.55) 55%, transparent 100%);
   opacity:0; transition:opacity .3s ease;
 }
-.ps-panel-face:hover .ps-info, .ps-panel-face:focus-within .ps-info{opacity:1;}
+.ps-panel.is-hot .ps-info{opacity:1;}
 .ps-name{font-family:var(--ff-display); font-weight:700; font-size:12.5px; color:#fff; line-height:1.2;}
 .ps-cat{font-family:var(--ff-mono); font-size:9.5px; color:var(--gold); text-transform:uppercase; letter-spacing:.06em; margin-bottom:2px;}
 .ps-cta{font-family:var(--ff-mono); font-size:9.5px; color:rgba(255,255,255,.8); text-transform:uppercase; letter-spacing:.05em; margin-top:2px;}
 .ps-panel-face:focus-visible{outline:2px solid var(--gold); outline-offset:3px;}
 
 @media (max-width:1099px){
-  .ps-structure{width:min(56vw,380px); height:min(40vw,280px);}
-  .ps-room{--depth:150px;}
-  .ps-panel:nth-child(3), .ps-panel:nth-child(4){display:none;}
+  .ps-structure{width:min(30vw,220px); height:min(38vw,270px);}
+  .ps-panel:nth-child(7), .ps-panel:nth-child(8){display:none;}
 }
 
 /* ---- mobile fallback: single-card carousel ---- */
@@ -421,7 +407,6 @@ a:hover .arrow, button:hover .arrow{transform:translateX(4px);}
   .ps-structure{transition:opacity .3s ease; transform:translate3d(-50%,-50%,0) scale(1); opacity:1;}
   .ps-structure-glow{animation:none;}
   .ps-panel{transition:opacity .3s ease; opacity:1;}
-  .ps-panel-bob{animation:none;}
   .ps-panel-face{transition:none;}
   .ps-panel-face::before{animation:none; opacity:0;}
   .pm-media img{transition:none;}
