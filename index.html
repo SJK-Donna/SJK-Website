@@ -349,14 +349,40 @@
         </div>
       </div>
 
-      <div class="trusted-by reveal" id="partners">
-        <span class="trusted-by-label">Our Partners — Trusted by leading courses &amp; resorts</span>
-        <ul class="trusted-by-logos" id="partnerLogos">
-          <li><img src="images/partners/8.png" alt="Manila Golf" loading="lazy"></li>
-          <li><img src="images/partners/1.png" alt="Amanpulo" loading="lazy"></li>
-          <li><img src="images/partners/6.png" alt="Forest Hills Golf &amp; Country Club" loading="lazy"></li>
-          <li><img src="images/partners/2.png" alt="FedEx" loading="lazy"></li>
-        </ul>
+    </div>
+  </section>
+
+  <!-- ============ OUR PARTNERS — DIGITAL SHOWCASE ============ -->
+  <section id="partners" class="section section-dark partners-section stage-clubhouse" data-stage="clubhouse">
+    <div class="section-inner">
+      <div class="section-head reveal">
+        <span class="eyebrow">Our Partners</span>
+        <h2 class="display-lg">Stronger Together.</h2>
+        <p class="lead">We work alongside trusted golf courses, resorts, and logistics partners to deliver quality equipment, solutions, and service on every project.</p>
+      </div>
+
+      <div class="partner-showcase reveal" id="partnerShowcase" aria-label="Our partners">
+        <div class="ps-contours" aria-hidden="true"></div>
+        <div class="ps-stage" id="psStage">
+          <div class="ps-structure" aria-hidden="true">
+            <span class="ps-structure-glow"></span>
+          </div>
+          <ul class="ps-panels" id="psPanels"></ul>
+        </div>
+      </div>
+
+      <!-- Mobile fallback: touch-friendly single-card carousel -->
+      <div class="partner-mobile" id="partnerMobile">
+        <div class="pm-card">
+          <div class="pm-media"><img id="pmImg" src="" alt=""></div>
+          <span class="pm-name" id="pmName"></span>
+          <span class="pm-cat" id="pmCat"></span>
+        </div>
+        <div class="pm-controls">
+          <button type="button" class="pm-arrow pm-prev" aria-label="Previous partner">←</button>
+          <span class="pm-counter"><span id="pmCur">01</span> / <span id="pmTotal">08</span></span>
+          <button type="button" class="pm-arrow pm-next" aria-label="Next partner">→</button>
+        </div>
       </div>
     </div>
   </section>

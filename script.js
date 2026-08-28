@@ -511,64 +511,131 @@ function initQuoteForm() {
   });
 }
 
-/* ================= OUR PARTNERS — ROTATING LOGO WALL ================= */
+/* ================= OUR PARTNERS — 3D DIGITAL SHOWCASE ================= */
 
-const PARTNER_LOGOS = [
-  { src: "images/partners/8.png", alt: "Manila Golf" },
-  { src: "images/partners/1.png", alt: "Amanpulo" },
-  { src: "images/partners/6.png", alt: "Forest Hills Golf & Country Club" },
-  { src: "images/partners/2.png", alt: "FedEx" },
-  { src: "images/partners/4.png", alt: "Anvaya Cove Golf & Sports Club" },
-  { src: "images/partners/3.png", alt: "The Farm at San Benito" },
-  { src: "images/partners/5.png", alt: "Valley Golf" },
-  { src: "images/partners/7.png", alt: "Mimosa Plus Golf Course" }
+const PARTNERS = [
+  { src: "images/partners/8.png", name: "Manila Golf", cat: "Golf Club", x: "-190px", y: "-120px", z: "40px", r: "-10deg", s: 1.08 },
+  { src: "images/partners/1.png", name: "Amanpulo", cat: "Luxury Resort", x: "70px", y: "-190px", z: "-50px", r: "6deg", s: 0.88 },
+  { src: "images/partners/6.png", name: "Forest Hills Golf & Country Club", cat: "Golf & Country Club", x: "-260px", y: "60px", z: "-20px", r: "-5deg", s: 0.95 },
+  { src: "images/partners/2.png", name: "FedEx", cat: "Logistics Partner", x: "230px", y: "-20px", z: "60px", r: "10deg", s: 1.1 },
+  { src: "images/partners/4.png", name: "Anvaya Cove Golf & Sports Club", cat: "Golf & Sports Club", x: "-110px", y: "190px", z: "-40px", r: "-9deg", s: 0.9 },
+  { src: "images/partners/3.png", name: "The Farm at San Benito", cat: "Wellness Resort", x: "170px", y: "170px", z: "20px", r: "7deg", s: 1.0 },
+  { src: "images/partners/5.png", name: "Valley Golf", cat: "Golf Course", x: "-20px", y: "-230px", z: "10px", r: "2deg", s: 1.0 },
+  { src: "images/partners/7.png", name: "Mimosa Plus Golf Course", cat: "Golf Course", x: "40px", y: "230px", z: "-25px", r: "-6deg", s: 0.92 }
 ];
 
-function initPartnerRotator() {
-  const list = document.getElementById("partnerLogos");
-  if (!list) return;
+function buildPartnerPanelsHTML() {
+  return PARTNERS.map((p, i) => `
+    <li class="ps-panel" style="--i:${i}; --x:${p.x}; --y:${p.y}; --z:${p.z}; --r:${p.r}; --s:${p.s};">
+      <div class="ps-panel-float">
+        <a class="ps-panel-face" href="#quote" aria-label="${p.name} — ${p.cat}. Request a quote.">
+          <img src="${p.src}" alt="${p.name}" loading="lazy">
+          <span class="ps-info">
+            <span class="ps-cat">${p.cat}</span>
+            <span class="ps-name">${p.name}</span>
+            <span class="ps-cta">Explore <span class="arrow">→</span></span>
+          </span>
+        </a>
+      </div>
+    </li>`).join("");
+}
 
-  if (reduceMotion) {
-    // Show every partner at once, statically, rather than rotating through them.
-    list.innerHTML = PARTNER_LOGOS.map((logo) =>
-      `<li><img src="${logo.src}" alt="${logo.alt}" loading="lazy"></li>`
-    ).join("");
-    return;
+function initPartnerShowcase() {
+  const showcase = document.getElementById("partnerShowcase");
+  const stage = document.getElementById("psStage");
+  const panelsList = document.getElementById("psPanels");
+  if (!showcase || !stage || !panelsList) return;
+
+  panelsList.innerHTML = buildPartnerPanelsHTML();
+
+  // Entrance choreography: structure and panels animate in once scrolled into view.
+  if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          showcase.classList.add("is-active");
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.25 });
+    io.observe(showcase);
+  } else {
+    showcase.classList.add("is-active");
   }
 
-  const SLOT_COUNT = 4;
-  const INTERVAL_MS = 2800;
-  const STAGGER_MS = 700;
-  const SWAP_MS = 320;
+  if (reduceMotion) return;
 
-  list.innerHTML = "";
-  const slots = [];
-  for (let i = 0; i < SLOT_COUNT; i++) {
-    const li = document.createElement("li");
-    const img = document.createElement("img");
-    const logo = PARTNER_LOGOS[i];
-    img.src = logo.src;
-    img.alt = logo.alt;
-    img.loading = "lazy";
-    li.appendChild(img);
-    list.appendChild(li);
-    slots.push({ img, index: i });
+  // Subtle scroll-linked rotation of the whole scene, plus a light mouse parallax tilt.
+  const desktopQuery = window.matchMedia("(min-width:700px)");
+  let scrollRot = 0;
+  let mouseRotX = 0;
+  let mouseRotY = 0;
+  let ticking = false;
+
+  function applyTransform() {
+    stage.style.transform = `rotateY(${(scrollRot + mouseRotY).toFixed(2)}deg) rotateX(${(-mouseRotX).toFixed(2)}deg)`;
   }
 
-  slots.forEach((slot, i) => {
-    setTimeout(() => {
-      setInterval(() => {
-        slot.img.classList.add("is-swapping");
-        setTimeout(() => {
-          slot.index = (slot.index + SLOT_COUNT) % PARTNER_LOGOS.length;
-          const next = PARTNER_LOGOS[slot.index];
-          slot.img.src = next.src;
-          slot.img.alt = next.alt;
-          requestAnimationFrame(() => slot.img.classList.remove("is-swapping"));
-        }, SWAP_MS);
-      }, INTERVAL_MS);
-    }, i * STAGGER_MS);
+  function onScroll() {
+    if (!desktopQuery.matches || ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      ticking = false;
+      const rect = showcase.getBoundingClientRect();
+      const progress = 1 - Math.min(1, Math.max(0, rect.top / window.innerHeight));
+      scrollRot = (progress - 0.5) * 12; // -6deg .. 6deg across the section's scroll range
+      applyTransform();
+    });
+  }
+
+  showcase.addEventListener("mousemove", (e) => {
+    if (!desktopQuery.matches) return;
+    const rect = showcase.getBoundingClientRect();
+    mouseRotY = ((e.clientX - rect.left) / rect.width - 0.5) * 8;
+    mouseRotX = ((e.clientY - rect.top) / rect.height - 0.5) * 8;
+    applyTransform();
   });
+  showcase.addEventListener("mouseleave", () => {
+    mouseRotX = 0;
+    mouseRotY = 0;
+    applyTransform();
+  });
+
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+}
+
+function initPartnerMobile() {
+  const root = document.getElementById("partnerMobile");
+  if (!root) return;
+
+  const img = document.getElementById("pmImg");
+  const nameEl = document.getElementById("pmName");
+  const catEl = document.getElementById("pmCat");
+  const curEl = document.getElementById("pmCur");
+  const totalEl = document.getElementById("pmTotal");
+  const prevBtn = root.querySelector(".pm-prev");
+  const nextBtn = root.querySelector(".pm-next");
+
+  let index = 0;
+  totalEl.textContent = String(PARTNERS.length).padStart(2, "0");
+
+  function render() {
+    const p = PARTNERS[index];
+    img.src = p.src;
+    img.alt = p.name;
+    nameEl.textContent = p.name;
+    catEl.textContent = p.cat;
+    curEl.textContent = String(index + 1).padStart(2, "0");
+  }
+  function go(delta) {
+    index = (index + delta + PARTNERS.length) % PARTNERS.length;
+    render();
+  }
+
+  prevBtn.addEventListener("click", () => go(-1));
+  nextBtn.addEventListener("click", () => go(1));
+  render();
 }
 
 async function initSite() {
@@ -583,7 +650,8 @@ async function initSite() {
   initRevealAnimations();
   initServiceJourney();
   initSolutionFinder();
-  initPartnerRotator();
+  initPartnerShowcase();
+  initPartnerMobile();
   initQuoteForm();
 }
 
