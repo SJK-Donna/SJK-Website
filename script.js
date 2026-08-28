@@ -74,13 +74,16 @@ const HERO_SLIDES = [
 function buildHeroCarouselHTML() {
   const total = HERO_SLIDES.length;
 
-  const slides = HERO_SLIDES.map((s, i) => `
+  const slides = HERO_SLIDES.map((s, i) => {
+    const words = s.headline.split(" ").map((w, wi) => `<span class="hc-word" style="--wi:${wi}">${w}</span>`).join(" ");
+    return `
     <div class="hc-slide" data-index="${i}" role="group" aria-roledescription="slide" aria-label="${i + 1} of ${total}">
       <div class="hc-media"><img src="${s.img}" alt="${s.alt}" draggable="false" loading="${i === 0 ? "eager" : "lazy"}"></div>
       <div class="hc-scrim"></div>
+      <div class="hc-glow" aria-hidden="true"></div>
       <div class="hc-content">
         <span class="hc-eyebrow">${s.eyebrow}</span>
-        <h2 class="hc-headline">${s.headline}</h2>
+        <h2 class="hc-headline">${words}</h2>
         <p class="hc-subtitle">${s.subtitle}</p>
         <div class="hc-cta">
           <button type="button" class="hc-btn" data-target-hole="${s.target}">
@@ -89,10 +92,11 @@ function buildHeroCarouselHTML() {
           </button>
         </div>
       </div>
-    </div>`).join("");
+    </div>`;
+  }).join("");
 
   const dots = HERO_SLIDES.map((_, i) =>
-    `<button type="button" class="hc-dot${i === 0 ? " active" : ""}" data-goto="${i}" aria-label="Go to slide ${i + 1}" aria-current="${i === 0}"></button>`
+    `<button type="button" class="hc-dot${i === 0 ? " active" : ""}" data-goto="${i}" aria-label="Go to slide ${i + 1}" aria-current="${i === 0}"><span class="hc-dot-fill"></span></button>`
   ).join("");
 
   return `
@@ -126,7 +130,8 @@ function initHeroCarousel() {
   const total = slides.length;
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const canHoverFine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-  const AUTOPLAY_MS = 6500;
+  const AUTOPLAY_MS = 7000;
+  root.style.setProperty("--autoplay-ms", `${AUTOPLAY_MS}ms`);
 
   let index = 0;
   let autoplayTimer = null;
@@ -151,11 +156,13 @@ function initHeroCarousel() {
   function prev(userInitiated) { goTo(index - 1, userInitiated); }
 
   function startAutoplay() {
+    root.classList.remove("paused");
+    if (autoplayTimer) { clearInterval(autoplayTimer); autoplayTimer = null; }
     if (reduceMotion) return;
-    stopAutoplay();
     autoplayTimer = setInterval(() => next(false), AUTOPLAY_MS);
   }
   function stopAutoplay() {
+    root.classList.add("paused");
     if (autoplayTimer) { clearInterval(autoplayTimer); autoplayTimer = null; }
   }
   function restartAutoplay() { startAutoplay(); }
@@ -171,8 +178,19 @@ function initHeroCarousel() {
     });
   });
 
-  root.addEventListener("mouseenter", stopAutoplay);
-  root.addEventListener("mouseleave", startAutoplay);
+  // The carousel fills the entire viewport, so a canvas-wide mouseenter/mouseleave
+  // pause would trigger the moment it opens under a stationary cursor and never
+  // resume (there is no "outside" to leave to). Pause on hover only over the
+  // interactive controls instead, where a deliberate hover is meaningful.
+  function isHoverPauseTarget(el) {
+    return !!(el && el.closest && el.closest(".hc-arrow, .hc-footer, .hc-btn"));
+  }
+  root.addEventListener("pointerover", (e) => {
+    if (isHoverPauseTarget(e.target)) stopAutoplay();
+  });
+  root.addEventListener("pointerout", (e) => {
+    if (isHoverPauseTarget(e.target) && !isHoverPauseTarget(e.relatedTarget)) startAutoplay();
+  });
   root.addEventListener("focusin", stopAutoplay);
   root.addEventListener("focusout", (e) => {
     if (!root.contains(e.relatedTarget)) startAutoplay();
@@ -380,7 +398,7 @@ function initMap() {
   const closeCard = document.getElementById("closeCard");
 
   function openCard(label, hole) {
-    contentCard.classList.toggle("wide", hole === "home");
+    contentCard.classList.toggle("home-fullscreen", hole === "home");
     if (hole === "home") {
       cardBody.innerHTML = buildHeroCarouselHTML();
       initHeroCarousel();
@@ -417,6 +435,9 @@ function initMap() {
 
   closeCard.addEventListener("click", closeOverlay);
   overlayScrim.addEventListener("click", closeOverlay);
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && contentCard.classList.contains("show")) closeOverlay();
+  });
 }
 
 async function initSite() {
