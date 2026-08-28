@@ -511,6 +511,66 @@ function initQuoteForm() {
   });
 }
 
+/* ================= OUR PARTNERS — ROTATING LOGO WALL ================= */
+
+const PARTNER_LOGOS = [
+  { src: "images/partners/8.png", alt: "Manila Golf" },
+  { src: "images/partners/1.png", alt: "Amanpulo" },
+  { src: "images/partners/6.png", alt: "Forest Hills Golf & Country Club" },
+  { src: "images/partners/2.png", alt: "FedEx" },
+  { src: "images/partners/4.png", alt: "Anvaya Cove Golf & Sports Club" },
+  { src: "images/partners/3.png", alt: "The Farm at San Benito" },
+  { src: "images/partners/5.png", alt: "Valley Golf" },
+  { src: "images/partners/7.png", alt: "Mimosa Plus Golf Course" }
+];
+
+function initPartnerRotator() {
+  const list = document.getElementById("partnerLogos");
+  if (!list) return;
+
+  if (reduceMotion) {
+    // Show every partner at once, statically, rather than rotating through them.
+    list.innerHTML = PARTNER_LOGOS.map((logo) =>
+      `<li><img src="${logo.src}" alt="${logo.alt}" loading="lazy"></li>`
+    ).join("");
+    return;
+  }
+
+  const SLOT_COUNT = 4;
+  const INTERVAL_MS = 2800;
+  const STAGGER_MS = 700;
+  const SWAP_MS = 320;
+
+  list.innerHTML = "";
+  const slots = [];
+  for (let i = 0; i < SLOT_COUNT; i++) {
+    const li = document.createElement("li");
+    const img = document.createElement("img");
+    const logo = PARTNER_LOGOS[i];
+    img.src = logo.src;
+    img.alt = logo.alt;
+    img.loading = "lazy";
+    li.appendChild(img);
+    list.appendChild(li);
+    slots.push({ img, index: i });
+  }
+
+  slots.forEach((slot, i) => {
+    setTimeout(() => {
+      setInterval(() => {
+        slot.img.classList.add("is-swapping");
+        setTimeout(() => {
+          slot.index = (slot.index + SLOT_COUNT) % PARTNER_LOGOS.length;
+          const next = PARTNER_LOGOS[slot.index];
+          slot.img.src = next.src;
+          slot.img.alt = next.alt;
+          requestAnimationFrame(() => slot.img.classList.remove("is-swapping"));
+        }, SWAP_MS);
+      }, INTERVAL_MS);
+    }, i * STAGGER_MS);
+  });
+}
+
 async function initSite() {
   await Promise.all([
     loadPartial("site-header", "header.html"),
@@ -523,6 +583,7 @@ async function initSite() {
   initRevealAnimations();
   initServiceJourney();
   initSolutionFinder();
+  initPartnerRotator();
   initQuoteForm();
 }
 
