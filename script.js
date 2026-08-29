@@ -339,35 +339,48 @@ function initJourneyRail() {
 
 /* ================= COURSE CARE — SERVICE JOURNEY ================= */
 
+// The Course Care journey is a scroll-driven perspective experience, not
+// six cards shown at once: .service-journey gets extra scroll height for
+// (stages + 1) segments — a leading "intro" segment where no stage is
+// active yet (so no image shows), then one segment per stage — and the
+// pinned .sj-block for the active stage is the only one that fades/scales
+// into view as that segment is reached. Below the pinned breakpoint (or
+// under prefers-reduced-motion) there's no scroll-jacking: every block sits
+// in normal flow and reveals its own image via IntersectionObserver as it
+// enters the viewport, per the mobile spec ("stack vertically, each image
+// appears only when its stage enters the viewport").
 function initServiceJourney() {
   const root = document.getElementById("serviceJourney");
   if (!root) return;
 
   const steps = Array.from(root.querySelectorAll(".sj-step"));
-  const panels = Array.from(root.querySelectorAll(".sj-panel"));
+  const blocks = Array.from(root.querySelectorAll(".sj-block"));
+  const media = Array.from(root.querySelectorAll(".sj-media"));
   const fill = document.getElementById("sjRailFill");
   const total = steps.length;
-  const desktopQuery = window.matchMedia("(min-width:901px)");
-  let activeIndex = 0;
+  const pinnedQuery = window.matchMedia("(min-width:700px)");
+  let activeIndex = -1; // -1 = intro: no stage reached yet, no image shown
   let scrollDriven = false;
 
   function setActive(i) {
-    activeIndex = Math.max(0, Math.min(total - 1, i));
+    activeIndex = Math.max(-1, Math.min(total - 1, i));
     steps.forEach((s, idx) => s.classList.toggle("is-active", idx === activeIndex));
-    panels.forEach((p, idx) => p.classList.toggle("is-active", idx === activeIndex));
-    fill.style.width = `${((activeIndex + 1) / total) * 100}%`;
+    blocks.forEach((b, idx) => b.classList.toggle("is-active", idx === activeIndex));
+    fill.style.width = activeIndex < 0 ? "0%" : `${((activeIndex + 1) / total) * 100}%`;
   }
 
   steps.forEach((step, i) => {
     step.addEventListener("click", () => {
-      setActive(i);
-      if (desktopQuery.matches && !reduceMotion) {
+      if (scrollDriven) {
         const rect = root.getBoundingClientRect();
         const scrollable = root.offsetHeight - window.innerHeight;
         if (scrollable > 0) {
-          const targetY = window.scrollY + rect.top + (i / total) * scrollable + 1;
-          window.scrollTo({ top: targetY, behavior: "smooth" });
+          const segment = scrollable / (total + 1);
+          const targetY = window.scrollY + rect.top + segment * (i + 1) + 1;
+          window.scrollTo({ top: targetY, behavior: reduceMotion ? "auto" : "smooth" });
         }
+      } else {
+        blocks[i].scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
       }
     });
   });
@@ -383,18 +396,33 @@ function initServiceJourney() {
       const scrollable = root.offsetHeight - window.innerHeight;
       if (scrollable <= 0) return;
       const progress = Math.min(1, Math.max(0, -rect.top / scrollable));
-      setActive(Math.min(total - 1, Math.floor(progress * total)));
+      const segment = Math.min(total, Math.floor(progress * (total + 1)));
+      setActive(segment - 1);
     });
   }
 
   function syncMode() {
-    scrollDriven = desktopQuery.matches && !reduceMotion;
+    scrollDriven = pinnedQuery.matches && !reduceMotion;
+    if (!scrollDriven) setActive(-1);
   }
   syncMode();
-  desktopQuery.addEventListener("change", syncMode);
+  pinnedQuery.addEventListener("change", syncMode);
   window.addEventListener("scroll", onScroll, { passive: true });
 
-  setActive(0);
+  // Stacked-flow reveal (mobile, or reduced motion at any width).
+  if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-revealed");
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    media.forEach((m) => io.observe(m));
+  } else {
+    media.forEach((m) => m.classList.add("is-revealed"));
+  }
 }
 
 /* ================= FIND YOUR SOLUTION ================= */
