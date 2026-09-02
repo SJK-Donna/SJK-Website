@@ -1,19 +1,31 @@
 import Navbar from "../components/layout/Navbar.jsx";
 import Footer from "../components/layout/Footer.jsx";
 import Hero from "../components/Hero.jsx";
+import TeeOff from "../components/TeeOff.jsx";
+import OurCompany from "../components/OurCompany.jsx";
+import Fairway from "../components/Fairway.jsx";
+import CourseEquipment from "../components/CourseEquipment.jsx";
+import CourseCare from "../components/CourseCare.jsx";
+import FindSolution from "../components/FindSolution.jsx";
+import Brands from "../components/Brands.jsx";
+import OurPartners from "../components/OurPartners.jsx";
+import Quote from "../components/Quote.jsx";
 
-// Home is being migrated section-by-section from the existing static
-// site (see repo root index.html/style.css/script.js) into this React
-// app. This first pass ports the Navbar, Hero (with the Three.js scene),
-// and Footer; the remaining sections (Tee Off, Our Company, Fairway,
-// Course Equipment, Course Care, Brands, Our Partners, Find Your
-// Solution, Quote) land in follow-up PRs.
 export default function Home() {
   return (
     <>
       <Navbar />
       <main>
         <Hero />
+        <TeeOff />
+        <OurCompany />
+        <Fairway />
+        <CourseEquipment />
+        <CourseCare />
+        <FindSolution />
+        <Brands />
+        <OurPartners />
+        <Quote />
       </main>
       <Footer />
     </>
