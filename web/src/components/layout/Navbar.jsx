@@ -1,15 +1,20 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Button from "../ui/Button.jsx";
 
+// Prefixed with "/" (not bare "#...") so these still resolve correctly
+// from a different route like /3d-experience — a plain anchor tag to
+// "/#fairway" does a full navigation back to Home and then jumps to the
+// section, rather than just appending a meaningless hash to the current URL.
 const NAV_LINKS = [
-  { href: "#hero", label: "Home" },
-  { href: "#fairway", label: "Golf Carts" },
-  { href: "#course-equipment", label: "Course Equipment" },
-  { href: "#course-care", label: "Services" },
-  { href: "#brands", label: "Brands" },
-  { href: "#partners", label: "Our Partners" },
-  { href: "#our-company", label: "Our Company" },
-  { href: "#contact", label: "Contact" }
+  { href: "/#hero", label: "Home" },
+  { href: "/#fairway", label: "Golf Carts" },
+  { href: "/#course-equipment", label: "Course Equipment" },
+  { href: "/#course-care", label: "Services" },
+  { href: "/#brands", label: "Brands" },
+  { href: "/#partners", label: "Our Partners" },
+  { href: "/#our-company", label: "Our Company" },
+  { href: "/#contact", label: "Contact" }
 ];
 
 export default function Navbar() {
@@ -31,7 +36,7 @@ export default function Navbar() {
       }`}
     >
       <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-6">
-        <a href="#hero" aria-label="SJK Guahan — Home" className="shrink-0">
+        <a href="/#hero" aria-label="SJK Guahan — Home" className="shrink-0">
           <img src="/images/sjk-logo-nav.png" alt="SJK Guahan" width={140} height={68} className="h-9 w-auto drop-shadow-[0_2px_6px_rgba(0,0,0,.25)]" />
         </a>
 
@@ -47,10 +52,19 @@ export default function Navbar() {
               </a>
             </li>
           ))}
+          <li>
+            <Link
+              to="/3d-experience"
+              className="group relative flex items-center gap-1.5 py-1 font-display text-[13.5px] font-semibold text-gold transition-opacity hover:opacity-80"
+            >
+              3D Showcase
+              <span className="absolute inset-x-0 -bottom-0.5 h-0.5 origin-left scale-x-0 bg-gold transition-transform duration-200 group-hover:scale-x-100" />
+            </Link>
+          </li>
         </ul>
 
         <div className="flex items-center gap-3.5">
-          <Button as="a" href="#quote" variant="primary" className="hidden px-5 py-2.5 text-xs sm:inline-flex">
+          <Button as="a" href="/#quote" variant="primary" className="hidden px-5 py-2.5 text-xs sm:inline-flex">
             Request a Quote
           </Button>
           <button
@@ -90,8 +104,17 @@ export default function Navbar() {
               </a>
             </li>
           ))}
+          <li>
+            <Link
+              to="/3d-experience"
+              onClick={() => setMenuOpen(false)}
+              className="block rounded-lg px-3 py-2.5 font-display text-sm font-semibold text-gold hover:bg-white/5"
+            >
+              3D Showcase
+            </Link>
+          </li>
           <li className="pt-2">
-            <Button as="a" href="#quote" variant="primary" className="w-full" onClick={() => setMenuOpen(false)}>
+            <Button as="a" href="/#quote" variant="primary" className="w-full" onClick={() => setMenuOpen(false)}>
               Request a Quote
             </Button>
           </li>
