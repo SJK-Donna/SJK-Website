@@ -51,12 +51,12 @@ export default function OurCompany() {
           </Reveal>
         </div>
 
-        <Reveal className="mt-24 grid items-center gap-10 rounded-3xl bg-forest-deep p-8 shadow-raised-dark sm:p-12 lg:grid-cols-[0.9fr_1.1fr]">
+        <Reveal className="mt-24 grid items-center gap-10 rounded-3xl bg-control p-8 shadow-raised sm:p-12 lg:grid-cols-[0.9fr_1.1fr]">
           <div className="overflow-hidden rounded-2xl">
             <img src="/images/brands/golf-cart-course.jpg" alt="Golf cart on a golf course at dawn" loading="lazy" className="aspect-[4/3] w-full object-cover" />
           </div>
           <div>
-            <span className="mb-3.5 inline-flex items-center gap-2.5 font-mono text-xs uppercase tracking-[0.16em] text-gold">
+            <span className="mb-3.5 inline-flex items-center gap-2.5 font-mono text-xs uppercase tracking-[0.16em] text-nav">
               <span className="h-px w-6 bg-current opacity-70" />
               Our Mission
             </span>
@@ -76,11 +76,11 @@ export default function OurCompany() {
                 key={p.num}
                 delay={i * 80}
                 as="article"
-                className="rounded-2xl bg-white p-7 shadow-raised transition-transform duration-300 hover:-translate-y-1.5 hover:shadow-[0_18px_40px_rgba(13,21,18,.16)]"
+                className="rounded-2xl bg-white p-7 shadow-raised transition-transform duration-300 hover:-translate-y-1.5 hover:shadow-[0_18px_40px_rgba(31,36,32,.16)]"
               >
                 <span className="mb-3 block font-mono text-xs text-gold-deep">{p.num}</span>
                 <h4 className="mb-3 font-display text-lg font-bold text-ink">{p.title}</h4>
-                <p className="text-sm leading-relaxed text-ink/65">{p.body}</p>
+                <p className="text-sm leading-relaxed text-ink/75">{p.body}</p>
               </Reveal>
             ))}
           </div>

@@ -3,21 +3,32 @@ export default {
   content: ["./index.html", "./src/**/*.{js,jsx}"],
   theme: {
     extend: {
-      // Ported 1:1 from the existing site's :root custom properties
-      // (style.css) so the new stack keeps the established brand identity
-      // instead of introducing a new palette.
+      // Brand palette, assigned by component role:
+      //   control #4B5938 — input controls: buttons, fields, toggles
+      //   nav     #F0F2EC — navigational components: navbar, menus, tabs
+      //   info    #97A379 — informational: labels, badges, progress, toasts
+      //   surface #FFFFFF — containers & layout: cards, modals, panels
+      // ink stays as the near-black for text and dark sections. The older
+      // token names are kept pointing at the same palette so existing
+      // classes still resolve — "gold" is the sage accent and "gold-deep"
+      // the olive used for accent text on light backgrounds (sage alone is
+      // too low-contrast there).
       colors: {
-        ink: "#0d1512",
-        charcoal: "#1b201d",
-        forest: "#173e2e",
-        "forest-deep": "#0f2a20",
-        green: "#3f7d54",
-        "green-deep": "#2c5c40",
-        "warm-white": "#f6f3ea",
-        paper: "#efeade",
-        sand: "#d8bd7c",
-        gold: "#e8c563",
-        "gold-deep": "#c9a24a"
+        control: "#4b5938",
+        nav: "#f0f2ec",
+        info: "#97a379",
+        surface: "#ffffff",
+        ink: "#1f2420",
+        charcoal: "#2a302b",
+        forest: "#4b5938",
+        "forest-deep": "#363f28",
+        green: "#97a379",
+        "green-deep": "#4b5938",
+        "warm-white": "#f0f2ec",
+        paper: "#f0f2ec",
+        sand: "#97a379",
+        gold: "#97a379",
+        "gold-deep": "#4b5938"
       },
       fontFamily: {
         display: ["Space Grotesk", "sans-serif"],
@@ -27,9 +38,9 @@ export default {
       boxShadow: {
         // Modern-skeuomorphic layers: a raised surface reads via a soft
         // ambient shadow below plus a faint highlight along its top edge.
-        raised: "0 10px 26px rgba(13,21,18,.18), inset 0 1px 0 rgba(255,255,255,.35)",
+        raised: "0 10px 26px rgba(31,36,32,.18), inset 0 1px 0 rgba(255,255,255,.35)",
         "raised-dark": "0 10px 26px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.08)",
-        pressed: "inset 0 2px 6px rgba(13,21,18,.35)",
+        pressed: "inset 0 2px 6px rgba(31,36,32,.35)",
         "pressed-dark": "inset 0 2px 6px rgba(0,0,0,.5)"
       }
     }

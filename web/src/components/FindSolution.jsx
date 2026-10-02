@@ -15,7 +15,7 @@ export default function FindSolution() {
   const s = SOLUTIONS[active];
 
   return (
-    <section id="find-solution" className="bg-warm-white px-6 py-24 sm:px-10 lg:px-16">
+    <section id="find-solution" className="bg-surface px-6 py-24 sm:px-10 lg:px-16">
       <div className="mx-auto max-w-[1320px]">
         <SectionHead eyebrow="Find Your Solution" title="What Does Your Course Need?" />
 
@@ -27,27 +27,27 @@ export default function FindSolution() {
               role="tab"
               aria-selected={i === active}
               onClick={() => setActive(i)}
-              className={`flex flex-col gap-1.5 rounded-2xl border-[1.5px] bg-white px-5 py-5 text-left shadow-raised transition-all hover:-translate-y-0.5 ${
-                i === active ? "border-forest shadow-[0_14px_30px_rgba(13,21,18,.14)]" : "border-ink/10"
+              className={`flex flex-col gap-1.5 rounded-2xl border-[1.5px] px-5 py-5 text-left shadow-raised transition-all hover:-translate-y-0.5 ${
+                i === active ? "border-control bg-surface shadow-[0_14px_30px_rgba(31,36,32,.14)]" : "border-ink/10 bg-nav"
               }`}
             >
               <span className="font-display text-sm font-bold text-ink">{opt.eyebrow}</span>
-              <span className={`font-mono text-xs ${i === active ? "font-semibold text-forest" : "text-ink/55"}`}>{opt.sub}</span>
+              <span className={`font-mono text-xs ${i === active ? "font-semibold text-control" : "text-ink/70"}`}>{opt.sub}</span>
             </button>
           ))}
         </Reveal>
 
-        <div key={active} className="mt-8 grid animate-[fadeIn_.35s_ease] overflow-hidden rounded-[20px] bg-forest-deep text-white shadow-raised-dark lg:grid-cols-2">
+        <div key={active} className="mt-8 grid animate-[fadeIn_.35s_ease] overflow-hidden rounded-[20px] bg-control text-white shadow-raised lg:grid-cols-2">
           <div className="aspect-[16/10] overflow-hidden lg:aspect-auto">
             <img src={s.img} alt={s.alt} loading="lazy" className="h-full w-full object-cover" />
           </div>
           <div className="flex flex-col justify-center gap-4 p-8 sm:p-10">
-            <span className="font-mono text-xs uppercase tracking-[0.16em] text-gold">{s.eyebrow}</span>
+            <span className="font-mono text-xs uppercase tracking-[0.16em] text-nav">{s.eyebrow}</span>
             <h3 className="font-display text-2xl font-bold">{s.title}</h3>
-            <p className="max-w-[42ch] text-white/80">{s.description}</p>
+            <p className="max-w-[42ch] text-white/90">{s.description}</p>
             <a
               href={s.ctaHref}
-              className="mt-2 inline-flex w-fit items-center gap-2 rounded-full bg-gold px-6 py-3 font-display text-xs font-bold uppercase tracking-wide text-ink shadow-raised transition-transform hover:-translate-y-0.5"
+              className="mt-2 inline-flex w-fit items-center gap-2 rounded-full bg-nav px-6 py-3 font-display text-xs font-bold uppercase tracking-wide text-control shadow-raised transition-transform hover:-translate-y-0.5"
             >
               Explore <span aria-hidden="true">→</span>
             </a>

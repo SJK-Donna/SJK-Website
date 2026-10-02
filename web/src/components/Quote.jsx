@@ -3,7 +3,7 @@ import SectionHead from "./ui/SectionHead.jsx";
 import Reveal from "./ui/Reveal.jsx";
 
 const inputClasses =
-  "w-full rounded-xl border border-ink/12 bg-white px-4 py-3 text-sm text-ink shadow-pressed transition-shadow focus:border-forest focus:shadow-[inset_0_2px_6px_rgba(13,21,18,.15),0_0_0_3px_rgba(232,197,99,.35)] focus:outline-none";
+  "w-full rounded-xl border border-ink/12 bg-white px-4 py-3 text-sm text-ink shadow-pressed transition-shadow focus:border-control focus:shadow-[inset_0_2px_6px_rgba(31,36,32,.15),0_0_0_3px_rgba(75,89,56,.35)] focus:outline-none";
 const labelClasses = "mb-1.5 block font-display text-xs font-bold uppercase tracking-wide text-ink/70";
 
 export default function Quote() {
@@ -66,11 +66,11 @@ export default function Quote() {
           </div>
           <button
             type="submit"
-            className="w-full rounded-full bg-gold px-7 py-4 font-display text-sm font-bold uppercase tracking-wide text-ink shadow-raised transition-all hover:-translate-y-0.5 hover:shadow-[0_14px_32px_rgba(13,21,18,.24)] active:translate-y-0 active:shadow-pressed"
+            className="w-full rounded-full bg-control px-7 py-4 font-display text-sm font-bold uppercase tracking-wide text-white shadow-raised transition-all hover:-translate-y-0.5 hover:shadow-[0_14px_32px_rgba(31,36,32,.24)] active:translate-y-0 active:shadow-pressed"
           >
             Request A Quote
           </button>
-          <p role="status" className={`text-center text-sm font-semibold text-forest transition-opacity ${submitted ? "opacity-100" : "opacity-0"}`}>
+          <p role="status" className={`rounded-xl bg-info px-4 py-3 text-center text-sm font-semibold text-ink transition-opacity ${submitted ? "opacity-100" : "opacity-0"}`}>
             Thanks — our team will reach out shortly.
           </p>
         </form>

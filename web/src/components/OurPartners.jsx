@@ -43,14 +43,13 @@ export default function OurPartners() {
   }, []);
 
   return (
-    <section id="partners" className="bg-ink px-6 py-24 sm:px-10 lg:px-16">
+    <section id="partners" className="bg-surface px-6 py-24 sm:px-10 lg:px-16">
       <div className="mx-auto max-w-[1320px]">
         <SectionHead
           eyebrow="Our Partners"
           title="Stronger Together."
           lead="We work alongside trusted golf courses, resorts, and logistics partners to deliver quality equipment, solutions, and service on every project."
-          dark
-        />
+                  />
 
         {showScene ? (
           <>

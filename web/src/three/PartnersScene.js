@@ -1,7 +1,7 @@
 import * as THREE from "three";
 
-const STRUCTURE_COLOR = 0x173e2e;
-const EDGE_COLOR = 0xe8c563;
+const STRUCTURE_COLOR = 0xc5ccb0;
+const EDGE_COLOR = 0x4b5938;
 
 // Slow shared orbit — same composition the client approved for the CSS
 // version of this section (a stable central structure, cards drifting
@@ -53,7 +53,7 @@ export default class PartnersScene {
     this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas, antialias: true, alpha: true });
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
 
-    this.scene.add(new THREE.AmbientLight(0xffffff, 0.7));
+    this.scene.add(new THREE.AmbientLight(0xffffff, 1.8));
     const key = new THREE.PointLight(EDGE_COLOR, 1, 30);
     key.position.set(3, 3, 6);
     this.scene.add(key);

@@ -11,9 +11,9 @@ const BRANDS = [
 
 export default function Brands() {
   return (
-    <section id="brands" className="bg-ink px-6 py-24 sm:px-10 lg:px-16">
+    <section id="brands" className="bg-warm-white px-6 py-24 sm:px-10 lg:px-16">
       <div className="mx-auto max-w-[1320px]">
-        <SectionHead eyebrow="Our Brands" title="Trusted Brands. Proven Performance." dark />
+        <SectionHead eyebrow="Our Brands" title="Trusted Brands. Proven Performance." />
 
         <div className="space-y-16">
           {BRANDS.map((b) => (
@@ -21,20 +21,20 @@ export default function Brands() {
               key={b.word}
               className={`grid items-center gap-10 lg:grid-cols-2 ${b.reverse ? "lg:[&>*:first-child]:order-2" : ""}`}
             >
-              <div className="overflow-hidden rounded-3xl shadow-raised-dark">
+              <div className="overflow-hidden rounded-3xl shadow-raised">
                 <img src={b.img} alt={b.alt} loading="lazy" className="aspect-[4/3] w-full object-cover" />
               </div>
               <div>
-                <span className="mb-3 block font-display text-2xl font-bold text-white">{b.word}</span>
-                <p className="mb-4 max-w-[48ch] text-white/75">{b.body}</p>
+                <span className="mb-3 block font-display text-2xl font-bold text-ink">{b.word}</span>
+                <p className="mb-4 max-w-[48ch] text-ink/75">{b.body}</p>
                 <ul className="mb-5 flex flex-wrap gap-2">
                   {b.chips.map((c) => (
-                    <li key={c} className="rounded-full border border-white/15 px-3.5 py-1.5 font-mono text-[11px] uppercase tracking-wide text-white/70">
+                    <li key={c} className="rounded-full bg-info px-3.5 py-1.5 font-mono text-[11px] uppercase tracking-wide text-ink">
                       {c}
                     </li>
                   ))}
                 </ul>
-                <a href={b.href} className="inline-flex items-center gap-1.5 font-display text-sm font-bold uppercase tracking-wide text-gold hover:opacity-80">
+                <a href={b.href} className="inline-flex items-center gap-1.5 font-display text-sm font-bold uppercase tracking-wide text-control hover:opacity-80">
                   Explore <span aria-hidden="true">→</span>
                 </a>
               </div>

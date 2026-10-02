@@ -15,10 +15,10 @@ export default function CourseCare() {
   mediaRefs.current = [];
 
   return (
-    <section id="course-care" className="bg-ink px-6 py-24 sm:px-10 lg:px-16">
+    <section id="course-care" className="bg-control px-6 py-24 sm:px-10 lg:px-16">
       <div className="mx-auto max-w-[1320px]">
         <div className="mb-10 max-w-2xl">
-          <span className="mb-3.5 inline-flex items-center gap-2.5 font-mono text-xs uppercase tracking-[0.16em] text-gold">
+          <span className="mb-3.5 inline-flex items-center gap-2.5 font-mono text-xs uppercase tracking-[0.16em] text-nav">
             <span className="h-px w-6 bg-current opacity-70" />
             04 — Course Care
           </span>

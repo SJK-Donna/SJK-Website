@@ -4,7 +4,7 @@ export default function Fairway() {
   return (
     <FeatureSection
       id="fairway"
-      dark
+      white
       eyebrow="02 — Fairway"
       title="Ride The Fairway."
       lead="Reliable transportation solutions built for golf courses, resorts, communities, and businesses."

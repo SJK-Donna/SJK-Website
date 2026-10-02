@@ -1,6 +1,7 @@
 import Navbar from "../components/layout/Navbar.jsx";
 import Footer from "../components/layout/Footer.jsx";
 import Hero from "../components/Hero.jsx";
+import BrandIntro from "../components/BrandIntro.jsx";
 import TeeOff from "../components/TeeOff.jsx";
 import OurCompany from "../components/OurCompany.jsx";
 import Fairway from "../components/Fairway.jsx";
@@ -17,6 +18,7 @@ export default function Home() {
       <Navbar />
       <main>
         <Hero />
+        <BrandIntro />
         <TeeOff />
         <OurCompany />
         <Fairway />

@@ -10,7 +10,7 @@ const PILLARS = [
 
 export default function TeeOff() {
   return (
-    <section id="tee-off" className="bg-warm-white px-6 py-24 sm:px-10 lg:px-16">
+    <section id="tee-off" className="bg-surface px-6 py-24 sm:px-10 lg:px-16">
       <div className="mx-auto grid max-w-[1320px] items-center gap-14 lg:grid-cols-2">
         <Reveal>
           <span className="mb-3.5 inline-flex items-center gap-2.5 font-mono text-xs uppercase tracking-[0.16em] text-gold-deep">

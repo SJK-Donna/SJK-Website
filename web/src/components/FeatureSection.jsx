@@ -7,11 +7,11 @@ import SectionHead from "./ui/SectionHead.jsx";
  * optional "featured brands" line, and a CTA. Parametrized rather than
  * duplicated since both sections are structurally identical.
  */
-export default function FeatureSection({ id, dark, eyebrow, title, lead, cards, chips, featuredBrands, ctaLabel, ctaHref }) {
+export default function FeatureSection({ id, white, eyebrow, title, lead, cards, chips, featuredBrands, ctaLabel, ctaHref }) {
   return (
-    <section id={id} className={`px-6 py-24 sm:px-10 lg:px-16 ${dark ? "bg-ink" : "bg-warm-white"}`}>
+    <section id={id} className={`px-6 py-24 sm:px-10 lg:px-16 ${white ? "bg-surface" : "bg-warm-white"}`}>
       <div className="mx-auto max-w-[1320px]">
-        <SectionHead eyebrow={eyebrow} title={title} lead={lead} dark={dark} />
+        <SectionHead eyebrow={eyebrow} title={title} lead={lead} />
 
         <div className="mb-10 grid gap-6 sm:grid-cols-2">
           {cards.map((c, i) => (
@@ -42,14 +42,14 @@ export default function FeatureSection({ id, dark, eyebrow, title, lead, cards, 
 
         <Reveal className="mb-8 flex flex-wrap gap-2.5">
           {chips.map((c) => (
-            <li key={c} className={`list-none rounded-full border px-4 py-2 font-mono text-xs uppercase tracking-wide ${dark ? "border-white/15 text-white/80" : "border-ink/12 text-ink/70"}`}>
+            <li key={c} className="list-none rounded-full bg-info px-4 py-2 font-mono text-xs uppercase tracking-wide text-ink">
               {c}
             </li>
           ))}
         </Reveal>
 
         {featuredBrands && (
-          <Reveal className={`mb-6 text-sm ${dark ? "text-white/70" : "text-ink/65"}`}>
+          <Reveal className={"mb-6 text-sm text-ink/75"}>
             {featuredBrands}
           </Reveal>
         )}
@@ -57,9 +57,7 @@ export default function FeatureSection({ id, dark, eyebrow, title, lead, cards, 
         <Reveal>
           <a
             href={ctaHref}
-            className={`inline-flex items-center gap-2 rounded-full border-[1.5px] px-7 py-3.5 font-display text-sm font-bold uppercase tracking-wide transition-all hover:-translate-y-0.5 ${
-              dark ? "border-white/40 text-white hover:border-gold hover:bg-gold hover:text-ink" : "border-forest text-forest hover:bg-forest hover:text-white"
-            }`}
+            className="inline-flex items-center gap-2 rounded-full border-[1.5px] border-control px-7 py-3.5 font-display text-sm font-bold uppercase tracking-wide text-control transition-all hover:-translate-y-0.5 hover:bg-control hover:text-white"
           >
             {ctaLabel} <span aria-hidden="true">→</span>
           </a>

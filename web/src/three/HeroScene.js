@@ -1,10 +1,10 @@
 import * as THREE from "three";
 
-// Brand colors ported from style.css :root — gold accent, green line,
-// dark ink background — so the scene reads as "SJK Guahan," not a
+// Brand palette — sage nodes and soft off-white lines over the olive
+// hero background — so the scene reads as "SJK Guahan," not a
 // generic tech demo.
-const NODE_COLOR = 0xe8c563;
-const LINE_COLOR = 0x3f7d54;
+const NODE_COLOR = 0x97a379;
+const LINE_COLOR = 0xf0f2ec;
 
 /**
  * A quiet "business network" scene for the hero background: a field of
