@@ -129,6 +129,19 @@ export const MILESTONES = [
   { value: "Local Technical Support", detail: "Service, parts and product support" }
 ];
 
+// Brief §11 additional figures. `value` stays null until the number is
+// internally verified; only then does it appear on the public site.
+// `sample` is a placeholder shown ONLY in local development (npm run dev),
+// tagged "Sample", so the layout can be previewed. Never publish samples.
+export const PENDING_FIGURES = [
+  { label: "Customers served", value: null, suffix: "+", sample: 250 },
+  { label: "Golf courses supported", value: null, suffix: "+", sample: 40 },
+  { label: "Electric vehicles deployed", value: null, suffix: "+", sample: 1500 },
+  { label: "Provinces and regions covered", value: null, suffix: "", sample: 18 },
+  { label: "Technical team members", value: null, suffix: "", sample: 30 },
+  { label: "Years of combined industry experience", value: null, suffix: "+", sample: 100 }
+];
+
 export const BRAND_GROUPS = [
   { business: "Golfcarts.ph", group: "Golf & Mobility", brands: ["Club Car"] },
   {
