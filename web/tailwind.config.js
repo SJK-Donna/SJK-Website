@@ -3,47 +3,48 @@ export default {
   content: ["./index.html", "./src/**/*.{js,jsx}"],
   theme: {
     extend: {
-      // Brand palette, assigned by component role:
-      //   control #4B5938 — input controls: buttons, fields, toggles
-      //   nav     #F0F2EC — navigational components: navbar, menus, tabs
-      //   info    #97A379 — informational: labels, badges, progress, toasts
+      // Palette taken from the SJK Guahan logo, assigned by component role:
+      //   control #0D1C2C — logo navy: buttons, fields, the dark band
+      //   info    #F9B200 — logo amber: badges, highlights, active markers
+      //   nav     #EEF1F5 — cool off-white: navigation and alternate sections
       //   surface #FFFFFF — containers & layout: cards, modals, panels
-      // ink stays as the near-black for text and dark sections. The older
-      // token names are kept pointing at the same palette so existing
-      // classes still resolve — "gold" is the sage accent and "gold-deep"
-      // the olive used for accent text on light backgrounds (sage alone is
-      // too low-contrast there).
+      // Text is the logo navy too. Amber is only 1.6:1 on light backgrounds,
+      // so it is used as a fill or underline there, never as text.
+      // Older token names point at the same palette so existing classes
+      // still resolve ("gold" is the amber, "forest"/"gold-deep" the navy).
       colors: {
-        control: "#4b5938",
-        nav: "#f0f2ec",
-        info: "#97a379",
+        control: "#0d1c2c",
+        nav: "#eef1f5",
+        info: "#f9b200",
         surface: "#ffffff",
-        ink: "#1f2420",
-        charcoal: "#2a302b",
-        forest: "#4b5938",
-        "forest-deep": "#363f28",
-        green: "#97a379",
-        "green-deep": "#4b5938",
-        "warm-white": "#f0f2ec",
-        paper: "#f0f2ec",
-        sand: "#97a379",
-        gold: "#97a379",
-        "gold-deep": "#4b5938"
+        ink: "#0d1c2c",
+        slate: "#5a6b80",
+        charcoal: "#1b3048",
+        forest: "#0d1c2c",
+        "forest-deep": "#1b3048",
+        green: "#f9b200",
+        "green-deep": "#0d1c2c",
+        "warm-white": "#eef1f5",
+        paper: "#eef1f5",
+        sand: "#f9b200",
+        gold: "#f9b200",
+        "gold-deep": "#0d1c2c"
       },
       fontFamily: {
-        display: ["Space Grotesk", "sans-serif"],
-        body: ["Inter", "sans-serif"],
-        mono: ["JetBrains Mono", "monospace"],
-        // Tile-layout home page: the platform's own UI face first (San
-        // Francisco on Apple devices), Inter everywhere else.
-        sans: ["-apple-system", "BlinkMacSystemFont", "Inter", "Segoe UI", "sans-serif"]
+        // Archivo (set wide) carries headings, navigation and buttons — its
+        // broad letterforms echo the decals on the equipment SJK supplies.
+        // Source Serif 4 sets the reading copy like a printed company profile.
+        sans: ["Archivo", "Segoe UI", "sans-serif"],
+        display: ["Archivo", "Segoe UI", "sans-serif"],
+        body: ["\"Source Serif 4\"", "Georgia", "serif"],
+        mono: ["ui-monospace", "monospace"]
       },
       boxShadow: {
         // Modern-skeuomorphic layers: a raised surface reads via a soft
         // ambient shadow below plus a faint highlight along its top edge.
-        raised: "0 10px 26px rgba(31,36,32,.18), inset 0 1px 0 rgba(255,255,255,.35)",
+        raised: "0 10px 26px rgba(13,28,44,.18), inset 0 1px 0 rgba(255,255,255,.35)",
         "raised-dark": "0 10px 26px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.08)",
-        pressed: "inset 0 2px 6px rgba(31,36,32,.35)",
+        pressed: "inset 0 2px 6px rgba(13,28,44,.35)",
         "pressed-dark": "inset 0 2px 6px rgba(0,0,0,.5)"
       }
     }

@@ -1,111 +1,127 @@
-import Reveal from "../components/ui/Reveal.jsx";
 import PageHeader from "../components/home/PageHeader.jsx";
-import SectionTitle from "../components/home/SectionTitle.jsx";
+import { Margin } from "../components/home/SectionTitle.jsx";
 import FinalCta from "../components/sections/FinalCta.jsx";
-import { BUSINESSES, COMPANY, CORE_MESSAGES, PRINCIPLES, TEAM, TIMELINE, WHO_WE_ARE } from "../content/site.js";
+import StoryTimeline from "../components/sections/StoryTimeline.jsx";
+import { BUSINESSES, COMPANY, CORE_MESSAGES, PRINCIPLES, TEAM, WHO_WE_ARE } from "../content/site.js";
+
+// The three areas the company works across, one photo each.
+const AREAS = [
+  ["/images/brands/golf-cart-course.jpg", "Electric golf cart on a golf course at dawn", "Mobility"],
+  ["/images/brands/jacobsen-bunker.jpg", "Fairway mower maintaining a golf course beside sand bunkers", "Turf and grounds"],
+  ["/images/carousel/slide-4.jpg", "Compact excavator digging on a property site", "Compact equipment"]
+];
 
 // Brief §19–21: history, mission, vision, philosophy, story and people.
 export default function WhoWeAre() {
   return (
     <>
-      <PageHeader eyebrow="Who We Are" title="An equipment, mobility and solutions company." lead={WHO_WE_ARE[0]} />
+      <PageHeader eyebrow="Who we are" title="An equipment, mobility and solutions company." lead={WHO_WE_ARE[0]} />
 
-      <section className="bg-surface px-6 py-20 lg:py-24">
-        <Reveal className="mx-auto max-w-[760px] space-y-5 text-[19px] leading-relaxed text-ink/80 lg:text-[21px]">
-          {WHO_WE_ARE.slice(1).map((p, i) => (
-            <p key={i}>{p}</p>
-          ))}
-        </Reveal>
-      </section>
-
-      <section id="mission" className="grid gap-3 bg-surface px-3 pb-3 md:grid-cols-2">
-        {[
-          ["Our Mission", COMPANY.mission, "bg-nav text-ink", "text-control"],
-          ["Our Vision", COMPANY.vision, "bg-control text-white", "text-nav"]
-        ].map(([label, text, tone, eyebrow]) => (
-          <Reveal key={label} className={`rounded-[22px] px-8 py-14 lg:px-14 lg:py-20 ${tone}`}>
-            <p className={`text-[17px] font-semibold ${eyebrow}`}>{label}</p>
-            <p className="mt-3 font-sans text-[24px] font-semibold leading-snug tracking-[-0.01em] lg:text-[30px]">{text}</p>
-          </Reveal>
+      <ul className="mx-auto grid max-w-[1240px] gap-3 px-6 pt-6 sm:grid-cols-3">
+        {AREAS.map(([src, alt, label]) => (
+          <li key={src}>
+            <img src={src} alt={alt} loading="lazy" className="aspect-[4/3] w-full rounded-[3px] object-cover" />
+            <p className="wide mt-3 font-sans text-[18px] font-semibold text-ink">{label}</p>
+          </li>
         ))}
-      </section>
+      </ul>
 
-      <section className="bg-surface px-6 py-16">
-        <div className="mx-auto grid max-w-[1080px] gap-6 md:grid-cols-3">
-          <Reveal>
-            <h2 className="font-sans text-[21px] font-semibold text-ink">SJK Guahan</h2>
-            <p className="mt-2 text-[15px] leading-relaxed text-ink/80">Shape the future of outdoor mobility and landscape management in Southeast Asia.</p>
-          </Reveal>
-          {BUSINESSES.map((b, i) => (
-            <Reveal key={b.id} delay={(i + 1) * 80}>
-              <h2 className="font-sans text-[21px] font-semibold text-ink">{b.name}</h2>
-              <p className="mt-2 text-[15px] leading-relaxed text-ink/80">{b.vision}</p>
-            </Reveal>
+      <Margin title="Since 2017" className="bg-surface">
+        {WHO_WE_ARE.slice(1).map((p, i) => (
+          <p key={i} className={`max-w-[58ch] ${i ? "mt-5 text-ink/80" : "text-[21px] leading-[1.55] text-ink"}`}>{p}</p>
+        ))}
+      </Margin>
+
+      <section id="mission" className="bg-nav px-6 py-20 lg:py-28">
+        <div className="mx-auto max-w-[1240px] space-y-16">
+          {[
+            ["Our mission", COMPANY.mission],
+            ["Our vision", COMPANY.vision]
+          ].map(([label, text]) => (
+            <div key={label} className="grid gap-4 lg:grid-cols-12">
+              <h2 className="font-sans text-[18px] font-semibold text-control lg:col-span-3 lg:pt-3">{label}</h2>
+              <p className="wide max-w-[30ch] font-sans text-[28px] font-semibold leading-[1.15] tracking-[-0.015em] text-ink lg:col-span-9 lg:text-[40px]">{text}</p>
+            </div>
           ))}
-        </div>
-      </section>
-
-      <section id="philosophy" className="bg-nav px-6 py-20 lg:py-24">
-        <div className="mx-auto max-w-[1180px]">
-          <SectionTitle eyebrow="Our Company Philosophy" title="Five principles. One way of working." lead="Our philosophy guides how we work with customers, colleagues and partners." center className="mb-12" />
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {PRINCIPLES.map((p, i) => (
-              <Reveal key={p.title} delay={i * 60} as="article" className="rounded-[22px] bg-surface p-7">
-                <p className="text-[13px] font-semibold text-control">0{i + 1}</p>
-                <h3 className="mt-1 font-sans text-[22px] font-semibold text-ink">{p.title}</h3>
-                {p.subtitle && <p className="text-[15px] font-semibold text-control">{p.subtitle}</p>}
-                <p className="mt-3 text-[15px] leading-relaxed text-ink/80">{p.body}</p>
-              </Reveal>
+          <div className="grid gap-8 border-t-2 border-ink pt-10 md:grid-cols-3 lg:ml-[25%]">
+            <div>
+              <h3 className="wide font-sans text-[20px] font-semibold text-ink">SJK Guahan</h3>
+              <p className="mt-2 text-[16px] text-ink/80">Shape the future of outdoor mobility and landscape management in Southeast Asia.</p>
+            </div>
+            {BUSINESSES.map((b) => (
+              <div key={b.id}>
+                <h3 className="wide font-sans text-[20px] font-semibold text-ink">{b.name}</h3>
+                <p className="mt-2 text-[16px] text-ink/80">{b.vision}</p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section id="story" className="bg-surface px-6 py-20 lg:py-24">
-        <div className="mx-auto max-w-[880px]">
-          <SectionTitle eyebrow="Our Story" title="From 2017 to the road ahead." center className="mb-14" />
-          <ol className="relative border-l-2 border-control/30 pl-8 sm:pl-10">
-            {TIMELINE.map((t, i) => (
-              <Reveal as="li" key={t.when} delay={i * 60} className="relative pb-10 last:pb-0">
-                <span className="absolute -left-[41px] top-1.5 h-4 w-4 rounded-full border-[3px] border-surface bg-control sm:-left-[49px]" aria-hidden="true" />
-                <p className="font-sans text-[24px] font-semibold text-control lg:text-[28px]">{t.when}</p>
-                <p className="mt-1 max-w-[56ch] text-[17px] leading-relaxed text-ink/80 lg:text-[19px]">{t.what}</p>
-              </Reveal>
-            ))}
-          </ol>
-        </div>
-      </section>
+      <Margin
+        id="philosophy"
+        title="Our company philosophy"
+        lead="How we work with customers, colleagues and partners."
+        img="/images/sjk/technical-training.jpg"
+        alt="SJK team members in a technical training session in the meeting room"
+        className="bg-surface"
+      >
+        <dl>
+          {PRINCIPLES.map((p) => (
+            <div key={p.title} className="grid gap-3 border-t border-ink/20 py-7 first:border-t-2 first:border-ink md:grid-cols-[minmax(0,15rem)_1fr] md:gap-8">
+              <dt>
+                <span className="wide block font-sans text-[22px] font-semibold leading-tight text-ink">{p.title}</span>
+                {p.subtitle && <span className="mt-1 block font-sans text-[15px] font-semibold text-control">{p.subtitle}</span>}
+              </dt>
+              <dd className="max-w-[56ch] text-ink/80">{p.body}</dd>
+            </div>
+          ))}
+        </dl>
+      </Margin>
 
-      <section className="bg-nav px-6 py-20 lg:py-24">
-        <div className="mx-auto max-w-[1180px]">
-          <SectionTitle eyebrow="What We Stand For" title="Five ideas behind everything we do." center className="mb-12" />
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-            {CORE_MESSAGES.map((m, i) => (
-              <Reveal key={m.title} delay={i * 60} className="rounded-[22px] bg-surface p-6">
-                <h3 className="font-sans text-[19px] font-semibold text-ink">{m.title}</h3>
-                <p className="mt-2 text-[15px] leading-relaxed text-ink/80">{m.body}</p>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
+      <Margin
+        id="story"
+        title="Our story"
+        img="/images/sjk/turf-equipment-assembly.jpg"
+        alt="SJK technicians assembling new turf equipment in the workshop"
+        className="bg-nav"
+      >
+        <StoryTimeline />
+      </Margin>
 
-      <section id="people" className="bg-surface px-6 py-20 lg:py-24">
-        <div className="mx-auto max-w-[1080px]">
-          <SectionTitle eyebrow="The People Behind SJK" title="The Team Behind the Business" lead={TEAM.intro.join(" ")} center />
-          {TEAM.members.length > 0 && (
-            <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {TEAM.members.map((m) => (
-                <li key={m.name} className="text-center">
-                  {m.photo && <img src={m.photo} alt={m.name} loading="lazy" className="mx-auto aspect-square w-full max-w-[240px] rounded-[22px] object-cover" />}
-                  <p className="mt-4 font-sans text-[19px] font-semibold text-ink">{m.name}</p>
-                  <p className="text-[15px] text-ink/80">{m.position}</p>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-      </section>
+      <Margin
+        title="What we stand for"
+        img="/images/sjk/battery-service.jpg"
+        alt="Technician servicing the battery pack of a golf cart"
+        className="bg-surface"
+      >
+        <dl className="grid gap-x-10 gap-y-10 sm:grid-cols-2">
+          {CORE_MESSAGES.map((m) => (
+            <div key={m.title} className="border-t-2 border-ink pt-4">
+              <dt className="wide font-sans text-[22px] font-semibold text-ink">{m.title}</dt>
+              <dd className="mt-2 max-w-[44ch] text-ink/80">{m.body}</dd>
+            </div>
+          ))}
+        </dl>
+      </Margin>
+
+      <Margin id="people" title="The team behind the business" className="bg-nav">
+        {TEAM.intro.map((p, i) => (
+          <p key={i} className={`max-w-[58ch] ${i ? "mt-5 text-ink/80" : "text-[21px] leading-[1.55] text-ink"}`}>{p}</p>
+        ))}
+        {TEAM.img && <img src={TEAM.img} alt={TEAM.alt} loading="lazy" className="mt-10 h-auto w-full rounded-[3px]" />}
+        {TEAM.members.length > 0 && (
+          <ul className="mt-12 grid gap-x-6 gap-y-10 sm:grid-cols-3">
+            {TEAM.members.map((m) => (
+              <li key={m.name}>
+                {m.photo && <img src={m.photo} alt={m.name} loading="lazy" className="aspect-[4/5] w-full rounded-[3px] object-cover" />}
+                <p className="wide mt-3 font-sans text-[19px] font-semibold text-ink">{m.name}</p>
+                <p className="text-[16px] text-ink/80">{m.position}</p>
+              </li>
+            ))}
+          </ul>
+        )}
+      </Margin>
 
       <FinalCta />
     </>

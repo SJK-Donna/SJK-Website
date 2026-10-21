@@ -4,8 +4,8 @@ import Locations from "../components/sections/Locations.jsx";
 import { CONTACT_INTERESTS } from "../content/site.js";
 
 const input =
-  "w-full rounded-xl border border-ink/20 bg-surface px-4 py-3 text-[16px] text-ink transition-shadow focus:border-control focus:shadow-[0_0_0_3px_rgba(75,89,56,.25)] focus:outline-none";
-const label = "mb-1.5 block text-[14px] font-semibold text-ink";
+  "w-full rounded-[3px] border border-ink/30 bg-surface px-4 py-3 font-sans text-[16px] text-ink transition-shadow focus:border-control focus:shadow-[0_0_0_3px_rgba(249,178,0,.45)] focus:outline-none";
+const label = "mb-1.5 block font-sans text-[15px] font-semibold text-ink";
 
 // Brief §25 — keep the form simple; offices appear below it.
 export default function Contact() {
@@ -28,10 +28,10 @@ export default function Contact() {
 
   return (
     <>
-      <PageHeader eyebrow="Contact Us" title="Talk to Our Team" lead="Tell us about your course, resort, property or operation and we'll help identify the right equipment and support strategy." />
+      <PageHeader eyebrow="Contact us" title="Talk to our team" lead="Tell us about your course, resort, property or operation and we'll help identify the right equipment and support strategy." />
 
       <section id="form" className="bg-surface px-6 py-16 lg:py-20">
-        <form ref={formRef} onSubmit={handleSubmit} noValidate className="mx-auto max-w-[680px] space-y-5">
+        <form ref={formRef} onSubmit={handleSubmit} noValidate className="mx-auto max-w-[1240px] space-y-6 lg:pr-[33%]">
           <div className="grid gap-5 sm:grid-cols-2">
             <div>
               <label htmlFor="cName" className={label}>Name</label>
@@ -67,10 +67,10 @@ export default function Contact() {
             <label htmlFor="cMessage" className={label}>Message</label>
             <textarea id="cMessage" name="message" rows={5} className={input} />
           </div>
-          <button type="submit" className="w-full rounded-full bg-control px-7 py-3.5 text-[17px] text-white transition-colors hover:bg-forest-deep">
-            Submit
+          <button type="submit" className="wide rounded-[5px] bg-control px-6 py-3 font-sans text-[15px] font-semibold text-white transition-colors hover:bg-forest-deep">
+            Send inquiry
           </button>
-          <p role="status" className="text-center text-[15px] font-semibold text-control">
+          <p role="status" className="font-sans text-[16px] font-semibold text-control">
             {sent ? "Thank you — our team will reach out shortly." : ""}
           </p>
         </form>

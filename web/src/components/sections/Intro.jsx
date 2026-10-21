@@ -1,21 +1,23 @@
-import Reveal from "../ui/Reveal.jsx";
 import PillLinks from "../home/PillLinks.jsx";
+import { Margin } from "../home/SectionTitle.jsx";
 import { INTRO } from "../../content/site.js";
 
-// Brief §8 — who SJK is, in two short paragraphs and one philosophy line.
+// Brief §8 — who SJK is. The philosophy line is set as a pull quote: it is
+// the sentence the brief most wants remembered.
 export default function Intro() {
   return (
-    <section className="bg-surface px-6 py-20 lg:py-28">
-      <Reveal className="mx-auto max-w-[820px] text-center">
-        <p className="text-[17px] font-semibold text-control">{INTRO.eyebrow}</p>
-        {INTRO.body.map((p, i) => (
-          <p key={i} className={`mx-auto max-w-[60ch] leading-relaxed text-ink/80 ${i === 0 ? "mt-4 text-[21px] text-ink lg:text-[24px]" : "mt-4 text-[19px]"}`}>
-            {p}
-          </p>
-        ))}
-        <p className="mx-auto mt-8 max-w-[34ch] font-sans text-[26px] font-semibold leading-snug tracking-[-0.01em] text-ink lg:text-[32px]">{INTRO.philosophy}</p>
-        <PillLinks primary={{ label: "Our Story", href: "/who-we-are#story" }} className="mt-8" />
-      </Reveal>
-    </section>
+    <Margin title="More than equipment" className="bg-surface">
+      <div className="grid gap-10 xl:grid-cols-[1fr_340px]">
+        <div>
+          <p className="max-w-[58ch] text-[21px] leading-[1.55] text-ink">{INTRO.body[0]}</p>
+          <p className="mt-5 max-w-[58ch] text-ink/80">{INTRO.body[1]}</p>
+          <blockquote className="wide mt-12 max-w-[24ch] border-l-[3px] border-info pl-6 font-sans text-[26px] font-semibold leading-[1.2] text-control lg:text-[30px]">
+            {INTRO.philosophy}
+          </blockquote>
+          <PillLinks primary={{ label: "Read our story", href: "/who-we-are#story" }} className="mt-10" />
+        </div>
+        {INTRO.img && <img src={INTRO.img} alt={INTRO.alt} loading="lazy" className="h-auto w-full rounded-[3px] xl:mt-2" />}
+      </div>
+    </Margin>
   );
 }

@@ -20,7 +20,7 @@ function useScrollOnNavigate() {
 export default function Layout() {
   useScrollOnNavigate();
   return (
-    <div className="min-h-screen bg-surface font-sans">
+    <div className="min-h-screen bg-surface font-body">
       <GlobalNav />
       <main>
         <Outlet />

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import PageHeader from "../components/home/PageHeader.jsx";
 import PillLinks from "../components/home/PillLinks.jsx";
+import FilterTabs from "../components/home/FilterTabs.jsx";
 import { NewsCard, newestFirst } from "../components/sections/News.jsx";
 import { NEWS, NEWS_CATEGORIES } from "../content/site.js";
 
@@ -11,36 +12,30 @@ export default function NewsPage() {
 
   return (
     <>
-      <PageHeader eyebrow="News" title="What's Happening at SJK" lead="Projects, demonstrations, training, partnerships and company milestones." />
-      <section className="bg-surface px-6 py-16 lg:py-20">
-        <div className="mx-auto max-w-[1180px]">
+      <PageHeader
+        eyebrow="News"
+        title="What's happening at SJK"
+        lead="Projects, demonstrations, training, partnerships and company milestones."
+        img="/images/brands/campey.jpg"
+        alt="Turf renovation machine working a sports pitch"
+      />
+      <section className="bg-surface px-6 py-16 lg:py-24">
+        <div className="mx-auto max-w-[1240px]">
           {NEWS.length === 0 ? (
-            <div className="mx-auto max-w-[620px] rounded-[22px] bg-nav px-8 py-14 text-center">
-              <h2 className="font-sans text-[24px] font-semibold text-ink">Stories are coming soon.</h2>
-              <p className="mt-3 text-[17px] leading-relaxed text-ink/80">Check back for updates on deliveries, demonstrations, training and new partnerships.</p>
-              <PillLinks primary={{ label: "Talk to Our Team", href: "/contact" }} className="mt-6" />
+            <div className="max-w-[56ch]">
+              <h2 className="wide font-sans text-[28px] font-semibold text-ink">No stories published yet</h2>
+              <p className="mt-3 text-ink/80">Updates on deliveries, demonstrations, training and new partnerships will appear here.</p>
+              <PillLinks primary={{ label: "Talk to our team", href: "/contact" }} className="mt-8" />
             </div>
           ) : (
             <>
-              <div role="group" aria-label="Filter news by category" className="mb-10 flex flex-wrap justify-center gap-2">
-                {["All", ...NEWS_CATEGORIES].map((c) => (
-                  <button
-                    key={c}
-                    type="button"
-                    aria-pressed={filter === c}
-                    onClick={() => setFilter(c)}
-                    className={`rounded-full px-4 py-2 text-[14px] transition-colors ${filter === c ? "bg-control text-white" : "bg-nav text-ink hover:bg-paper"}`}
-                  >
-                    {c}
-                  </button>
+              <FilterTabs label="Filter news by category" options={["All", ...NEWS_CATEGORIES]} value={filter} onChange={setFilter} />
+              <div className="grid gap-x-6 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
+                {shown.map((n) => (
+                  <NewsCard key={n.title} item={n} />
                 ))}
               </div>
-              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {shown.map((n, i) => (
-                  <NewsCard key={n.title} item={n} delay={i * 60} />
-                ))}
-              </div>
-              {shown.length === 0 && <p className="text-center text-[17px] text-ink/80">No stories in this category yet.</p>}
+              {shown.length === 0 && <p className="text-ink/80">No stories in this category yet.</p>}
             </>
           )}
         </div>

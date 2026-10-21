@@ -1,4 +1,4 @@
-import HeroRotator from "../components/sections/HeroRotator.jsx";
+import Hero from "../components/sections/Hero.jsx";
 import Intro from "../components/sections/Intro.jsx";
 import Businesses from "../components/sections/Businesses.jsx";
 import WayForward from "../components/sections/WayForward.jsx";
@@ -17,7 +17,7 @@ import FinalCta from "../components/sections/FinalCta.jsx";
 export default function Home() {
   return (
     <>
-      <HeroRotator />
+      <Hero />
       <Intro />
       <Businesses />
       <WayForward />

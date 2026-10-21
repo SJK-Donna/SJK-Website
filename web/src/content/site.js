@@ -30,13 +30,11 @@ export const NAV = [
   { to: "/contact", label: "Contact Us" }
 ];
 
-export const HERO_IMAGES = [
-  { src: "/images/carousel/slide-1.jpg", alt: "Golf cart fleet on a golf course at dawn" },
-  { src: "/images/carousel/slide-3.jpg", alt: "Fairway mower maintaining championship turf" },
-  { src: "/images/brands/wacker-neuson-mountain.jpg", alt: "Compact excavator working on a mountain site" },
-  { src: "/images/brands/smithco-bunker-rake.jpg", alt: "Bunker rake grooming a golf course sand trap" },
-  { src: "/images/carousel/slide-2.jpg", alt: "Electric golf cart beneath trees on a property" },
-  { src: "/images/brands/campey.jpg", alt: "Turf renovation machine working a sports pitch" }
+// The headline names three things SJK does; the hero shows one photo for each.
+export const HERO_PANELS = [
+  { caption: "Move people", detail: "Golf carts and low-speed electric mobility", src: "/images/sjk/fleet-course.jpg", alt: "Fleet of black Club Car golf carts lined up beside a tropical course" },
+  { caption: "Shape landscapes", detail: "Compact construction equipment", src: "/images/brands/wacker-neuson-mountain.jpg", alt: "Compact excavator working on a mountain site", position: "50% 0%" },
+  { caption: "Improve the outdoors", detail: "Professional turf and grounds care", src: "/images/carousel/slide-3.jpg", alt: "Fairway mower maintaining championship turf" }
 ];
 
 export const INTRO = {
@@ -45,34 +43,37 @@ export const INTRO = {
     "Established in 2017, SJK Guahan Inc. is a joint venture between Philippine and Guam partners created to bring trusted products, new technologies and strong after-sales support to the Philippine market.",
     "Over the years, our business has grown across golf, resorts, property development, landscaping, turf and grounds management, specialized mobility and compact equipment."
   ],
-  philosophy: "Represent good products. Support them properly. Build long-term relationships with our customers."
+  philosophy: "Represent good products. Support them properly. Build long-term relationships with our customers.",
+  img: "/images/sjk/fleet-delivery.jpg",
+  alt: "Rows of new white golf carts, still in protective wrap, ready for delivery"
 };
 
 export const BUSINESSES = [
   {
     id: "golf-carts-ph",
-    name: "Golf Carts PH",
+    name: "Golfcarts.ph",
     tagline: "Mobility Solutions",
     logo: "/images/brands/golfcarts-ph-logo.png",
-    body: "Golf Carts PH provides golf, resort, commercial and specialized low-speed electric mobility solutions supported by local parts, technical service and fleet management expertise.",
-    img: "/images/brands/golf-carts-ph.jpg",
-    alt: "Golf Carts PH golf cart fleet on a misty golf course",
-    cta: "Explore Golf Carts PH",
-    // The brief names the domain ("Visit GolfCarts.ph").
+    body: "Golfcarts.ph provides golf, resort, commercial and specialized low-speed electric mobility solutions supported by local parts, technical service and fleet management expertise.",
+    img: "/images/sjk/vista-fleet.jpg",
+    alt: "White Club Car golf carts on the cart path at a country club course",
+    imgPosition: "100% 50%",
+    cta: "Explore Golfcarts.ph",
+    // The brief names the domain ("Visit Golfcarts.ph").
     url: "https://golfcarts.ph",
     vision: "Lead the market in golf carts and low-speed electric mobility solutions."
   },
   {
     id: "ground-masters",
-    name: "Ground Masters",
+    name: "Groundmasters.ph",
     tagline: "Turf, Grounds & Equipment Solutions",
     logo: "/images/brands/groundmasters-ph-logo.png",
-    body: "Ground Masters provides professional equipment and solutions for golf courses, sports turf, landscaping, grounds maintenance and compact equipment applications.",
-    img: "/images/carousel/slide-3.jpg",
-    alt: "Fairway mower maintaining a golf course",
-    cta: "Explore Ground Masters",
+    body: "Groundmasters.ph provides professional equipment and solutions for golf courses, sports turf, landscaping, grounds maintenance and compact equipment applications.",
+    img: "/images/sjk/campey-assembly.jpg",
+    alt: "SJK team assembling Campey fertilizer spreaders in the warehouse",
+    cta: "Explore Groundmasters.ph",
     // Website address not confirmed in the brief — set it here when known.
-    // Until then the button opens the Ground Masters section of Brands & Partners.
+    // Until then the button opens the Groundmasters.ph section of Brands & Partners.
     url: "",
     vision: "Lead the way in professional turf, grounds and landscape management solutions."
   }
@@ -85,8 +86,8 @@ export const WAY_FORWARD = {
     "Our role is to bring these solutions closer to our customers through product demonstrations, technical support, operator training, education and real-world testing — helping customers understand not only what new technologies are available, but why and where they can create value."
   ],
   closing: ["We believe that introducing a product is only the beginning.", "The real value comes from making the solution work."],
-  img: "/images/brands/campey.jpg",
-  alt: "Campey turf renovation machine at work on a sports pitch"
+  img: "/images/sjk/product-training.jpg",
+  alt: "SJK team receiving hands-on product training on new turf equipment in the warehouse"
 };
 
 // Only the four qualitative milestones the brief lists. Add verified figures
@@ -100,10 +101,10 @@ export const MILESTONES = [
 ];
 
 export const BRAND_GROUPS = [
-  { business: "Golf Carts PH", group: "Golf & Mobility", brands: ["Club Car"] },
+  { business: "Golfcarts.ph", group: "Golf & Mobility", brands: ["Club Car"] },
   {
-    business: "Ground Masters",
-    group: "Ground Masters",
+    business: "Groundmasters.ph",
+    group: "Groundmasters.ph",
     brands: ["Jacobsen", "Smithco", "Iseki", "Campey", "Dakota", "Trimax", "Wacker Neuson", "Aqua-Aid", "ONECOTE"]
   }
 ];
@@ -192,7 +193,7 @@ export const TIMELINE = [
   { when: "Early Years", what: "Development of the golf cart and golf industry business." },
   { when: "Expansion", what: "Addition of professional turf, grounds management and equipment solutions." },
   { when: "Growth", what: "Expansion of technical capabilities, locations, product lines and national customer base." },
-  { when: "Today", what: "SJK operates through Golf Carts PH, Ground Masters and a growing portfolio of international partners." },
+  { when: "Today", what: "SJK operates through Golfcarts.ph, Groundmasters.ph and a growing portfolio of international partners." },
   { when: "The Future", what: "Continued investment in electric mobility, sustainable outdoor solutions, technology, technical capability and expanded regional customer support." }
 ];
 
@@ -201,6 +202,8 @@ export const TEAM = {
     "Our company is built around people with backgrounds in sales, engineering, operations, service, finance and customer support.",
     "Together, our team works across different industries with one objective — ensuring that the solutions we provide continue performing long after delivery."
   ],
+  img: "/images/sjk/team-warehouse.jpg",
+  alt: "The SJK Guahan team with new turf equipment in the warehouse",
   // { name: "…", position: "…", photo: "/images/team/….jpg" }
   members: []
 };

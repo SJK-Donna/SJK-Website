@@ -1,14 +1,11 @@
-import useReveal from "../../hooks/useReveal.js";
-
-export default function Reveal({ as: Tag = "div", className = "", delay = 0, children, ...props }) {
-  const [ref, visible] = useReveal();
+// Formerly a scroll-triggered fade-and-slide-up. Sections now render still —
+// the hero's load sequence is the site's only ambient motion — so this is a
+// plain wrapper that keeps the existing call sites' API (`as`, `className`).
+// `delay` is accepted and ignored for the same reason.
+// eslint-disable-next-line no-unused-vars
+export default function Reveal({ as: Tag = "div", className = "", delay, children, ...props }) {
   return (
-    <Tag
-      ref={ref}
-      style={{ transitionDelay: visible ? `${delay}ms` : "0ms" }}
-      className={`transition-all duration-700 ease-out ${visible ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"} ${className}`}
-      {...props}
-    >
+    <Tag className={className} {...props}>
       {children}
     </Tag>
   );

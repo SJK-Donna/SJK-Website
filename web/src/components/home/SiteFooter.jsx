@@ -14,8 +14,8 @@ const COLUMNS = [
   {
     title: "Our Businesses",
     links: [
-      ["Golf Carts PH", "/brands-partners#golf-carts-ph"],
-      ["Ground Masters", "/brands-partners#ground-masters"],
+      ["Golfcarts.ph", "/brands-partners#golf-carts-ph"],
+      ["Groundmasters.ph", "/brands-partners#ground-masters"],
       ["Brands & Partners", "/brands-partners"]
     ]
   },
@@ -32,14 +32,14 @@ const COLUMNS = [
 // Small-print footer: link columns, operating locations, then a legal line.
 export default function SiteFooter() {
   return (
-    <footer className="bg-nav font-sans text-[12px] text-ink/75">
-      <div className="mx-auto max-w-[1080px] px-6 py-10">
-        <p className="border-b border-ink/15 pb-4 leading-relaxed">{COMPANY.positioning}</p>
+    <footer className="border-t border-ink/10 bg-nav font-sans text-[14px] leading-relaxed text-ink/80">
+      <div className="mx-auto max-w-[1240px] px-6 py-12">
+        <p className="max-w-[80ch] border-b border-ink/15 pb-6">{COMPANY.positioning}</p>
 
-        <div className="grid grid-cols-2 gap-8 py-6 sm:grid-cols-4">
+        <div className="grid grid-cols-2 gap-8 py-8 md:grid-cols-4">
           {COLUMNS.map((col) => (
             <div key={col.title}>
-              <h3 className="mb-2 font-sans text-[12px] font-semibold text-ink">{col.title}</h3>
+              <h3 className="mb-2 font-sans text-[14px] font-semibold text-ink">{col.title}</h3>
               <ul className="space-y-2">
                 {col.links.map(([label, to]) => (
                   <li key={label}>
@@ -50,7 +50,7 @@ export default function SiteFooter() {
             </div>
           ))}
           <div>
-            <h3 className="mb-2 font-sans text-[12px] font-semibold text-ink">Locations</h3>
+            <h3 className="mb-2 font-sans text-[14px] font-semibold text-ink">Locations</h3>
             <ul className="space-y-2">
               {LOCATIONS.map((l) => (
                 <li key={l.id}>
@@ -68,14 +68,7 @@ export default function SiteFooter() {
 
         <div className="flex flex-col gap-2 border-t border-ink/15 pt-4 sm:flex-row sm:justify-between">
           <p>Copyright © {new Date().getFullYear()} {COMPANY.name} All rights reserved.</p>
-          <p>
-            {BUSINESSES.map((b, i) => (
-              <span key={b.id}>
-                {i > 0 && " · "}
-                {b.name}
-              </span>
-            ))}
-          </p>
+          <p>{BUSINESSES.map((b) => b.name).join(" and ")} are SJK Guahan businesses.</p>
         </div>
       </div>
     </footer>

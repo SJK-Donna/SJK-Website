@@ -1,6 +1,7 @@
 import { useState } from "react";
 import PageHeader from "../components/home/PageHeader.jsx";
 import PillLinks from "../components/home/PillLinks.jsx";
+import FilterTabs from "../components/home/FilterTabs.jsx";
 import FinalCta from "../components/sections/FinalCta.jsx";
 import { ProjectCard } from "../components/sections/Projects.jsx";
 import { PROJECT_CATEGORIES, PROJECTS } from "../content/site.js";
@@ -13,50 +14,44 @@ export default function ProjectsPage() {
 
   return (
     <>
-      <PageHeader eyebrow="Projects" title="Solutions in Action" lead="Equipment and mobility solutions working in real customer environments across the Philippines." />
+      <PageHeader
+        eyebrow="Projects"
+        title="Solutions in action"
+        lead="Equipment and mobility solutions working in real customer environments across the Philippines."
+        img="/images/carousel/slide-4.jpg"
+        alt="Compact excavator digging on a property site"
+      />
 
-      <section className="bg-surface px-6 py-16 lg:py-20">
-        <div className="mx-auto max-w-[1180px]">
+      <section className="bg-surface px-6 py-16 lg:py-24">
+        <div className="mx-auto max-w-[1240px]">
           {PROJECTS.length === 0 ? (
-            <div className="mx-auto max-w-[620px] rounded-[22px] bg-nav px-8 py-14 text-center">
-              <h2 className="font-sans text-[24px] font-semibold text-ink">Project case studies are on the way.</h2>
-              <p className="mt-3 text-[17px] leading-relaxed text-ink/80">
-                We're documenting our work across golf, resorts, property development, mobility and grounds management. In the meantime, our team is happy to share relevant references for your requirement.
+            <div className="max-w-[56ch]">
+              <h2 className="wide font-sans text-[28px] font-semibold text-ink">Case studies are being prepared</h2>
+              <p className="mt-3 text-ink/80">
+                We're documenting our work across golf, resorts, property development, mobility and grounds management. Ask our team for references that match your requirement.
               </p>
-              <PillLinks primary={{ label: "Talk to Our Team", href: "/contact" }} className="mt-6" />
+              <PillLinks primary={{ label: "Ask for references", href: "/contact" }} className="mt-8" />
             </div>
           ) : (
             <>
-              <div role="group" aria-label="Filter projects by category" className="mb-10 flex flex-wrap justify-center gap-2">
-                {["All", ...PROJECT_CATEGORIES].map((c) => (
-                  <button
-                    key={c}
-                    type="button"
-                    aria-pressed={filter === c}
-                    onClick={() => setFilter(c)}
-                    className={`rounded-full px-4 py-2 text-[14px] transition-colors ${filter === c ? "bg-control text-white" : "bg-nav text-ink hover:bg-paper"}`}
-                  >
-                    {c}
-                  </button>
-                ))}
-              </div>
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {shown.map((p, i) => (
-                  <div key={p.client} className="flex flex-col">
-                    <ProjectCard project={p} delay={i * 60} />
-                    <dl className="mt-3 space-y-2 px-2 text-[14px] leading-relaxed text-ink/80">
-                      {[["The Requirement", p.requirement], ["Our Solution", p.solution], ["The Result", p.result]].map(
+              <FilterTabs label="Filter projects by category" options={["All", ...PROJECT_CATEGORIES]} value={filter} onChange={setFilter} />
+              <div className="grid gap-x-6 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
+                {shown.map((p) => (
+                  <div key={p.client}>
+                    <ProjectCard project={p} />
+                    <dl className="mt-4 space-y-3 border-t border-ink/15 pt-4 text-[16px] text-ink/80">
+                      {[["The requirement", p.requirement], ["Our solution", p.solution], ["The result", p.result]].map(
                         ([k, v]) =>
                           v && (
                             <div key={k}>
-                              <dt className="font-semibold text-ink">{k}</dt>
+                              <dt className="font-sans text-[15px] font-semibold text-ink">{k}</dt>
                               <dd>{v}</dd>
                             </div>
                           )
                       )}
                       {p.brands?.length > 0 && (
                         <div>
-                          <dt className="font-semibold text-ink">Products / Brands Involved</dt>
+                          <dt className="font-sans text-[15px] font-semibold text-ink">Products and brands</dt>
                           <dd>{p.brands.join(", ")}</dd>
                         </div>
                       )}
@@ -64,7 +59,7 @@ export default function ProjectsPage() {
                   </div>
                 ))}
               </div>
-              {shown.length === 0 && <p className="text-center text-[17px] text-ink/80">No projects in this category yet.</p>}
+              {shown.length === 0 && <p className="text-ink/80">No projects in this category yet.</p>}
             </>
           )}
         </div>

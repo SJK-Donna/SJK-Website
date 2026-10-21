@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 
 // Internal routes ("/projects", "/#businesses") go through the router;
-// absolute URLs open the operating brand's own site in a new tab.
-function Pill({ href, className, children }) {
+// absolute URLs open the operating brand's own site in a new tab, marked ↗.
+function Action({ href, className, children }) {
   if (/^https?:\/\//.test(href)) {
     return (
       <a href={href} target="_blank" rel="noopener noreferrer" className={className}>
@@ -18,23 +18,22 @@ function Pill({ href, className, children }) {
   );
 }
 
-// The pair of pill buttons used throughout: a filled primary action and an
-// outlined secondary one. `onDark` swaps to light pills for olive panels,
-// where the olive primary would disappear.
-export default function PillLinks({ primary, secondary, onDark = false, center = true, className = "" }) {
-  const filled = onDark ? "bg-nav text-control hover:bg-white" : "bg-control text-white hover:bg-forest-deep";
-  const outlined = onDark ? "border-white text-white hover:bg-white/10" : "border-control text-control hover:bg-control/5";
+// One solid button for the main action, and a plain underlined text link
+// for the secondary one. `onDark` inverts both for the navy band (amber button, white link).
+export default function PillLinks({ primary, secondary, onDark = false, center = false, className = "" }) {
+  const solid = onDark ? "bg-info text-control hover:bg-white" : "bg-control text-white hover:bg-forest-deep";
+  const text = onDark ? "text-white decoration-white/50 hover:decoration-white" : "text-control decoration-control/40 hover:decoration-control";
   return (
-    <div className={`flex flex-wrap items-center gap-3 ${center ? "justify-center" : ""} ${className}`}>
+    <div className={`flex flex-wrap items-center gap-x-7 gap-y-3 font-sans ${center ? "justify-center" : ""} ${className}`}>
       {primary && (
-        <Pill href={primary.href} className={`rounded-full px-[22px] py-[10px] text-[15px] transition-colors ${filled}`}>
+        <Action href={primary.href} className={`wide rounded-[5px] px-5 py-3 text-[15px] font-semibold transition-colors ${solid}`}>
           {primary.label}
-        </Pill>
+        </Action>
       )}
       {secondary && (
-        <Pill href={secondary.href} className={`rounded-full border px-[21px] py-[9px] text-[15px] transition-colors ${outlined}`}>
+        <Action href={secondary.href} className={`wide text-[15px] font-semibold underline decoration-2 underline-offset-[6px] transition-colors ${text}`}>
           {secondary.label}
-        </Pill>
+        </Action>
       )}
     </div>
   );
