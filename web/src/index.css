@@ -4,6 +4,8 @@
 
 html {
   scroll-behavior: smooth;
+  /* Keeps anchor targets clear of the sticky 48px global nav. */
+  scroll-padding-top: 48px;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -1,35 +1,34 @@
-import Navbar from "../components/layout/Navbar.jsx";
-import Footer from "../components/layout/Footer.jsx";
-import Hero from "../components/Hero.jsx";
-import BrandIntro from "../components/BrandIntro.jsx";
-import TeeOff from "../components/TeeOff.jsx";
-import OurCompany from "../components/OurCompany.jsx";
-import Fairway from "../components/Fairway.jsx";
-import CourseEquipment from "../components/CourseEquipment.jsx";
-import CourseCare from "../components/CourseCare.jsx";
-import FindSolution from "../components/FindSolution.jsx";
-import Brands from "../components/Brands.jsx";
-import OurPartners from "../components/OurPartners.jsx";
-import Quote from "../components/Quote.jsx";
+import HeroRotator from "../components/sections/HeroRotator.jsx";
+import Intro from "../components/sections/Intro.jsx";
+import Businesses from "../components/sections/Businesses.jsx";
+import WayForward from "../components/sections/WayForward.jsx";
+import Milestones from "../components/sections/Milestones.jsx";
+import FeaturedProjects from "../components/sections/Projects.jsx";
+import Testimonials from "../components/sections/Testimonials.jsx";
+import BrandWall from "../components/sections/BrandWall.jsx";
+import GivingBack from "../components/sections/GivingBack.jsx";
+import LatestNews from "../components/sections/News.jsx";
+import Locations from "../components/sections/Locations.jsx";
+import FinalCta from "../components/sections/FinalCta.jsx";
 
+// Homepage in the order of the content brief (§7–§18). Projects,
+// testimonials, Giving Back and news render only once real entries exist
+// in content/site.js.
 export default function Home() {
   return (
     <>
-      <Navbar />
-      <main>
-        <Hero />
-        <BrandIntro />
-        <TeeOff />
-        <OurCompany />
-        <Fairway />
-        <CourseEquipment />
-        <CourseCare />
-        <FindSolution />
-        <Brands />
-        <OurPartners />
-        <Quote />
-      </main>
-      <Footer />
+      <HeroRotator />
+      <Intro />
+      <Businesses />
+      <WayForward />
+      <Milestones />
+      <FeaturedProjects />
+      <Testimonials />
+      <BrandWall />
+      <GivingBack />
+      <LatestNews />
+      <Locations />
+      <FinalCta />
     </>
   );
 }

@@ -33,7 +33,10 @@ export default {
       fontFamily: {
         display: ["Space Grotesk", "sans-serif"],
         body: ["Inter", "sans-serif"],
-        mono: ["JetBrains Mono", "monospace"]
+        mono: ["JetBrains Mono", "monospace"],
+        // Tile-layout home page: the platform's own UI face first (San
+        // Francisco on Apple devices), Inter everywhere else.
+        sans: ["-apple-system", "BlinkMacSystemFont", "Inter", "Segoe UI", "sans-serif"]
       },
       boxShadow: {
         // Modern-skeuomorphic layers: a raised surface reads via a soft
