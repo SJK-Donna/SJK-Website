@@ -20,13 +20,13 @@ export default function FeaturedProjects() {
   if (PROJECTS.length === 0) return null;
   const featured = [...PROJECTS.filter((p) => p.featured), ...PROJECTS.filter((p) => !p.featured)].slice(0, 6);
   return (
-    <Margin title="Our work in the field" className="bg-nav">
+    <Margin title="Our Work in the Field" className="bg-nav">
       <div className="grid gap-x-6 gap-y-12 sm:grid-cols-2">
         {featured.map((p) => (
           <ProjectCard key={p.client} project={p} />
         ))}
       </div>
-      <PillLinks primary={{ label: "View all projects", href: "/projects" }} className="mt-12" />
+      <PillLinks primary={{ label: "View All Projects", href: "/projects" }} className="mt-12" />
     </Margin>
   );
 }

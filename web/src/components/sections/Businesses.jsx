@@ -12,7 +12,7 @@ export default function Businesses() {
     <section id="businesses" aria-labelledby="businesses-title" className="bg-nav px-6 py-20 lg:py-28">
       <div className="mx-auto max-w-[1240px]">
         <h2 id="businesses-title" className="wide font-sans text-[30px] font-semibold tracking-[-0.01em] text-ink lg:text-[40px]">
-          Our businesses
+          Our Businesses
         </h2>
         <div className="mt-12 grid gap-x-6 gap-y-16 md:grid-cols-2">
           {BUSINESSES.map((b) => (

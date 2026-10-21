@@ -3,7 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import { NAV } from "../../content/site.js";
 import { useScrolled } from "../../hooks/useScrollFx.js";
 
-// The brief's six destinations plus a permanent "Talk to our team" button.
+// The brief's six destinations plus a permanent "Talk to Our Team" button.
 // The current page is marked with an underline, not just a weight change.
 export default function GlobalNav() {
   const [open, setOpen] = useState(false);
@@ -31,7 +31,7 @@ export default function GlobalNav() {
         </ul>
         <div className="flex items-center gap-3">
           <Link to="/contact" className="wide hidden rounded-[5px] bg-control px-4 py-2 font-sans text-[14px] font-semibold text-white transition-colors hover:bg-forest-deep sm:inline-block">
-            Talk to our team
+            Talk to Our Team
           </Link>
           <button
             type="button"

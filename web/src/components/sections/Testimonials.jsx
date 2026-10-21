@@ -5,7 +5,7 @@ import { TESTIMONIALS } from "../../content/site.js";
 export default function Testimonials() {
   if (TESTIMONIALS.length === 0) return null;
   return (
-    <Margin title="What our customers say" className="bg-surface">
+    <Margin title="Customer Testimonials" className="bg-surface">
       <div className="space-y-14">
         {TESTIMONIALS.map((t) => (
           <figure key={t.name} className="grid gap-6 sm:grid-cols-[200px_1fr]">

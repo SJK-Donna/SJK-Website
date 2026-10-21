@@ -23,13 +23,13 @@ export function NewsCard({ item: n }) {
 export default function LatestNews() {
   if (NEWS.length === 0) return null;
   return (
-    <Margin title="What's happening at SJK" className="bg-nav">
+    <Margin title="What's Happening at SJK" className="bg-nav">
       <div className="grid gap-x-6 gap-y-12 sm:grid-cols-2">
         {newestFirst(NEWS).slice(0, 3).map((n) => (
           <NewsCard key={n.title} item={n} />
         ))}
       </div>
-      <PillLinks primary={{ label: "View all news", href: "/news" }} className="mt-12" />
+      <PillLinks primary={{ label: "View All News", href: "/news" }} className="mt-12" />
     </Margin>
   );
 }

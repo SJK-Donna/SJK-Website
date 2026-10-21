@@ -30,11 +30,14 @@ export const NAV = [
   { to: "/contact", label: "Contact Us" }
 ];
 
-// The headline names three things SJK does; the hero shows one photo for each.
-export const HERO_PANELS = [
-  { caption: "Move people", detail: "Golf carts and low-speed electric mobility", src: "/images/sjk/fleet-course.jpg", alt: "Fleet of black Club Car golf carts lined up beside a tropical course" },
-  { caption: "Shape landscapes", detail: "Compact construction equipment", src: "/images/brands/wacker-neuson-mountain.jpg", alt: "Compact excavator working on a mountain site", position: "50% 0%" },
-  { caption: "Improve the outdoors", detail: "Professional turf and grounds care", src: "/images/carousel/slide-3.jpg", alt: "Fairway mower maintaining championship turf" }
+// Brief §7: hero imagery rotating every 3–5 seconds, covering golf carts,
+// turf equipment, compact equipment, customer projects and team activity.
+export const HERO_SLIDES = [
+  { caption: "Golfcarts.ph fleet on a customer course", src: "/images/sjk/fleet-course.jpg", alt: "Fleet of black Club Car golf carts lined up beside a tropical course" },
+  { caption: "Fairway mowing on championship turf", src: "/images/carousel/slide-3.jpg", alt: "Fairway mower maintaining championship turf" },
+  { caption: "Compact equipment shaping a site", src: "/images/brands/wacker-neuson-mountain.jpg", alt: "Compact excavator working on a mountain site", position: "50% 20%" },
+  { caption: "Golfcarts.ph fleet at The Vista Country Club", src: "/images/sjk/vista-fleet.jpg", alt: "White Club Car golf carts on the cart path at a country club course", position: "100% 50%" },
+  { caption: "Hands-on product training with our team", src: "/images/sjk/product-training.jpg", alt: "SJK team receiving hands-on product training on new turf equipment" }
 ];
 
 export const INTRO = {
@@ -82,7 +85,7 @@ export const BUSINESSES = [
 // Golfcarts.ph buyer guidance, adapted from its own "questions to ask
 // before buying a fleet" social series.
 export const FLEET_GUIDE = {
-  title: "Five questions to ask before you buy a golf cart fleet",
+  title: "Five Questions to Ask Before You Buy a Golf Cart Fleet",
   intro: "A fleet is a long-term investment. These are the questions our Golfcarts.ph team encourages every course and resort to ask, whoever they buy from.",
   img: "/images/brands/golf-carts-ph.jpg",
   alt: "Golfcarts.ph Club Car golf carts lined up on a golf course",
@@ -131,7 +134,17 @@ export const BRAND_GROUPS = [
   {
     business: "Groundmasters.ph",
     group: "Groundmasters.ph",
-    brands: ["Jacobsen", "Smithco", "Iseki", "Campey", "Dakota", "Trimax", "Wacker Neuson", "Aqua-Aid", "ONECOTE"]
+    brands: ["Jacobsen", "Smithco", "Iseki", "Campey", "Dakota", "Trimax", "Wacker Neuson", "Aqua-Aid", "ONECOTE"],
+    // Brief §22 categories, used on the Brands & Partners page. Placements of
+    // Smithco, Dakota and ONECOTE are best guesses awaiting confirmation.
+    categories: [
+      { group: "Professional Turf Equipment", brands: ["Jacobsen", "Trimax", "Campey"] },
+      { group: "Spraying & Application", brands: ["Smithco"] },
+      { group: "Tractors & Utility Equipment", brands: ["Iseki"] },
+      { group: "Compact Construction Equipment", brands: ["Wacker Neuson"] },
+      { group: "Turf Inputs & Soil Solutions", brands: ["Aqua-Aid", "ONECOTE"] },
+      { group: "Specialized Grounds Equipment", brands: ["Dakota"] }
+    ]
   }
 ];
 

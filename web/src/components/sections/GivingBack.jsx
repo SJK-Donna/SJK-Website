@@ -5,7 +5,7 @@ import { GIVING_BACK } from "../../content/site.js";
 export default function GivingBack() {
   if (GIVING_BACK.length === 0) return null;
   return (
-    <Margin title="Beyond business" className="bg-surface">
+    <Margin title="Beyond Business" className="bg-surface">
       <div className="grid gap-x-6 gap-y-12 sm:grid-cols-2">
         {GIVING_BACK.map((g) => (
           <article key={g.title}>

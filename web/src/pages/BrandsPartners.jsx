@@ -8,9 +8,9 @@ import { BRAND_GROUPS, BUSINESSES, GOLFCARTS_SERVICES, PARTNERS } from "../conte
 // Real Golfcarts.ph work shown under its section: delivery, a customer
 // fleet and the service team.
 const GOLFCARTS_GALLERY = [
-  ["/images/sjk/fleet-delivery.jpg", "New white golf carts in protective wrap, ready for delivery", "Fleet delivery"],
-  ["/images/sjk/fleet-course.jpg", "Black Club Car golf carts lined up beside a tropical course", "Customer fleet"],
-  ["/images/sjk/service-team.jpg", "Golfcarts.ph technicians working on a golf cart", "Service and parts"]
+  ["/images/sjk/fleet-delivery.jpg", "New white golf carts in protective wrap, ready for delivery", "Fleet Delivery"],
+  ["/images/sjk/fleet-course.jpg", "Black Club Car golf carts lined up beside a tropical course", "Customer Fleet"],
+  ["/images/sjk/service-team.jpg", "Golfcarts.ph technicians working on a golf cart", "Service & Parts"]
 ];
 
 // Brief §22 — one section per business with the brands it represents.
@@ -18,8 +18,8 @@ export default function BrandsPartners() {
   return (
     <>
       <PageHeader
-        eyebrow="Brands and partners"
-        title="Trusted brands. Local support."
+        eyebrow="Brands & Partners"
+        title="Trusted Brands. Local Support."
         lead="International brands represented through our operating businesses, supported locally with service, parts and customer care."
       />
 
@@ -62,14 +62,14 @@ export default function BrandsPartners() {
             )}
             {group && (
               <div className="mx-auto mt-16 max-w-[1240px] border-t-2 border-ink pt-8">
-                <BrandGroups groups={[{ ...group, group: `Brands represented through ${b.name}` }]} />
+                <BrandGroups groups={group.categories ?? [{ ...group, group: `Brands represented through ${b.name}` }]} />
               </div>
             )}
           </section>
         );
       })}
 
-      <Margin id="partners" title="Customers and partners" lead="Golf courses, resorts and logistics partners we work alongside." className="bg-surface">
+      <Margin id="partners" title="Customers & Partners" lead="Golf courses, resorts and logistics partners we work alongside." className="bg-surface">
         <ul className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-4">
           {PARTNERS.map((p) => (
             <li key={p.name}>

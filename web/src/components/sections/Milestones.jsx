@@ -6,7 +6,7 @@ import { MILESTONES } from "../../content/site.js";
 export default function Milestones() {
   return (
     <Margin
-      title="Numbers and milestones"
+      title="Numbers & Milestones"
       img="/images/sjk/battery-service.jpg"
       alt="Golfcarts.ph technician servicing the battery pack of a golf cart"
       className="bg-surface"

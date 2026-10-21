@@ -26,9 +26,9 @@ export function BrandGroups({ groups = BRAND_GROUPS }) {
 
 export default function BrandWall() {
   return (
-    <Margin title="Trusted brands. Local support." className="bg-nav">
+    <Margin title="Trusted Brands. Local Support." className="bg-nav">
       <BrandGroups />
-      <PillLinks primary={{ label: "View our brands and partners", href: "/brands-partners" }} className="mt-14" />
+      <PillLinks primary={{ label: "View Our Brands & Partners", href: "/brands-partners" }} className="mt-14" />
     </Margin>
   );
 }

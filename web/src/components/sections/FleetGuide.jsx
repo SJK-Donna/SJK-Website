@@ -33,8 +33,8 @@ export default function FleetGuide() {
           </ol>
           {golfcarts && (
             <PillLinks
-              primary={{ label: "Plan your fleet with Golfcarts.ph", href: businessHref(golfcarts) }}
-              secondary={{ label: "Talk to our team", href: "/contact" }}
+              primary={{ label: "Plan Your Fleet with Golfcarts.ph", href: businessHref(golfcarts) }}
+              secondary={{ label: "Talk to Our Team", href: "/contact" }}
               className="mt-10"
             />
           )}

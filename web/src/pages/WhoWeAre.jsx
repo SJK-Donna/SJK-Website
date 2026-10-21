@@ -7,15 +7,15 @@ import { BUSINESSES, COMPANY, CORE_MESSAGES, PRINCIPLES, TEAM, WHO_WE_ARE } from
 // The three areas the company works across, one photo each.
 const AREAS = [
   ["/images/brands/golf-cart-course.jpg", "Electric golf cart on a golf course at dawn", "Mobility"],
-  ["/images/brands/jacobsen-bunker.jpg", "Fairway mower maintaining a golf course beside sand bunkers", "Turf and grounds"],
-  ["/images/carousel/slide-4.jpg", "Compact excavator digging on a property site", "Compact equipment"]
+  ["/images/brands/jacobsen-bunker.jpg", "Fairway mower maintaining a golf course beside sand bunkers", "Turf & Grounds"],
+  ["/images/carousel/slide-4.jpg", "Compact excavator digging on a property site", "Compact Equipment"]
 ];
 
 // Brief §19–21: history, mission, vision, philosophy, story and people.
 export default function WhoWeAre() {
   return (
     <>
-      <PageHeader eyebrow="Who we are" title="An equipment, mobility and solutions company." lead={WHO_WE_ARE[0]} />
+      <PageHeader eyebrow="Who We Are" title="An Equipment, Mobility and Solutions Company." lead={WHO_WE_ARE[0]} />
 
       <ul className="mx-auto grid max-w-[1240px] gap-3 px-6 pt-6 sm:grid-cols-3">
         {AREAS.map(([src, alt, label]) => (
@@ -35,8 +35,8 @@ export default function WhoWeAre() {
       <section id="mission" className="bg-nav px-6 py-20 lg:py-28">
         <div className="mx-auto max-w-[1240px] space-y-16">
           {[
-            ["Our mission", COMPANY.mission],
-            ["Our vision", COMPANY.vision]
+            ["Our Mission", COMPANY.mission],
+            ["Our Vision", COMPANY.vision]
           ].map(([label, text]) => (
             <div key={label} className="grid gap-4 lg:grid-cols-12">
               <h2 className="font-sans text-[18px] font-semibold text-control lg:col-span-3 lg:pt-3">{label}</h2>
@@ -60,7 +60,7 @@ export default function WhoWeAre() {
 
       <Margin
         id="philosophy"
-        title="Our company philosophy"
+        title="Our Company Philosophy"
         lead="How we work with customers, colleagues and partners."
         img="/images/sjk/technical-training.jpg"
         alt="SJK team members in a technical training session in the meeting room"
@@ -81,7 +81,7 @@ export default function WhoWeAre() {
 
       <Margin
         id="story"
-        title="Our story"
+        title="Our Story"
         img="/images/sjk/turf-equipment-assembly.jpg"
         alt="SJK technicians assembling new turf equipment in the workshop"
         className="bg-nav"
@@ -90,7 +90,7 @@ export default function WhoWeAre() {
       </Margin>
 
       <Margin
-        title="What we stand for"
+        title="What We Stand For"
         img="/images/sjk/product-training.jpg"
         alt="SJK team receiving hands-on product training on new turf equipment"
         className="bg-surface"
@@ -105,7 +105,7 @@ export default function WhoWeAre() {
         </dl>
       </Margin>
 
-      <Margin id="people" title="The team behind the business" className="bg-nav">
+      <Margin id="people" title="The Team Behind the Business" className="bg-nav">
         {TEAM.intro.map((p, i) => (
           <p key={i} className={`max-w-[58ch] ${i ? "mt-5 text-ink/80" : "text-[21px] leading-[1.55] text-ink"}`}>{p}</p>
         ))}

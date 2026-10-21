@@ -28,7 +28,7 @@ export default function Contact() {
 
   return (
     <>
-      <PageHeader eyebrow="Contact us" title="Talk to our team" lead="Tell us about your course, resort, property or operation and we'll help identify the right equipment and support strategy." />
+      <PageHeader eyebrow="Contact Us" title="Talk to Our Team" lead="Tell us about your course, resort, property or operation and we'll help identify the right equipment and support strategy." />
 
       <section id="form" className="bg-surface px-6 py-16 lg:py-20">
         <form ref={formRef} onSubmit={handleSubmit} noValidate className="mx-auto max-w-[1240px] space-y-6 lg:pr-[33%]">
@@ -68,7 +68,7 @@ export default function Contact() {
             <textarea id="cMessage" name="message" rows={5} className={input} />
           </div>
           <button type="submit" className="wide rounded-[5px] bg-control px-6 py-3 font-sans text-[15px] font-semibold text-white transition-colors hover:bg-forest-deep">
-            Send inquiry
+            Submit
           </button>
           <p role="status" className="font-sans text-[16px] font-semibold text-control">
             {sent ? "Thank you — our team will reach out shortly." : ""}

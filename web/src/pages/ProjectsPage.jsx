@@ -16,7 +16,7 @@ export default function ProjectsPage() {
     <>
       <PageHeader
         eyebrow="Projects"
-        title="Solutions in action"
+        title="Solutions in Action"
         lead="Equipment and mobility solutions working in real customer environments across the Philippines."
         img="/images/carousel/slide-4.jpg"
         alt="Compact excavator digging on a property site"
@@ -26,11 +26,11 @@ export default function ProjectsPage() {
         <div className="mx-auto max-w-[1240px]">
           {PROJECTS.length === 0 ? (
             <div className="max-w-[56ch]">
-              <h2 className="wide font-sans text-[28px] font-semibold text-ink">Case studies are being prepared</h2>
+              <h2 className="wide font-sans text-[28px] font-semibold text-ink">Case Studies Are Being Prepared</h2>
               <p className="mt-3 text-ink/80">
                 We're documenting our work across golf, resorts, property development, mobility and grounds management. Ask our team for references that match your requirement.
               </p>
-              <PillLinks primary={{ label: "Ask for references", href: "/contact" }} className="mt-8" />
+              <PillLinks primary={{ label: "Ask for References", href: "/contact" }} className="mt-8" />
             </div>
           ) : (
             <>
@@ -40,7 +40,7 @@ export default function ProjectsPage() {
                   <div key={p.client}>
                     <ProjectCard project={p} />
                     <dl className="mt-4 space-y-3 border-t border-ink/15 pt-4 text-[16px] text-ink/80">
-                      {[["The requirement", p.requirement], ["Our solution", p.solution], ["The result", p.result]].map(
+                      {[["The Requirement", p.requirement], ["Our Solution", p.solution], ["The Result", p.result]].map(
                         ([k, v]) =>
                           v && (
                             <div key={k}>
@@ -51,7 +51,7 @@ export default function ProjectsPage() {
                       )}
                       {p.brands?.length > 0 && (
                         <div>
-                          <dt className="font-sans text-[15px] font-semibold text-ink">Products and brands</dt>
+                          <dt className="font-sans text-[15px] font-semibold text-ink">Products / Brands Involved</dt>
                           <dd>{p.brands.join(", ")}</dd>
                         </div>
                       )}

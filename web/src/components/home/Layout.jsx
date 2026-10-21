@@ -10,7 +10,7 @@ function useScrollOnNavigate() {
   useEffect(() => {
     if (hash) {
       // Wait a frame so the new page's sections exist before looking one up.
-      requestAnimationFrame(() => document.getElementById(hash.slice(1))?.scrollIntoView());
+      window.requestAnimationFrame(() => document.getElementById(hash.slice(1))?.scrollIntoView());
     } else {
       window.scrollTo(0, 0);
     }

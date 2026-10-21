@@ -26,7 +26,7 @@ export default function Locations() {
     <section id="locations" aria-labelledby="locations-title" className="bg-surface px-6 py-20 lg:py-28">
       <div className="mx-auto grid max-w-[1240px] items-start gap-12 lg:grid-cols-12">
         <div className="lg:col-span-7">
-          <SectionTitle title="Supporting customers across the Philippines" />
+          <SectionTitle title="Supporting Customers Across the Philippines" />
           <ol className="mt-12 grid gap-x-10 gap-y-10 sm:grid-cols-2">
             {LOCATIONS.map((l, i) => (
               <li key={l.id} className="border-t-2 border-ink pt-4 text-[16px] leading-relaxed text-ink/80">

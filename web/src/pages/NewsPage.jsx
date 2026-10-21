@@ -14,7 +14,7 @@ export default function NewsPage() {
     <>
       <PageHeader
         eyebrow="News"
-        title="What's happening at SJK"
+        title="What's Happening at SJK"
         lead="Projects, demonstrations, training, partnerships and company milestones."
         img="/images/brands/campey.jpg"
         alt="Turf renovation machine working a sports pitch"
@@ -23,9 +23,9 @@ export default function NewsPage() {
         <div className="mx-auto max-w-[1240px]">
           {NEWS.length === 0 ? (
             <div className="max-w-[56ch]">
-              <h2 className="wide font-sans text-[28px] font-semibold text-ink">No stories published yet</h2>
+              <h2 className="wide font-sans text-[28px] font-semibold text-ink">No Stories Published Yet</h2>
               <p className="mt-3 text-ink/80">Updates on deliveries, demonstrations, training and new partnerships will appear here.</p>
-              <PillLinks primary={{ label: "Talk to our team", href: "/contact" }} className="mt-8" />
+              <PillLinks primary={{ label: "Talk to Our Team", href: "/contact" }} className="mt-8" />
             </div>
           ) : (
             <>
