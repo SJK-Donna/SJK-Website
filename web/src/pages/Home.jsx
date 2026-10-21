@@ -1,6 +1,7 @@
 import Hero from "../components/sections/Hero.jsx";
 import Intro from "../components/sections/Intro.jsx";
 import Businesses from "../components/sections/Businesses.jsx";
+import FleetGuide from "../components/sections/FleetGuide.jsx";
 import WayForward from "../components/sections/WayForward.jsx";
 import Milestones from "../components/sections/Milestones.jsx";
 import FeaturedProjects from "../components/sections/Projects.jsx";
@@ -20,6 +21,7 @@ export default function Home() {
       <Hero />
       <Intro />
       <Businesses />
+      <FleetGuide />
       <WayForward />
       <Milestones />
       <FeaturedProjects />

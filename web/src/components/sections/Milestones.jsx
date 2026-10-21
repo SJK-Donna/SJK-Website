@@ -7,8 +7,8 @@ export default function Milestones() {
   return (
     <Margin
       title="Numbers and milestones"
-      img="/images/sjk/service-team.jpg"
-      alt="Golfcarts.ph service technicians working on a golf cart steering assembly"
+      img="/images/sjk/battery-service.jpg"
+      alt="Golfcarts.ph technician servicing the battery pack of a golf cart"
       className="bg-surface"
     >
       <dl className="grid gap-x-10 gap-y-10 sm:grid-cols-2">

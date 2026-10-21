@@ -91,8 +91,8 @@ export default function WhoWeAre() {
 
       <Margin
         title="What we stand for"
-        img="/images/sjk/battery-service.jpg"
-        alt="Technician servicing the battery pack of a golf cart"
+        img="/images/sjk/product-training.jpg"
+        alt="SJK team receiving hands-on product training on new turf equipment"
         className="bg-surface"
       >
         <dl className="grid gap-x-10 gap-y-10 sm:grid-cols-2">

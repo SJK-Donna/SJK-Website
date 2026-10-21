@@ -79,6 +79,32 @@ export const BUSINESSES = [
   }
 ];
 
+// Golfcarts.ph buyer guidance, adapted from its own "questions to ask
+// before buying a fleet" social series.
+export const FLEET_GUIDE = {
+  title: "Five questions to ask before you buy a golf cart fleet",
+  intro: "A fleet is a long-term investment. These are the questions our Golfcarts.ph team encourages every course and resort to ask, whoever they buy from.",
+  img: "/images/brands/golf-carts-ph.jpg",
+  alt: "Golfcarts.ph Club Car golf carts lined up on a golf course",
+  questions: [
+    { q: "How long does the battery actually last?", a: "Ask for real-world runtime per charge, not lab specs, and the expected lifespan in years or charge cycles. A cart that dies mid-round costs more than the sticker price ever showed." },
+    { q: "Lithium or lead-acid: what is the real difference?", a: "Lithium charges faster, lasts longer, needs no watering and weighs less. Lead-acid costs less upfront but needs more upkeep and has a shorter life. Your usage volume decides which pays off faster." },
+    { q: "What does the maintenance contract actually cover?", a: "Get specifics: are parts included or billed separately, how fast is the response to a breakdown, and is service on-site or drop-off? A vague “we’ll take care of it” isn’t a contract." },
+    { q: "What will this fleet be worth in five years?", a: "Authorized, well-maintained Club Car units hold their value significantly better than unbranded imports. Ask your dealer for real resale data, not a guess." },
+    { q: "Can it be personalized?", a: "Custom colors, branding and decals, seating configuration and add-ons such as coolers, ball washers and storage, so your fleet matches your course’s identity rather than a generic default." }
+  ]
+};
+
+// What Golfcarts.ph provides, from the brief and its customer guidance.
+export const GOLFCARTS_SERVICES = [
+  "Golf course fleets",
+  "Resort and hotel mobility",
+  "Commercial and utility vehicles",
+  "Lithium and lead-acid battery options",
+  "Maintenance contracts, parts and technical service",
+  "Fleet personalization: colors, branding, seating and add-ons"
+];
+
 export const WAY_FORWARD = {
   title: "Setting the Way Forward",
   body: [
@@ -86,8 +112,8 @@ export const WAY_FORWARD = {
     "Our role is to bring these solutions closer to our customers through product demonstrations, technical support, operator training, education and real-world testing — helping customers understand not only what new technologies are available, but why and where they can create value."
   ],
   closing: ["We believe that introducing a product is only the beginning.", "The real value comes from making the solution work."],
-  img: "/images/sjk/product-training.jpg",
-  alt: "SJK team receiving hands-on product training on new turf equipment in the warehouse"
+  img: "/images/sjk/service-team.jpg",
+  alt: "Golfcarts.ph service technicians working on a golf cart steering assembly"
 };
 
 // Only the four qualitative milestones the brief lists. Add verified figures
