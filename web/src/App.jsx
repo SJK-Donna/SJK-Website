@@ -9,7 +9,8 @@ import Contact from "./pages/Contact.jsx";
 
 export default function App() {
   return (
-    <BrowserRouter>
+    // basename matches the deploy subfolder (/SJK-Website/ on GitHub Pages).
+    <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, "") || "/"}>
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
