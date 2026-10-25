@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Upload package for cPanel hosting (rebuild with npm run build)
+sjkguahan-website.zip
