@@ -4,8 +4,8 @@
 
 html {
   scroll-behavior: smooth;
-  /* Keeps anchor targets clear of the sticky 56px global nav. */
-  scroll-padding-top: 56px;
+  /* Keeps anchor targets clear of the sticky 64px global nav. */
+  scroll-padding-top: 64px;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -21,32 +21,128 @@ html {
 
 body {
   @apply bg-surface text-ink font-body antialiased;
-  font-size: 18px;
+  font-size: 17px;
   line-height: 1.65;
 }
 
 h1, h2, h3, h4 {
-  @apply font-display font-semibold;
-  line-height: 1.08;
+  @apply font-display font-bold;
+  line-height: 1.05;
 }
 
 a, button, select, input, textarea {
-  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-control focus-visible:ring-offset-2 focus-visible:ring-offset-surface;
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-info focus-visible:ring-offset-2 focus-visible:ring-offset-control;
 }
 
 @layer utilities {
   /* Archivo's width axis — wide settings for headings and buttons. */
   .wide { font-stretch: 112%; }
-  .wider { font-stretch: 122%; }
+  .wider { font-stretch: 125%; }
+
+  /* Small tracked capitals, after the "G U A H A N" line in the logo. */
+  .eyebrow {
+    @apply font-sans text-[13px] font-semibold uppercase;
+    letter-spacing: 0.32em;
+  }
+
+  /* The amber triangle from the logo — a flag on the pin. Right angle at
+     the top left, hypotenuse running "/" like the logo's diagonal. */
+  .flag {
+    @apply bg-info;
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+  }
+
+  /* Bottom-right corner cut along the same diagonal, used on photos,
+     cards and buttons instead of rounded corners. */
+  .cut {
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--cut, 32px)), calc(100% - var(--cut, 32px)) 100%, 0 100%);
+  }
+  .cut-sm { --cut: 12px; }
+  .cut-lg { --cut: 56px; }
 }
 
-/* Unused since the hero became a cross-fading slideshow (brief §7); kept
-   as a utility. Scroll effects live in hooks/useScrollFx.js. */
+/* Scroll reveal (components/ui/Reveal.jsx): content slides in along the
+   logo's diagonal and settles firmly, like equipment moving into place. */
+.reveal {
+  opacity: 0;
+  transform: translate(-20px, 20px);
+}
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.7s ease-out, transform 0.8s cubic-bezier(.16,.84,.24,1);
+}
+
+/* Photos (components/ui/Photo.jsx). The layer carries the scroll
+   parallax (no transition, so it tracks the scroll exactly); the image
+   carries the settle-in zoom and the hover push-in. */
+.photo-layer { transform: translate3d(0, var(--py, 0), 0); will-change: transform; }
+.photo-img {
+  transform: scale(1.18);
+  transition: transform 1.4s cubic-bezier(.16,.84,.24,1), filter 0.6s ease;
+}
+.photo.is-in .photo-img { transform: scale(1); }
+.group:hover .photo.is-in .photo-img,
+.photo.is-in:hover .photo-img { transform: scale(1.06); }
+.group:hover .photo-img { filter: saturate(1.15) contrast(1.05); }
+
+/* Navy panel with an amber leading edge that sweeps off the photo. */
+.photo-curtain {
+  position: absolute;
+  inset: 0 -30% 0 -10%;
+  background: #0d1c2c;
+  border-left: 6px solid #f9b200;
+  transform: skewX(-12deg) translateX(0);
+  transition: transform 1.1s cubic-bezier(.7,0,.2,1);
+  pointer-events: none;
+}
+.photo.is-in .photo-curtain { transform: skewX(-12deg) translateX(110%); }
+
+/* Partner logos sit in grey and come into colour on hover. */
+.logo-mono { filter: grayscale(1); opacity: 0.65; transition: filter 0.4s ease, opacity 0.4s ease; }
+.group:hover .logo-mono { filter: none; opacity: 1; }
+
+/* Hero: the amber flag "plants" itself — wiped in along its diagonal. */
+.flag-plant { animation: flag-plant 0.9s cubic-bezier(.7,0,.2,1) 0.2s both; }
+@keyframes flag-plant {
+  from { clip-path: polygon(0 0, 0 0, 0 0); }
+  to { clip-path: polygon(0 0, 100% 0, 0 100%); }
+}
+
+/* Hero lines arrive one after another along the diagonal. */
+.rise { animation: rise 0.9s cubic-bezier(.16,.84,.24,1) both; }
 @keyframes rise {
-  from { opacity: 0; transform: translateY(24px); }
+  from { opacity: 0; transform: translate(-24px, 24px); }
   to { opacity: 1; transform: none; }
 }
-.rise { animation: rise 0.9s cubic-bezier(.2,.7,.2,1) both; }
+
+/* Slow push-in on the active hero photo. */
+.ken-burns { animation: ken-burns 9s ease-out both; }
+@keyframes ken-burns {
+  from { transform: scale(1.12); }
+  to { transform: scale(1); }
+}
+
+/* Hero slide progress bar fills over the slide's time on screen. */
+.progress-fill { animation: progress-fill linear both; transform-origin: left; }
+@keyframes progress-fill {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+/* Brand roster scrolls sideways; the list is rendered twice so the loop
+   is seamless. Paused on hover, and still under reduced motion. */
+.marquee { animation: marquee 40s linear infinite; }
+.marquee:hover { animation-play-state: paused; }
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee { animation: none; width: auto; padding: 0 1.5rem; }
+  .marquee > ul { flex-wrap: wrap; row-gap: 0.5rem; }
+  .marquee > ul[aria-hidden] { display: none; }
+}
 
 /* Locations map: each branch marker drops in, then sends out one amber
    ring. Delays are set inline per marker. */

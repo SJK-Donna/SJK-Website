@@ -31,12 +31,12 @@ export default {
         "gold-deep": "#0d1c2c"
       },
       fontFamily: {
-        // Archivo (set wide) carries headings, navigation and buttons — its
-        // broad letterforms echo the decals on the equipment SJK supplies.
-        // Source Serif 4 sets the reading copy like a printed company profile.
+        // One family throughout. Archivo set wide and heavy for headings
+        // echoes the SJK letterforms; at normal width it sets the reading
+        // copy. (A serif clashed with the industrial logo.)
         sans: ["Archivo", "Segoe UI", "sans-serif"],
         display: ["Archivo", "Segoe UI", "sans-serif"],
-        body: ["\"Source Serif 4\"", "Georgia", "serif"],
+        body: ["Archivo", "Segoe UI", "sans-serif"],
         mono: ["ui-monospace", "monospace"]
       },
       boxShadow: {

@@ -23,14 +23,14 @@ export default function Locations() {
   // the first time the map scrolls into view.
   const [mapRef, mapInView] = useInView(0.4);
   return (
-    <section id="locations" aria-labelledby="locations-title" className="bg-surface px-6 py-20 lg:py-28">
-      <div className="mx-auto grid max-w-[1240px] items-start gap-12 lg:grid-cols-12">
+    <section id="locations" aria-labelledby="locations-title" className="bg-nav px-6 py-20 lg:py-28">
+      <div className="mx-auto grid max-w-[1320px] items-start gap-12 lg:grid-cols-12">
         <div className="lg:col-span-7">
-          <SectionTitle title="Supporting Customers Across the Philippines" />
+          <SectionTitle id="locations-title" eyebrow="Our Locations" title="Supporting Customers Across the Philippines" />
           <ol className="mt-12 grid gap-x-10 gap-y-10 sm:grid-cols-2">
             {LOCATIONS.map((l, i) => (
-              <li key={l.id} className="border-t-2 border-ink pt-4 text-[16px] leading-relaxed text-ink/80">
-                <h3 className="wide font-sans text-[22px] font-semibold text-ink">
+              <li key={l.id} className="border-t-4 border-info pt-5 text-[16px] leading-relaxed text-ink/80">
+                <h3 className="wide font-sans text-[22px] font-extrabold text-ink">
                   <span className="mr-2 text-control">{i + 1}</span>
                   {l.name}
                 </h3>
@@ -75,7 +75,7 @@ export default function Locations() {
                     <circle cx={p.x} cy={p.y} r="6" fill="none" stroke="#f9b200" strokeWidth="2" className="map-pulse" style={{ animationDelay: `${380 + i * 220}ms` }} />
                   )}
                   <circle cx={p.x} cy={p.y} r="6" fill="#0d1c2c" stroke="#f9b200" strokeWidth="2.5" />
-                  <text x={p.x + lab.dx} y={p.y + lab.dy} textAnchor={lab.anchor} fontFamily="Archivo, sans-serif" fontSize="15" fontWeight="600" fill="#0d1c2c" style={{ paintOrder: "stroke" }} stroke="#ffffff" strokeWidth="4">
+                  <text x={p.x + lab.dx} y={p.y + lab.dy} textAnchor={lab.anchor} fontFamily="Archivo, sans-serif" fontSize="15" fontWeight="600" fill="#0d1c2c" style={{ paintOrder: "stroke" }} stroke="#eef1f5" strokeWidth="4">
                     {i + 1} {l.name}
                   </text>
                 </g>

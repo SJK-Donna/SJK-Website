@@ -1,17 +1,43 @@
-// Opening of each inner page: the page name, a large left-aligned title and
-// a short lead. A photo, when given, sits beside the title at its own
-// proportions rather than being cropped into a wide strip.
-export default function PageHeader({ eyebrow, title, lead, img, alt = "" }) {
+import { Eyebrow, Slant, NAVY } from "../ui/Brand.jsx";
+
+// Opening of each inner page, in the home hero's language: a full-bleed
+// photo behind a navy wash with a slow push-in, the amber flag, a large
+// heavy title and a short lead, then a diagonal edge into the page.
+// `next` is the background colour of the section that follows.
+export default function PageHeader({ eyebrow, title, lead, img, alt = "", position, next = "#ffffff" }) {
   return (
-    <header className="bg-nav">
-      <div className={`mx-auto grid max-w-[1240px] gap-10 px-6 pb-14 pt-14 lg:pb-20 lg:pt-20 ${img ? "lg:grid-cols-12 lg:items-end" : ""}`}>
-        <div className={img ? "lg:col-span-7" : ""}>
-          {eyebrow && <p className="font-sans text-[15px] font-semibold text-control">{eyebrow}</p>}
-          <h1 className="wide mt-3 max-w-[18ch] font-sans text-[40px] font-semibold leading-[1.0] tracking-[-0.02em] text-ink lg:text-[72px]">{title}</h1>
-          {lead && <p className="mt-6 max-w-[56ch] text-[19px] text-ink/80 lg:text-[21px]">{lead}</p>}
+    <>
+      <header className="relative isolate overflow-hidden bg-control text-white">
+        {img && (
+          <div className="absolute inset-0 -z-10">
+            <img src={img} alt={alt} style={{ objectPosition: position }} className="ken-burns h-full w-full object-cover" />
+            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(13,28,44,.95)_0%,rgba(13,28,44,.8)_45%,rgba(13,28,44,.35)_100%)]" />
+          </div>
+        )}
+        <div className="mx-auto max-w-[1320px] px-6 pb-16 pt-16 lg:pb-24 lg:pt-28">
+          <div className="mb-8 flex items-start" aria-hidden="true">
+            <span className="block h-12 w-[4px] bg-white lg:h-14" />
+            <span className="flag flag-plant block h-9 w-9 lg:h-10 lg:w-10" />
+          </div>
+          {eyebrow && (
+            <div className="rise" style={{ animationDelay: "0.3s" }}>
+              <Eyebrow onDark>{eyebrow}</Eyebrow>
+            </div>
+          )}
+          <h1
+            className="wide rise mt-5 max-w-[18ch] font-sans text-[40px] font-black leading-[0.98] tracking-[-0.03em] sm:text-[56px] lg:text-[76px]"
+            style={{ animationDelay: "0.45s" }}
+          >
+            {title}
+          </h1>
+          {lead && (
+            <p className="rise mt-7 max-w-[56ch] text-[18px] text-white/80 lg:text-[20px]" style={{ animationDelay: "0.6s" }}>
+              {lead}
+            </p>
+          )}
         </div>
-        {img && <img src={img} alt={alt} className="h-auto w-full rounded-[3px] lg:col-span-5" />}
-      </div>
-    </header>
+      </header>
+      <Slant from={NAVY} to={next} />
+    </>
   );
 }

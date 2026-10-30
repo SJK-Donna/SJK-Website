@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import GlobalNav from "./GlobalNav.jsx";
 import SiteFooter from "./SiteFooter.jsx";
+import { BrandDefs } from "../ui/Brand.jsx";
 
 // Client-side navigation keeps the old scroll position by default; reset to
 // the top on page change, or scroll to the #section a link points at.
@@ -21,6 +22,7 @@ export default function Layout() {
   useScrollOnNavigate();
   return (
     <div className="min-h-screen bg-surface font-body">
+      <BrandDefs />
       <GlobalNav />
       <main>
         <Outlet />

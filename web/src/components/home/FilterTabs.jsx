@@ -1,16 +1,16 @@
-// Category filter for list pages: a row of plain text options with the
-// current one underlined in SJK amber.
+// Category filter for list pages: a row of cut-corner chips, the current
+// one filled in navy.
 export default function FilterTabs({ label, options, value, onChange }) {
   return (
-    <div role="group" aria-label={label} className="mb-12 flex flex-wrap gap-x-7 gap-y-2 border-b border-ink/15 pb-3">
+    <div role="group" aria-label={label} className="mb-12 flex flex-wrap gap-2">
       {options.map((o) => (
         <button
           key={o}
           type="button"
           aria-pressed={value === o}
           onClick={() => onChange(o)}
-          className={`font-sans text-[15px] font-semibold underline-offset-[10px] transition-colors ${
-            value === o ? "text-ink underline decoration-info decoration-[3px]" : "text-ink/70 hover:text-ink"
+          className={`cut cut-sm wide px-4 py-2.5 font-sans text-[14px] font-bold transition-colors ${
+            value === o ? "bg-control text-white" : "bg-nav text-ink/75 hover:bg-ink/10 hover:text-ink"
           }`}
         >
           {o}

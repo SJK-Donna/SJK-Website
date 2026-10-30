@@ -18,21 +18,23 @@ function Action({ href, className, children }) {
   );
 }
 
-// One solid button for the main action, and a plain underlined text link
-// for the secondary one. `onDark` inverts both for the navy band (amber button, white link).
+// One solid button for the main action, with the logo's diagonal corner
+// cut, and a plain text link with an arrow for the secondary one.
+// `onDark` switches the button to amber for navy sections.
 export default function PillLinks({ primary, secondary, onDark = false, center = false, className = "" }) {
   const solid = onDark ? "bg-info text-control hover:bg-white" : "bg-control text-white hover:bg-forest-deep";
-  const text = onDark ? "text-white decoration-white/50 hover:decoration-white" : "text-control decoration-control/40 hover:decoration-control";
+  const text = onDark ? "text-white hover:text-info" : "text-control hover:text-ink";
   return (
-    <div className={`flex flex-wrap items-center gap-x-7 gap-y-3 font-sans ${center ? "justify-center" : ""} ${className}`}>
+    <div className={`flex flex-wrap items-center gap-x-8 gap-y-4 font-sans ${center ? "justify-center" : ""} ${className}`}>
       {primary && (
-        <Action href={primary.href} className={`wide rounded-[5px] px-5 py-3 text-[15px] font-semibold transition-colors ${solid}`}>
+        <Action href={primary.href} className={`cut cut-sm wide inline-block px-6 py-3.5 text-[15px] font-bold transition-colors ${solid}`}>
           {primary.label}
         </Action>
       )}
       {secondary && (
-        <Action href={secondary.href} className={`wide text-[15px] font-semibold underline decoration-2 underline-offset-[6px] transition-colors ${text}`}>
+        <Action href={secondary.href} className={`group wide inline-flex items-center gap-2 text-[15px] font-bold transition-colors ${text}`}>
           {secondary.label}
+          <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">→</span>
         </Action>
       )}
     </div>
