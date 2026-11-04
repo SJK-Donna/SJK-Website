@@ -4,6 +4,7 @@ import Locations from "../components/sections/Locations.jsx";
 import { Eyebrow } from "../components/ui/Brand.jsx";
 import Reveal from "../components/ui/Reveal.jsx";
 import { CONTACT_INTERESTS, LOCATIONS } from "../content/site.js";
+import { sendLeadToZoho } from "../content/zohoLeads.js";
 
 const input =
   "w-full border-0 border-b-2 border-ink/20 bg-nav px-4 py-3.5 font-sans text-[16px] text-ink transition-colors placeholder:text-ink/40 focus:border-info focus:bg-white focus:outline-none focus:ring-0";
@@ -13,21 +14,34 @@ const label = "eyebrow mb-2 block text-[11px] text-ink/70";
 // direct lines; the offices and map follow below.
 export default function Contact() {
   const formRef = useRef(null);
-  const [sent, setSent] = useState(false);
+  // "idle" | "sending" | "sent" | "error". Zoho's own redirect back here
+  // (?sent=1) also counts as sent.
+  const [status, setStatus] = useState(() => (new window.URLSearchParams(window.location.search).has("sent") ? "sent" : "idle"));
   const main = LOCATIONS[0];
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     const form = formRef.current;
     if (!form.checkValidity()) {
       form.reportValidity();
       return;
     }
-    // Front-end only: no backend or email service is connected yet, so
-    // nothing is actually sent. Wire this to the CRM or a form service
-    // before launch.
-    setSent(true);
-    form.reset();
+    const data = Object.fromEntries(new window.FormData(form));
+    // Hidden field people never see; bots that fill every field are
+    // quietly ignored.
+    if (data.website) {
+      setStatus("sent");
+      form.reset();
+      return;
+    }
+    setStatus("sending");
+    try {
+      await sendLeadToZoho(data);
+      setStatus("sent");
+      form.reset();
+    } catch {
+      setStatus("error");
+    }
   }
 
   return (
@@ -49,23 +63,23 @@ export default function Contact() {
               <div className="grid gap-6 sm:grid-cols-2">
                 <div>
                   <label htmlFor="cName" className={label}>Name</label>
-                  <input id="cName" name="name" required autoComplete="name" className={input} />
+                  <input id="cName" name="name" required maxLength={120} autoComplete="name" className={input} />
                 </div>
                 <div>
                   <label htmlFor="cCompany" className={label}>Company</label>
-                  <input id="cCompany" name="company" autoComplete="organization" className={input} />
+                  <input id="cCompany" name="company" maxLength={200} autoComplete="organization" className={input} />
                 </div>
                 <div>
                   <label htmlFor="cEmail" className={label}>Email</label>
-                  <input id="cEmail" name="email" type="email" required autoComplete="email" className={input} />
+                  <input id="cEmail" name="email" type="email" required maxLength={100} autoComplete="email" className={input} />
                 </div>
                 <div>
                   <label htmlFor="cMobile" className={label}>Mobile Number</label>
-                  <input id="cMobile" name="mobile" type="tel" autoComplete="tel" className={input} />
+                  <input id="cMobile" name="mobile" type="tel" maxLength={30} autoComplete="tel" className={input} />
                 </div>
                 <div>
                   <label htmlFor="cLocation" className={label}>Location</label>
-                  <input id="cLocation" name="location" autoComplete="address-level2" placeholder="City / Province" className={input} />
+                  <input id="cLocation" name="location" maxLength={100} autoComplete="address-level2" placeholder="City / Province" className={input} />
                 </div>
                 <div>
                   <label htmlFor="cInterest" className={label}>What Are You Interested In?</label>
@@ -79,14 +93,29 @@ export default function Contact() {
               </div>
               <div>
                 <label htmlFor="cMessage" className={label}>Message</label>
-                <textarea id="cMessage" name="message" rows={5} className={input} />
+                <textarea id="cMessage" name="message" rows={5} maxLength={2000} className={input} />
+              </div>
+              {/* Spam trap: hidden from people and screen readers. */}
+              <div className="absolute -left-[9999px]" aria-hidden="true">
+                <label htmlFor="cWebsite">Website</label>
+                <input id="cWebsite" name="website" tabIndex={-1} autoComplete="off" />
               </div>
               <div className="flex flex-wrap items-center gap-6">
-                <button type="submit" className="cut cut-sm wide bg-control px-8 py-4 font-sans text-[15px] font-bold text-white transition-colors hover:bg-forest-deep">
-                  Submit
+                <button
+                  type="submit"
+                  disabled={status === "sending"}
+                  className="cut cut-sm wide bg-control px-8 py-4 font-sans text-[15px] font-bold text-white transition-colors hover:bg-forest-deep disabled:cursor-wait disabled:opacity-60"
+                >
+                  {status === "sending" ? "Sending…" : "Submit"}
                 </button>
-                <p role="status" className="font-sans text-[16px] font-semibold text-control">
-                  {sent ? "Thank you — our team will reach out shortly." : ""}
+                <p role="status" className={`font-sans text-[16px] font-semibold ${status === "error" ? "text-red-700" : "text-control"}`}>
+                  {status === "sent" && "Thank you — our team will reach out shortly."}
+                  {status === "error" && (
+                    <>
+                      Sorry, your message couldn't be sent. Please try again, or call us on{" "}
+                      {main?.phones[0] ? <a href={`tel:${main.phones[0][1]}`} className="underline">{main.phones[0][0]}</a> : "our Manila office"}.
+                    </>
+                  )}
                 </p>
               </div>
             </form>
