@@ -8,7 +8,7 @@ export default function SectionTitle({ eyebrow, title, lead, onDark = false, as:
   return (
     <Reveal className={className}>
       {eyebrow && <Eyebrow onDark={onDark} className="mb-5">{eyebrow}</Eyebrow>}
-      <H id={id} className={`wide font-sans text-[32px] font-extrabold leading-[1.02] tracking-[-0.02em] lg:text-[48px] ${onDark ? "text-white" : "text-ink"}`}>{title}</H>
+      <H id={id} className={`wide font-sans text-[28px] font-extrabold leading-[1.02] tracking-[-0.02em] lg:text-[38px] ${onDark ? "text-white" : "text-ink"}`}>{title}</H>
       {lead && <p className={`mt-5 max-w-[42ch] text-[18px] ${onDark ? "text-white/75" : "text-ink/75"}`}>{lead}</p>}
     </Reveal>
   );

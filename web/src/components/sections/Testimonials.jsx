@@ -12,7 +12,7 @@ export default function Testimonials() {
           <figure key={t.name} className="grid gap-6 sm:grid-cols-[200px_1fr]">
             {t.img && <Photo src={t.img} parallax={false} className="cut cut-sm aspect-square w-full" />}
             <div>
-              <blockquote className="wide font-sans text-[24px] font-extrabold leading-[1.25] text-ink lg:text-[28px]">“{t.quote}”</blockquote>
+              <blockquote className="wide font-sans text-[21px] font-extrabold leading-[1.25] text-ink lg:text-[24px]">“{t.quote}”</blockquote>
               <figcaption className="mt-4 text-[16px] text-ink/80">
                 <span className="font-semibold text-ink">{t.name}</span>, {t.role}
               </figcaption>

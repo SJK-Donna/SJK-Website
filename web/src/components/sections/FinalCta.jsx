@@ -13,7 +13,7 @@ export default function FinalCta() {
             <span className="flag h-3 w-3" aria-hidden="true" />
             Talk to Our Team
           </p>
-          <h2 id="final-cta-title" className="wide mt-6 font-sans text-[40px] font-black leading-[0.98] tracking-[-0.03em] lg:text-[72px]">
+          <h2 id="final-cta-title" className="wide mt-6 font-sans text-[34px] font-black leading-[0.98] tracking-[-0.03em] lg:text-[56px]">
             Let's Build the Right Solution.
           </h2>
         </Reveal>

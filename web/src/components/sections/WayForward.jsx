@@ -16,12 +16,12 @@ export default function WayForward() {
           <SectionTitle id="way-forward-title" eyebrow="Looking Ahead" title={WAY_FORWARD.title} />
           <Reveal delay={100}>
             {WAY_FORWARD.body.map((p, i) => (
-              <p key={i} className={`max-w-[56ch] ${i ? "mt-5 text-ink/75" : "mt-8 text-[20px] leading-[1.55] text-ink"}`}>{p}</p>
+              <p key={i} className={`max-w-[56ch] ${i ? "mt-5 text-ink/75" : "mt-8 text-[18px] leading-[1.55] text-ink"}`}>{p}</p>
             ))}
           </Reveal>
           <Reveal delay={200} className="mt-14 border-l-4 border-info pl-6">
             <p className="text-ink/75">{WAY_FORWARD.closing[0]}</p>
-            <p className="wide mt-2 max-w-[18ch] font-sans text-[32px] font-black leading-[1.02] tracking-[-0.02em] text-ink lg:text-[44px]">
+            <p className="wide mt-2 max-w-[18ch] font-sans text-[28px] font-black leading-[1.02] tracking-[-0.02em] text-ink lg:text-[36px]">
               {WAY_FORWARD.closing[1]}
             </p>
           </Reveal>

@@ -97,7 +97,7 @@ function Reel({ reel, isActive, playing, onEnded, onPick, onStop }) {
           <span className="flag h-2.5 w-2.5" aria-hidden="true" />
           {reel.tag}
         </p>
-        <figcaption className="wide mt-2 font-sans text-[20px] font-extrabold leading-tight">{reel.title}</figcaption>
+        <figcaption className="wide mt-2 font-sans text-[18px] font-extrabold leading-tight">{reel.title}</figcaption>
       </div>
       {/* Amber bar along the bottom marks the reel that has the turn. */}
       <span className={`absolute inset-x-0 bottom-0 h-1 origin-left bg-info transition-transform duration-500 ${isActive ? "scale-x-100" : "scale-x-0"}`} aria-hidden="true" />

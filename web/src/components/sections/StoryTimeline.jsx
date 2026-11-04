@@ -43,7 +43,7 @@ export default function OurStory() {
                 className={`absolute -left-[49px] top-2.5 h-5 w-5 transition-all duration-500 ${active ? "flag" : "bg-nav ring-[3px] ring-inset ring-ink/20"}`}
                 aria-hidden="true"
               />
-              <p className={`wide font-sans text-[28px] font-black transition-colors duration-500 lg:text-[36px] ${active ? "text-ink" : "text-ink/35"}`}>{t.when}</p>
+              <p className={`wide font-sans text-[24px] font-black transition-colors duration-500 lg:text-[30px] ${active ? "text-ink" : "text-ink/35"}`}>{t.when}</p>
               <p className="mt-1 max-w-[52ch] text-ink/75">{t.what}</p>
               {t.img && (
                 <figure className="mt-5 lg:hidden">
@@ -81,7 +81,7 @@ function StoryFrame({ current, onPick }) {
         <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-control/90 via-control/50 to-transparent px-5 pb-4 pt-14 text-white">
           <p key={current} className="rise flex items-center gap-2.5">
             <span className="flag h-3.5 w-3.5" aria-hidden="true" />
-            <span className="wide font-sans text-[20px] font-black">{t.when}</span>
+            <span className="wide font-sans text-[18px] font-black">{t.when}</span>
           </p>
         </div>
         <span className="eyebrow absolute right-4 top-4 bg-control/70 px-2 py-1 text-[10px] text-white" aria-hidden="true">

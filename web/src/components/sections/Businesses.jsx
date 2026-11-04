@@ -26,7 +26,7 @@ export default function Businesses() {
                 </div>
               </Photo>
               <p className="eyebrow mt-8 text-[12px] text-info">{b.tagline}</p>
-              <h3 className="wide mt-3 font-sans text-[28px] font-extrabold tracking-[-0.01em] lg:text-[34px]">{b.name}</h3>
+              <h3 className="wide mt-3 font-sans text-[24px] font-extrabold tracking-[-0.01em] lg:text-[28px]">{b.name}</h3>
               <p className="mt-4 max-w-[52ch] text-white/75">{b.body}</p>
               <PillLinks onDark primary={{ label: b.cta, href: businessHref(b) }} className="mt-8" />
             </Reveal>

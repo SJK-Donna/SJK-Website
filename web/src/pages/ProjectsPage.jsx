@@ -18,7 +18,7 @@ export function ComingSoon({ title, body, cta, topics }) {
           <span className="flag h-3 w-3" aria-hidden="true" />
           Coming Soon
         </p>
-        <h2 className="wide mt-5 font-sans text-[30px] font-black leading-[1.05] text-ink lg:text-[40px]">{title}</h2>
+        <h2 className="wide mt-5 font-sans text-[26px] font-black leading-[1.05] text-ink lg:text-[34px]">{title}</h2>
         <p className="mt-4 text-ink/75">{body}</p>
         <PillLinks primary={cta} className="mt-8" />
       </div>

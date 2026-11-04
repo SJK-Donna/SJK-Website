@@ -11,7 +11,7 @@ export default function GivingBack() {
         {GIVING_BACK.map((g) => (
           <article key={g.title} className="group">
             {g.img && <Photo src={g.img} className="cut aspect-[4/3] w-full" />}
-            <h3 className="wide mt-5 font-sans text-[22px] font-extrabold text-ink">{g.title}</h3>
+            <h3 className="wide mt-5 font-sans text-[20px] font-extrabold text-ink">{g.title}</h3>
             <p className="mt-2 text-[16px] text-ink/80">{g.body}</p>
           </article>
         ))}

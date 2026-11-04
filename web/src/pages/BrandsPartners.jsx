@@ -44,7 +44,7 @@ export default function BrandsPartners() {
                   <img src={b.logo} alt={`${b.name} logo`} loading="lazy" className="h-16 w-auto object-contain lg:h-20" />
                 </div>
                 <Eyebrow className="mt-8">{b.tagline}</Eyebrow>
-                <h2 id={`${b.id}-title`} className="wide mt-4 font-sans text-[34px] font-black tracking-[-0.02em] text-ink lg:text-[52px]">{b.name}</h2>
+                <h2 id={`${b.id}-title`} className="wide mt-4 font-sans text-[28px] font-black tracking-[-0.02em] text-ink lg:text-[42px]">{b.name}</h2>
                 <p className="mt-5 max-w-[48ch] text-ink/75">{b.body}</p>
                 {b.id === "golf-carts-ph" && (
                   <ul className="mt-7 space-y-3 border-t border-ink/15 pt-6 font-sans text-[16px] font-medium text-ink">

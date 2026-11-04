@@ -21,9 +21,15 @@ const ZOHO_FORM = {
 // for the sales team to route.
 const LEAD_CREATION = {
   "Golf Carts / Electric Vehicles": "GCPH",
-  "Turf & Golf Course Equipment": "GMPH",
+  "Golf Course Equipment": "GMPH",
   "Grounds & Landscaping": "GMPH",
   "Compact Equipment": "GMPH"
+};
+
+// Website interest labels whose Zoho picklist value is spelled differently
+// (the Zoho form still uses its original wording).
+const ZOHO_INTEREST = {
+  "Golf Course Equipment": "Turf & Golf Course Equipment"
 };
 
 // Zoho needs a Last Name; the website asks for one Name field, so the last
@@ -55,7 +61,7 @@ export async function sendLeadToZoho(fields) {
     Description: fields.message.trim() || `Website enquiry: ${fields.interest}`,
     "Lead Source": "Website",
     LEADCF11: LEAD_CREATION[fields.interest] || "-None-",
-    LEADCF32: fields.interest,
+    LEADCF32: ZOHO_INTEREST[fields.interest] ?? fields.interest,
     aG9uZXlwb3Q: "" // Zoho's own spam trap; must stay empty
   });
 

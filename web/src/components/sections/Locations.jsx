@@ -30,7 +30,7 @@ export default function Locations() {
           <ol className="mt-12 grid gap-x-10 gap-y-10 sm:grid-cols-2">
             {LOCATIONS.map((l, i) => (
               <li key={l.id} className="border-t-4 border-info pt-5 text-[16px] leading-relaxed text-ink/80">
-                <h3 className="wide font-sans text-[22px] font-extrabold text-ink">
+                <h3 className="wide font-sans text-[20px] font-extrabold text-ink">
                   <span className="mr-2 text-control">{i + 1}</span>
                   {l.name}
                 </h3>

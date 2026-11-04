@@ -65,7 +65,7 @@ export default function Contact() {
         <div className="mx-auto grid max-w-[1320px] gap-12 lg:grid-cols-12 lg:gap-16">
           <Reveal className="lg:col-span-8">
             <Eyebrow>Send Us a Message</Eyebrow>
-            <h2 className="wide mt-4 font-sans text-[30px] font-black leading-[1.05] text-ink lg:text-[40px]">How can we help?</h2>
+            <h2 className="wide mt-4 font-sans text-[26px] font-black leading-[1.05] text-ink lg:text-[34px]">How can we help?</h2>
             <form ref={formRef} onSubmit={handleSubmit} noValidate className="mt-10 space-y-6">
               <div className="grid gap-6 sm:grid-cols-2">
                 <div>
@@ -133,12 +133,12 @@ export default function Contact() {
                   <span className="flag h-3 w-3" aria-hidden="true" />
                   Call Us Directly
                 </p>
-                <h3 className="wide mt-4 font-sans text-[24px] font-extrabold">{main.name}</h3>
+                <h3 className="wide mt-4 font-sans text-[21px] font-extrabold">{main.name}</h3>
                 {main.role && <p className="text-[14px] text-white/60">{main.role}</p>}
                 <ul className="mt-6 space-y-2">
                   {main.phones.map(([shown, dial]) => (
                     <li key={dial}>
-                      <a href={`tel:${dial}`} className="wide font-sans text-[20px] font-bold text-info hover:text-white">{shown}</a>
+                      <a href={`tel:${dial}`} className="wide font-sans text-[18px] font-bold text-info hover:text-white">{shown}</a>
                     </li>
                   ))}
                 </ul>

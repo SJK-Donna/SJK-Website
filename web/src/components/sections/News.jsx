@@ -14,7 +14,7 @@ export function NewsCard({ item: n }) {
       <p className="eyebrow mt-5 text-[11px] text-ink/60">
         {n.category} · <time dateTime={n.date}>{formatDate(n.date)}</time>
       </p>
-      <h3 className="wide mt-2 font-sans text-[22px] font-extrabold leading-snug text-ink">{n.title}</h3>
+      <h3 className="wide mt-2 font-sans text-[20px] font-extrabold leading-snug text-ink">{n.title}</h3>
       <p className="mt-3 text-[16px] text-ink/80">{n.summary}</p>
     </article>
   );

@@ -59,12 +59,12 @@ export default function Hero() {
           <p className="eyebrow rise text-white/80" style={{ animationDelay: "0.35s" }}>{COMPANY.name}</p>
           <h1
             id="hero-title"
-            className="wide rise mt-5 max-w-[17ch] font-sans text-[40px] font-black leading-[0.98] tracking-[-0.03em] sm:text-[60px] lg:text-[84px]"
+            className="wide rise mt-5 max-w-[17ch] font-sans text-[34px] font-black leading-[0.98] tracking-[-0.03em] sm:text-[48px] lg:text-[64px]"
             style={{ animationDelay: "0.5s" }}
           >
             {COMPANY.headline}
           </h1>
-          <p className="rise mt-8 max-w-[52ch] text-[18px] text-white/80 lg:text-[20px]" style={{ animationDelay: "0.7s" }}>
+          <p className="rise mt-8 max-w-[52ch] text-[18px] text-white/80 lg:text-[18px]" style={{ animationDelay: "0.7s" }}>
             {COMPANY.positioning}
           </p>
           <div className="rise" style={{ animationDelay: "0.85s" }}>

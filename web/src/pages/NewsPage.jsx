@@ -19,7 +19,7 @@ export default function NewsPage() {
         title="What's Happening at SJK"
         lead="Projects, demonstrations, training, partnerships and company milestones."
         img="/images/brands/campey.jpg"
-        alt="Turf renovation machine working a sports pitch"
+        alt="Renovation machine working a sports field"
       />
       <section className="bg-surface px-6 py-16 lg:py-24">
         <div className="mx-auto max-w-[1320px]">

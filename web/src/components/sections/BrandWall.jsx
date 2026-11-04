@@ -13,7 +13,7 @@ export function BrandGroups({ groups = BRAND_GROUPS }) {
           <h3 className="eyebrow text-[12px] text-ink/60">{g.group}</h3>
           <ul className="mt-3 flex flex-wrap gap-x-8 gap-y-1">
             {g.brands.map((b) => (
-              <li key={b} className="wide font-sans text-[30px] font-extrabold leading-[1.25] tracking-[-0.015em] text-ink lg:text-[40px]">
+              <li key={b} className="wide font-sans text-[26px] font-extrabold leading-[1.25] tracking-[-0.015em] text-ink lg:text-[34px]">
                 {b}
               </li>
             ))}
@@ -28,7 +28,7 @@ export function BrandGroups({ groups = BRAND_GROUPS }) {
 // business opens with a navy label tile, followed by one tile per brand it
 // represents. Twelve tiles fill 2, 3 and 4 columns evenly. Brand names
 // stand in for logos until the logo files are supplied.
-const BUSINESS_LABEL = { "Golfcarts.ph": "Golf & Mobility", "Groundmasters.ph": "Turf, Grounds & Equipment" };
+const BUSINESS_LABEL = { "Golfcarts.ph": "Golf & Mobility", "Groundmasters.ph": "Course Care, Grounds & Equipment" };
 
 function LogoWall() {
   return (
@@ -37,12 +37,12 @@ function LogoWall() {
         <li key={g.business} className="flex min-h-[120px] flex-col justify-end bg-control p-4 text-white sm:p-5 lg:min-h-[150px] lg:p-6">
           <span className="flag mb-auto h-4 w-4" aria-hidden="true" />
           <span className="eyebrow mt-6 text-[10px] text-info">{BUSINESS_LABEL[g.business] ?? g.group}</span>
-          <span className="mt-1 font-sans text-[15px] font-extrabold sm:text-[18px] lg:text-[20px]">{g.business}</span>
+          <span className="mt-1 font-sans text-[15px] font-extrabold sm:text-[18px] lg:text-[18px]">{g.business}</span>
         </li>,
         ...g.brands.map((b) => (
           <li key={b} className="group relative flex min-h-[120px] items-center justify-center bg-surface p-5 text-center transition-colors hover:bg-nav lg:min-h-[150px]">
             <span className="flag absolute left-0 top-0 h-3 w-3 scale-0 transition-transform duration-300 group-hover:scale-100" aria-hidden="true" />
-            <span className="wide font-sans text-[20px] font-black tracking-[-0.01em] text-ink lg:text-[26px]">{b}</span>
+            <span className="wide font-sans text-[18px] font-black tracking-[-0.01em] text-ink lg:text-[22px]">{b}</span>
           </li>
         ))
       ])}

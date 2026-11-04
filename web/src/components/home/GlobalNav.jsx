@@ -63,7 +63,7 @@ export default function GlobalNav() {
               to={l.to}
               end
               onClick={() => setOpen(false)}
-              className={({ isActive }) => `wide flex items-center gap-3 py-4 font-sans text-[20px] font-bold ${isActive ? "text-info" : "text-white"}`}
+              className={({ isActive }) => `wide flex items-center gap-3 py-4 font-sans text-[18px] font-bold ${isActive ? "text-info" : "text-white"}`}
             >
               {l.label}
             </NavLink>

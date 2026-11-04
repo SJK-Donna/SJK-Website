@@ -9,7 +9,7 @@ export function ProjectCard({ project: p }) {
     <article className="group flex flex-col">
       {p.img && <Photo src={p.img} alt={`${p.client}, ${p.type}`} className="cut aspect-[4/3] w-full" />}
       <p className="eyebrow mt-5 text-[11px] text-ink/60">{p.type} · {p.industry}</p>
-      <h3 className="wide mt-2 font-sans text-[22px] font-extrabold text-ink">{p.client}</h3>
+      <h3 className="wide mt-2 font-sans text-[20px] font-extrabold text-ink">{p.client}</h3>
       {p.location && <p className="text-[16px] text-ink/75">{p.location}</p>}
       <p className="mt-3 text-[16px] text-ink/80">{p.summary}</p>
     </article>

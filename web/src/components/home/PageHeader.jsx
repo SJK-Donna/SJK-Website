@@ -25,13 +25,13 @@ export default function PageHeader({ eyebrow, title, lead, img, alt = "", positi
             </div>
           )}
           <h1
-            className="wide rise mt-5 max-w-[18ch] font-sans text-[40px] font-black leading-[0.98] tracking-[-0.03em] sm:text-[56px] lg:text-[76px]"
+            className="wide rise mt-5 max-w-[18ch] font-sans text-[34px] font-black leading-[0.98] tracking-[-0.03em] sm:text-[44px] lg:text-[58px]"
             style={{ animationDelay: "0.45s" }}
           >
             {title}
           </h1>
           {lead && (
-            <p className="rise mt-7 max-w-[56ch] text-[18px] text-white/80 lg:text-[20px]" style={{ animationDelay: "0.6s" }}>
+            <p className="rise mt-7 max-w-[56ch] text-[18px] text-white/80 lg:text-[18px]" style={{ animationDelay: "0.6s" }}>
               {lead}
             </p>
           )}

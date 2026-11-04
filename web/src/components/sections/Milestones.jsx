@@ -33,7 +33,7 @@ export default function Milestones() {
             <Reveal key={s.label} delay={(i % 4) * 100} className={`border-b border-white/15 py-8 pr-6 ${i % 4 ? "lg:border-l lg:pl-8" : ""} ${i % 2 ? "border-l pl-6 lg:pl-8" : ""}`}>
               <dt className="sr-only">{s.label}</dt>
               <dd>
-                <CountUp value={s.value} suffix={s.suffix} className="wider block font-sans text-[52px] font-black leading-none tracking-[-0.03em] text-info lg:text-[72px]" />
+                <CountUp value={s.value} suffix={s.suffix} className="wider block font-sans text-[42px] font-black leading-none tracking-[-0.03em] text-info lg:text-[56px]" />
               </dd>
               <dd className="mt-4 font-sans text-[16px] font-bold leading-snug text-white" aria-hidden="true">{s.label}</dd>
               {s.detail && <dd className="mt-1 text-[15px] text-white/60">{s.detail}</dd>}
@@ -48,7 +48,7 @@ export default function Milestones() {
           {MILESTONES.map((m, i) => (
             <Reveal key={m.value} delay={i * 100}>
               <span className="flag mb-4 block h-4 w-4" aria-hidden="true" />
-              <dt className="wide font-sans text-[20px] font-extrabold leading-tight tracking-[-0.01em] text-white lg:text-[22px]">{m.value}</dt>
+              <dt className="wide font-sans text-[18px] font-extrabold leading-tight tracking-[-0.01em] text-white lg:text-[20px]">{m.value}</dt>
               <dd className="mt-2 max-w-[34ch] text-[15px] text-white/65">{m.detail}</dd>
             </Reveal>
           ))}
