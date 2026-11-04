@@ -32,15 +32,27 @@ jobs:
 
       - run: npm ci
 
-      # The site is served from https://<owner>.github.io/<repo>/, so build
-      # with that subfolder as the base path.
+      # Ask GitHub where the site is served: "/SJK-Website" on the
+      # github.io address, or "" once a custom domain (sjkguahan.com) is set
+      # in Settings → Pages. The build uses that as its base path, so the
+      # same workflow is right for both without editing.
+      - id: pages
+        uses: actions/configure-pages@v5
+
       - run: npm run build
         env:
-          PAGES_BASE: /${{ github.event.repository.name }}/
+          PAGES_BASE: ${{ steps.pages.outputs.base_path }}/
 
-      # Single-page app: GitHub Pages serves 404.html for unknown paths, so a
-      # copy of index.html lets deep links like /who-we-are load directly.
-      - run: cp dist/index.html dist/404.html
+      # Single-page app: give every page its own copy of index.html so links
+      # like /who-we-are load directly and return 200 (not 404) to visitors
+      # and search engines. 404.html covers any other address.
+      # Keep this list in step with the routes in src/App.jsx.
+      - run: |
+          for route in who-we-are brands-partners projects news contact; do
+            mkdir -p "dist/$route"
+            cp dist/index.html "dist/$route/index.html"
+          done
+          cp dist/index.html dist/404.html
 
       - uses: actions/upload-pages-artifact@v3
         with:
