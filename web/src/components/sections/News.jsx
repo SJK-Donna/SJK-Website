@@ -10,7 +10,7 @@ export const newestFirst = (items) => [...items].sort((a, b) => b.date.localeCom
 export function NewsCard({ item: n }) {
   return (
     <article className="group flex flex-col">
-      {n.img && <Photo src={n.img} className="cut aspect-[16/10] w-full" />}
+      {n.img && <Photo src={n.img} alt={n.alt} className="cut aspect-[16/10] w-full" />}
       <p className="eyebrow mt-5 text-[11px] text-ink/60">
         {n.category} · <time dateTime={n.date}>{formatDate(n.date)}</time>
       </p>
@@ -24,7 +24,7 @@ export function NewsCard({ item: n }) {
 export default function LatestNews() {
   if (NEWS.length === 0) return null;
   return (
-    <Margin eyebrow="News" title="What's Happening at SJK" className="bg-nav">
+    <Margin eyebrow="News" title="What's Happening at SJK" className="border-t border-ink/10 bg-surface">
       <div className="grid gap-x-6 gap-y-12 sm:grid-cols-2">
         {newestFirst(NEWS).slice(0, 3).map((n) => (
           <NewsCard key={n.title} item={n} />

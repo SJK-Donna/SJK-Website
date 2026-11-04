@@ -24,41 +24,42 @@ export function BrandGroups({ groups = BRAND_GROUPS }) {
   );
 }
 
-// Every brand in one row sliding sideways, amber flags between the names.
-// The list is rendered twice for a seamless loop; the copy is hidden from
-// screen readers, which read the first list once.
-const ALL_BRANDS = BRAND_GROUPS.flatMap((g) => g.brands);
+// Brief §14 — "a clean logo wall", grouped as the brief groups it: each
+// business opens with a navy label tile, followed by one tile per brand it
+// represents. Twelve tiles fill 2, 3 and 4 columns evenly. Brand names
+// stand in for logos until the logo files are supplied.
+const BUSINESS_LABEL = { "Golfcarts.ph": "Golf & Mobility", "Groundmasters.ph": "Turf, Grounds & Equipment" };
 
-function BrandMarquee() {
-  const Names = ({ hidden }) => (
-    <ul className="flex shrink-0 items-center" aria-hidden={hidden || undefined}>
-      {ALL_BRANDS.map((b) => (
-        <li key={b} className="flex items-center whitespace-nowrap">
-          <span className="wide px-8 font-sans text-[34px] font-black tracking-[-0.02em] text-ink lg:px-12 lg:text-[56px]">{b}</span>
-          <span className="flag h-4 w-4 lg:h-5 lg:w-5" aria-hidden="true" />
-        </li>
-      ))}
-    </ul>
-  );
+function LogoWall() {
   return (
-    <div className="overflow-hidden border-y border-ink/10 py-6 lg:py-9">
-      <div className="marquee flex w-max">
-        <Names />
-        <Names hidden />
-      </div>
-    </div>
+    <ul className="grid grid-cols-2 gap-px border border-ink/10 bg-ink/10 sm:grid-cols-3 lg:grid-cols-4">
+      {BRAND_GROUPS.flatMap((g) => [
+        <li key={g.business} className="flex min-h-[120px] flex-col justify-end bg-control p-4 text-white sm:p-5 lg:min-h-[150px] lg:p-6">
+          <span className="flag mb-auto h-4 w-4" aria-hidden="true" />
+          <span className="eyebrow mt-6 text-[10px] text-info">{BUSINESS_LABEL[g.business] ?? g.group}</span>
+          <span className="mt-1 font-sans text-[15px] font-extrabold sm:text-[18px] lg:text-[20px]">{g.business}</span>
+        </li>,
+        ...g.brands.map((b) => (
+          <li key={b} className="group relative flex min-h-[120px] items-center justify-center bg-surface p-5 text-center transition-colors hover:bg-nav lg:min-h-[150px]">
+            <span className="flag absolute left-0 top-0 h-3 w-3 scale-0 transition-transform duration-300 group-hover:scale-100" aria-hidden="true" />
+            <span className="wide font-sans text-[20px] font-black tracking-[-0.01em] text-ink lg:text-[26px]">{b}</span>
+          </li>
+        ))
+      ])}
+    </ul>
   );
 }
 
-// Brief §14 — logo and name only.
 export default function BrandWall() {
   return (
-    <section aria-labelledby="brands-title" className="bg-surface py-20 lg:py-28">
-      <div className="mx-auto mb-12 grid max-w-[1320px] gap-8 px-6 lg:grid-cols-12 lg:items-end">
-        <SectionTitle id="brands-title" eyebrow="Brands & Partners" title="Trusted Brands. Local Support." className="lg:col-span-8" />
-        <PillLinks primary={{ label: "View Our Brands & Partners", href: "/brands-partners" }} className="lg:col-span-4 lg:justify-end" />
+    <section aria-labelledby="brands-title" className="bg-surface px-6 py-20 lg:py-28">
+      <div className="mx-auto max-w-[1320px]">
+        <div className="mb-12 grid gap-8 lg:grid-cols-12 lg:items-end">
+          <SectionTitle id="brands-title" eyebrow="Brands & Partners" title="Trusted Brands. Local Support." className="lg:col-span-8" />
+          <PillLinks primary={{ label: "View Our Brands & Partners", href: "/brands-partners" }} className="lg:col-span-4 lg:justify-end" />
+        </div>
+        <LogoWall />
       </div>
-      <BrandMarquee />
     </section>
   );
 }

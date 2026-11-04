@@ -1,7 +1,6 @@
 import Hero from "../components/sections/Hero.jsx";
 import Intro from "../components/sections/Intro.jsx";
 import Businesses from "../components/sections/Businesses.jsx";
-import FleetGuide from "../components/sections/FleetGuide.jsx";
 import WayForward from "../components/sections/WayForward.jsx";
 import Milestones from "../components/sections/Milestones.jsx";
 import Reels from "../components/sections/Reels.jsx";
@@ -16,8 +15,10 @@ import { Slant, NAVY, WHITE, MIST } from "../components/ui/Brand.jsx";
 
 // Homepage in the order of the content brief (§7–§18). Projects,
 // testimonials, Giving Back and news render only once real entries exist
-// in content/site.js. Diagonal edges (the logo's "/" angle) mark the
-// main changes between navy and light sections.
+// in content/site.js. The "In the Field" reels sit where Featured Projects
+// go (§12), showing equipment working in real environments (§26).
+// Diagonal edges (the logo's "/" angle) mark the main changes between navy
+// and light sections.
 export default function Home() {
   return (
     <>
@@ -27,7 +28,6 @@ export default function Home() {
       <Slant from={WHITE} to={NAVY} />
       <Businesses />
       <Slant from={NAVY} to={MIST} />
-      <FleetGuide />
       <WayForward />
       <Milestones />
       <Reels />

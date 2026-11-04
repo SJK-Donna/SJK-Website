@@ -32,7 +32,9 @@ export const NAV = [
 
 // Brief §7: hero imagery rotating every 3–5 seconds, covering golf carts,
 // turf equipment, compact equipment, customer projects and team activity.
+// The first slide is a short clip (`video`), as the brief asks for.
 export const HERO_SLIDES = [
+  { caption: "Golfers heading out in a Club Car fleet", src: "/images/videos/hero-fleet.jpg", video: "/images/videos/hero-fleet.mp4", alt: "Golfers and caddies boarding white Club Car golf carts on the cart path beside a pond", position: "65% 50%" },
   { caption: "Golfcarts.ph fleet on a customer course", src: "/images/sjk/fleet-course.jpg", alt: "Fleet of black Club Car golf carts lined up beside a tropical course" },
   { caption: "Fairway mowing on championship turf", src: "/images/carousel/slide-3.jpg", alt: "Fairway mower maintaining championship turf" },
   { caption: "Compact equipment shaping a site", src: "/images/brands/wacker-neuson-mountain.jpg", alt: "Compact excavator working on a mountain site", position: "50% 20%" },
@@ -82,22 +84,6 @@ export const BUSINESSES = [
   }
 ];
 
-// Golfcarts.ph buyer guidance, adapted from its own "questions to ask
-// before buying a fleet" social series.
-export const FLEET_GUIDE = {
-  title: "Five Questions to Ask Before You Buy a Golf Cart Fleet",
-  intro: "A fleet is a long-term investment. These are the questions our Golfcarts.ph team encourages every course and resort to ask, whoever they buy from.",
-  img: "/images/brands/golf-carts-ph.jpg",
-  alt: "Golfcarts.ph Club Car golf carts lined up on a golf course",
-  questions: [
-    { q: "How long does the battery actually last?", a: "Ask for real-world runtime per charge, not lab specs, and the expected lifespan in years or charge cycles. A cart that dies mid-round costs more than the sticker price ever showed." },
-    { q: "Lithium or lead-acid: what is the real difference?", a: "Lithium charges faster, lasts longer, needs no watering and weighs less. Lead-acid costs less upfront but needs more upkeep and has a shorter life. Your usage volume decides which pays off faster." },
-    { q: "What does the maintenance contract actually cover?", a: "Get specifics: are parts included or billed separately, how fast is the response to a breakdown, and is service on-site or drop-off? A vague “we’ll take care of it” isn’t a contract." },
-    { q: "What will this fleet be worth in five years?", a: "Authorized, well-maintained Club Car units hold their value significantly better than unbranded imports. Ask your dealer for real resale data, not a guess." },
-    { q: "Can it be personalized?", a: "Custom colors, branding and decals, seating configuration and add-ons such as coolers, ball washers and storage, so your fleet matches your course’s identity rather than a generic default." }
-  ]
-};
-
 // What Golfcarts.ph provides, from the brief and its customer guidance.
 export const GOLFCARTS_SERVICES = [
   "Golf course fleets",
@@ -115,8 +101,8 @@ export const WAY_FORWARD = {
     "Our role is to bring these solutions closer to our customers through product demonstrations, technical support, operator training, education and real-world testing — helping customers understand not only what new technologies are available, but why and where they can create value."
   ],
   closing: ["We believe that introducing a product is only the beginning.", "The real value comes from making the solution work."],
-  img: "/images/sjk/service-team.jpg",
-  alt: "Golfcarts.ph service technicians working on a golf cart steering assembly"
+  img: "/images/sjk/product-training.jpg",
+  alt: "SJK team receiving hands-on product training on new turf equipment"
 };
 
 // Only the four qualitative milestones the brief lists. Add verified figures
@@ -175,14 +161,14 @@ export const PARTNERS = [
 
 // Branch addresses and numbers as supplied by SJK. `phones` pairs the
 // number as displayed with its dialable form; branches without a direct
-// line point visitors to the Contact page. Roles come from the brief
-// (none was given for Clark).
+// line point visitors to the Contact page. Names and roles follow the
+// brief §17 (none was given for Clark).
 const directions = (address) => `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(address)}`;
 
 export const LOCATIONS = [
   {
     id: "manila",
-    name: "Manila",
+    name: "Metro Manila",
     role: "Corporate / Sales / Service Operations",
     address: "1877 Honda Cars Manila Building, Paz M. Guazon St. cor Pres. Quirino Ave., Paco, Manila, 1007 National Capital Region",
     phones: [
@@ -202,7 +188,7 @@ export const LOCATIONS = [
   },
   {
     id: "laguna",
-    name: "Laguna",
+    name: "Santa Rosa",
     role: "Assembly / Technical / Operations",
     address: "Nissan Technopark, Purok 5 NMPI Rd, City of Santa Rosa, Laguna",
     phones: [],
@@ -292,8 +278,26 @@ export const TESTIMONIALS = [];
 
 export const NEWS_CATEGORIES = ["Company News", "Projects", "Product News", "Events", "Demonstrations", "Industry Insights", "Community"];
 
-// { title: "…", date: "2026-10-07", category: "Company News", summary: "…", img: "/images/news/….jpg" }
-export const NEWS = [];
+// { title: "…", date: "2026-10-07", category: "Company News", summary: "…", img: "/images/news/….jpg", alt: "…" }
+// Dates below are from the event photos' camera timestamps.
+export const NEWS = [
+  {
+    title: "SJK at the 11th Philippine Golf Course Management Conference",
+    date: "2026-05-13",
+    category: "Events",
+    summary: "SJK Guahan and Groundmasters.ph met the golf course management community, presenting turf and grounds equipment from our partner brands.",
+    img: "/images/sjk/gcm-conference-booth.jpg",
+    alt: "SJK Guahan and Groundmasters.ph booth with turf equipment displays at the conference"
+  },
+  {
+    title: "Golfcarts.ph at the 9th Philippine Hospitality Summit",
+    date: "2026-02-11",
+    category: "Events",
+    summary: "Golfcarts.ph showcased Club Car passenger carts for hotels, resorts and properties at the 9th Philippine Hospitality Summit.",
+    img: "/images/sjk/hospitality-summit-booth.jpg",
+    alt: "Golfcarts.ph booth with a Club Car passenger cart and banner at the summit"
+  }
+];
 
 // Real activities only — { title: "…", body: "…", img: "/images/…" }
 export const GIVING_BACK = [];

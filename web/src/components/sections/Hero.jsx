@@ -1,14 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import PillLinks from "../home/PillLinks.jsx";
 import { COMPANY, HERO_SLIDES } from "../../content/site.js";
 
-const INTERVAL_MS = 6000;
+// Brief §7: imagery rotates every 3–5 seconds.
+const INTERVAL_MS = 5000;
 
 // Brief §7, set full-screen: the photos cross-fade behind a navy wash with
 // a slow push-in on each, the amber flag from the logo plants itself, and
 // the headline arrives along the logo's diagonal. A caption names what is
 // shown, and a pause control stops the rotation; under reduced motion it
-// starts paused.
+// starts paused. A slide with `video` plays a short silent clip (its
+// `src` image is the poster) while it is the one on screen.
 export default function Hero() {
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(() => window.matchMedia("(prefers-reduced-motion: reduce)").matches);
@@ -23,19 +25,23 @@ export default function Hero() {
     <section aria-labelledby="hero-title" className="relative isolate flex min-h-[calc(100svh-64px)] flex-col overflow-hidden bg-control text-white">
       {/* Photos */}
       <div className="absolute inset-0 -z-10">
-        {HERO_SLIDES.map((s, i) => (
-          <img
-            key={s.src}
-            src={s.src}
-            alt={i === index ? s.alt : ""}
-            aria-hidden={i !== index}
-            loading={i === 0 ? "eager" : "lazy"}
-            style={{ objectPosition: s.position }}
-            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-[1400ms] ease-out ${
-              i === index ? `opacity-100 ${paused ? "" : "ken-burns"}` : "opacity-0"
-            }`}
-          />
-        ))}
+        {HERO_SLIDES.map((s, i) =>
+          s.video ? (
+            <HeroVideo key={s.src} slide={s} active={i === index} playing={i === index && !paused} />
+          ) : (
+            <img
+              key={s.src}
+              src={s.src}
+              alt={i === index ? s.alt : ""}
+              aria-hidden={i !== index}
+              loading={i === 0 ? "eager" : "lazy"}
+              style={{ objectPosition: s.position }}
+              className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-[1400ms] ease-out ${
+                i === index ? `opacity-100 ${paused ? "" : "ken-burns"}` : "opacity-0"
+              }`}
+            />
+          )
+        )}
         {/* Navy wash: heavy on the left where the text sits, and along the
             bottom for the caption; the photo shows through on the right. */}
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(13,28,44,.94)_0%,rgba(13,28,44,.78)_42%,rgba(13,28,44,.25)_100%)]" />
@@ -120,5 +126,33 @@ export default function Hero() {
         </div>
       </div>
     </section>
+  );
+}
+
+// Silent clip for a hero slide. Loads only once its slide comes up, plays
+// while it is on screen and the rotation is running, and fades like the
+// photos.
+function HeroVideo({ slide, active, playing }) {
+  const ref = useRef(null);
+  useEffect(() => {
+    const v = ref.current;
+    if (!v) return;
+    if (playing) v.play().catch(() => {});
+    else v.pause();
+  }, [playing]);
+  return (
+    <video
+      ref={ref}
+      src={slide.video}
+      poster={slide.src}
+      muted
+      loop
+      playsInline
+      preload={active ? "auto" : "none"}
+      aria-label={active ? slide.alt : undefined}
+      aria-hidden={!active}
+      style={{ objectPosition: slide.position }}
+      className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-[1400ms] ease-out ${active ? "opacity-100" : "opacity-0"}`}
+    />
   );
 }

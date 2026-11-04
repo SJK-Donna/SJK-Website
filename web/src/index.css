@@ -130,20 +130,6 @@ a, button, select, input, textarea {
   to { transform: scaleX(1); }
 }
 
-/* Brand roster scrolls sideways; the list is rendered twice so the loop
-   is seamless. Paused on hover, and still under reduced motion. */
-.marquee { animation: marquee 40s linear infinite; }
-.marquee:hover { animation-play-state: paused; }
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .marquee { animation: none; width: auto; padding: 0 1.5rem; }
-  .marquee > ul { flex-wrap: wrap; row-gap: 0.5rem; }
-  .marquee > ul[aria-hidden] { display: none; }
-}
-
 /* Locations map: each branch marker drops in, then sends out one amber
    ring. Delays are set inline per marker. */
 .map-pin { animation: pin-in 0.55s cubic-bezier(.2,.8,.3,1.25) both; }
