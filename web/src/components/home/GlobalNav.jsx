@@ -6,7 +6,7 @@ import { LogoOnDark } from "../ui/Brand.jsx";
 
 // The brief's six destinations plus a permanent "Talk to Our Team" button,
 // on a navy bar. The current page is marked with the logo's amber flag
-// above the link, not just a colour change.
+// beside the link's first letter, not just a colour change.
 export default function GlobalNav() {
   const [open, setOpen] = useState(false);
   // The bar firms up (fully opaque, with a shadow) once content slides under it.
@@ -31,7 +31,7 @@ export default function GlobalNav() {
               <NavLink to={l.to} end className={linkClass}>
                 {({ isActive }) => (
                   <>
-                    {isActive && <span className="flag absolute -top-3 left-0 h-2.5 w-2.5" aria-hidden="true" />}
+                    {isActive && <span className="flag absolute -left-4 top-1/2 h-2.5 w-2.5 -translate-y-1/2" aria-hidden="true" />}
                     {l.label}
                   </>
                 )}
