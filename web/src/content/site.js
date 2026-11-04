@@ -133,15 +133,14 @@ export const BRAND_GROUPS = [
   {
     business: "Groundmasters.ph",
     group: "Groundmasters.ph",
-    brands: ["Jacobsen", "Smithco", "Iseki", "Campey", "Dakota", "Trimax", "Wacker Neuson", "ONECOTE"],
+    brands: ["Jacobsen", "Smithco", "Iseki", "Campey", "Dakota", "Trimax", "Wacker Neuson"],
     // Brief §22 categories, used on the Brands & Partners page. Placements of
-    // Smithco, Dakota and ONECOTE are best guesses awaiting confirmation.
+    // Smithco and Dakota are best guesses awaiting confirmation.
     categories: [
       { group: "Professional Course Care Equipment", brands: ["Jacobsen", "Trimax", "Campey"] },
       { group: "Spraying & Application", brands: ["Smithco"] },
       { group: "Tractors & Utility Equipment", brands: ["Iseki"] },
       { group: "Compact Construction Equipment", brands: ["Wacker Neuson"] },
-      { group: "Grass Care & Soil Solutions", brands: ["ONECOTE"] },
       { group: "Specialized Grounds Equipment", brands: ["Dakota"] }
     ]
   }

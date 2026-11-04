@@ -28,7 +28,8 @@ export function BrandGroups({ groups = BRAND_GROUPS }) {
 // Brief §14 — "a clean logo wall", grouped as the brief groups it: each
 // business opens with a navy label tile, followed by one tile per brand it
 // represents. A closing "Other approved partners" tile (the brief's own
-// last entry) links to the full page. Brand names stand in for logos until
+// last entry) links to the full page; it is two cells wide so that, with
+// ten single tiles before it, every row is full at 2, 3 and 4 columns. Brand names stand in for logos until
 // the logo files are supplied.
 const BUSINESS_LABEL = { "Golfcarts.ph": "Golf & Mobility", "Groundmasters.ph": "Course Care, Grounds & Equipment" };
 
@@ -48,7 +49,7 @@ function LogoWall() {
           </li>
         ))
       ])}
-      <li className="bg-nav">
+      <li className="col-span-2 bg-nav">
         <Link to="/brands-partners" className="group flex h-full min-h-[120px] flex-col justify-end p-4 transition-colors hover:bg-info sm:p-5 lg:min-h-[150px] lg:p-6">
           <span className="eyebrow text-[10px] text-ink/60">And more</span>
           <span className="mt-1 font-sans text-[15px] font-extrabold text-ink sm:text-[18px]">
