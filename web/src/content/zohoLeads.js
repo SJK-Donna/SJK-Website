@@ -51,7 +51,7 @@ export async function sendLeadToZoho(fields) {
     Company: fields.company.trim() || "Not provided",
     Email: fields.email.trim(),
     Mobile: fields.mobile.trim(),
-    City: fields.location.trim(),
+    City: fields.location.trim().slice(0, 100),
     Description: fields.message.trim() || `Website enquiry: ${fields.interest}`,
     "Lead Source": "Website",
     LEADCF11: LEAD_CREATION[fields.interest] || "-None-",

@@ -5,6 +5,7 @@ import { Eyebrow } from "../components/ui/Brand.jsx";
 import Reveal from "../components/ui/Reveal.jsx";
 import { CONTACT_INTERESTS, LOCATIONS } from "../content/site.js";
 import { sendLeadToZoho } from "../content/zohoLeads.js";
+import LocationFields from "../components/home/LocationFields.jsx";
 
 const input =
   "w-full border-0 border-b-2 border-ink/20 bg-nav px-4 py-3.5 font-sans text-[16px] text-ink transition-colors placeholder:text-ink/40 focus:border-info focus:bg-white focus:outline-none focus:ring-0";
@@ -17,6 +18,8 @@ export default function Contact() {
   // "idle" | "sending" | "sent" | "error". Zoho's own redirect back here
   // (?sent=1) also counts as sent.
   const [status, setStatus] = useState(() => (new window.URLSearchParams(window.location.search).has("sent") ? "sent" : "idle"));
+  // Bumped after a successful send to clear the Province/City fields.
+  const [resetKey, setResetKey] = useState(0);
   const main = LOCATIONS[0];
 
   async function handleSubmit(e) {
@@ -27,11 +30,14 @@ export default function Contact() {
       return;
     }
     const data = Object.fromEntries(new window.FormData(form));
+    // Saved to Zoho's City field as "City, Province".
+    data.location = [data.city, data.province].map((v) => v.trim()).filter(Boolean).join(", ");
     // Hidden field people never see; bots that fill every field are
     // quietly ignored.
     if (data.website) {
       setStatus("sent");
       form.reset();
+      setResetKey((k) => k + 1);
       return;
     }
     setStatus("sending");
@@ -39,6 +45,7 @@ export default function Contact() {
       await sendLeadToZoho(data);
       setStatus("sent");
       form.reset();
+      setResetKey((k) => k + 1);
     } catch {
       setStatus("error");
     }
@@ -77,11 +84,8 @@ export default function Contact() {
                   <label htmlFor="cMobile" className={label}>Mobile Number</label>
                   <input id="cMobile" name="mobile" type="tel" maxLength={30} autoComplete="tel" className={input} />
                 </div>
-                <div>
-                  <label htmlFor="cLocation" className={label}>Location</label>
-                  <input id="cLocation" name="location" maxLength={100} autoComplete="address-level2" placeholder="City / Province" className={input} />
-                </div>
-                <div>
+                <LocationFields key={resetKey} inputClass={input} labelClass={label} />
+                <div className="sm:col-span-2">
                   <label htmlFor="cInterest" className={label}>What Are You Interested In?</label>
                   <select id="cInterest" name="interest" required defaultValue="" className={input}>
                     <option value="" disabled>Select one</option>
