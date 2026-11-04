@@ -240,13 +240,27 @@ export const WHO_WE_ARE = [
   "Our business has grown by focusing on long-term customer relationships rather than simply equipment sales."
 ];
 
+// Our Story. Each milestone has a photo that takes over the frame beside
+// the timeline as the reader reaches it. The photos show the kind of work
+// each stage added; they are not dated to that year, so captions describe
+// the scene, not the date.
 export const TIMELINE = [
-  { when: "2017", what: "SJK Guahan Inc. established in the Philippines." },
-  { when: "Early Years", what: "Development of the golf cart and golf industry business." },
-  { when: "Expansion", what: "Addition of professional turf, grounds management and equipment solutions." },
-  { when: "Growth", what: "Expansion of technical capabilities, locations, product lines and national customer base." },
-  { when: "Today", what: "SJK operates through Golfcarts.ph, Groundmasters.ph and a growing portfolio of international partners." },
-  { when: "The Future", what: "Continued investment in electric mobility, sustainable outdoor solutions, technology, technical capability and expanded regional customer support." }
+  { when: "2017", what: "SJK Guahan Inc. established in the Philippines.", img: "/images/sjk/fleet-delivery.jpg", caption: "New golf cart fleets ready for delivery" },
+  { when: "Early Years", what: "Development of the golf cart and golf industry business.", img: "/images/sjk/club-car-service.jpg", caption: "Golfcarts.ph technicians servicing a Club Car on site" },
+  { when: "Expansion", what: "Addition of professional turf, grounds management and equipment solutions.", img: "/images/sjk/turf-equipment-assembly.jpg", caption: "Assembling professional turf equipment in the workshop" },
+  { when: "Growth", what: "Expansion of technical capabilities, locations, product lines and national customer base.", img: "/images/sjk/team-warehouse.jpg", caption: "The SJK team with a widening range of turf and grounds equipment" },
+  { when: "Today", what: "SJK operates through Golfcarts.ph, Groundmasters.ph and a growing portfolio of international partners.", img: "/images/sjk/gcm-conference-booth.jpg", caption: "SJK, Golfcarts.ph and Groundmasters.ph at the Philippine Golf Course Management Conference" },
+  { when: "The Future", what: "Continued investment in electric mobility, sustainable outdoor solutions, technology, technical capability and expanded regional customer support.", img: "/images/sjk/fleet-on-course.jpg", caption: "Electric fleets at work on Philippine fairways" }
+];
+
+// Short silent clips for the "In the Field" reels on the homepage. Vertical
+// (9:16) phone footage, compressed to 720px wide; `poster` shows before the
+// clip loads and for visitors who prefer reduced motion.
+export const REELS = [
+  { title: "Fleets in Play", tag: "Golfcarts.ph", src: "/images/videos/fleet-on-course.mp4", poster: "/images/videos/fleet-on-course.jpg", alt: "Golfers and caddies boarding a fleet of white golf carts beside the fairway" },
+  { title: "On the Cart Path", tag: "Golfcarts.ph", src: "/images/videos/cart-path.mp4", poster: "/images/videos/cart-path.jpg", alt: "A golf cart driving toward the camera along a tree-lined cart path" },
+  { title: "Custom Upgrades", tag: "Accessories", src: "/images/videos/custom-wheels.mp4", poster: "/images/videos/custom-wheels.jpg", alt: "Close-up of a customised golf cart with lifted fenders and alloy wheels" },
+  { title: "At Industry Events", tag: "SJK Guahan", src: "/images/videos/conference-booth.mp4", poster: "/images/videos/conference-booth.jpg", alt: "The SJK Guahan and Groundmasters.ph booth at a golf course management conference" }
 ];
 
 export const TEAM = {

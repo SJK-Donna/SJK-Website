@@ -1,7 +1,7 @@
 import PageHeader from "../components/home/PageHeader.jsx";
 import SectionTitle, { Margin } from "../components/home/SectionTitle.jsx";
 import FinalCta from "../components/sections/FinalCta.jsx";
-import StoryTimeline from "../components/sections/StoryTimeline.jsx";
+import OurStory from "../components/sections/StoryTimeline.jsx";
 import Photo from "../components/ui/Photo.jsx";
 import Reveal from "../components/ui/Reveal.jsx";
 import { BUSINESSES, COMPANY, CORE_MESSAGES, PRINCIPLES, TEAM, WHO_WE_ARE } from "../content/site.js";
@@ -105,16 +105,7 @@ export default function WhoWeAre() {
         </dl>
       </Margin>
 
-      <Margin
-        id="story"
-        eyebrow="Our Story"
-        title="From one business to a growing group"
-        img="/images/sjk/turf-equipment-assembly.jpg"
-        alt="SJK technicians assembling new turf equipment in the workshop"
-        className="bg-nav"
-      >
-        <StoryTimeline />
-      </Margin>
+      <OurStory />
 
       {/* What we stand for: five cards on navy-2. */}
       <section className="bg-forest-deep px-6 py-20 text-white lg:py-28">

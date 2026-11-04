@@ -4,6 +4,7 @@ import Businesses from "../components/sections/Businesses.jsx";
 import FleetGuide from "../components/sections/FleetGuide.jsx";
 import WayForward from "../components/sections/WayForward.jsx";
 import Milestones from "../components/sections/Milestones.jsx";
+import Reels from "../components/sections/Reels.jsx";
 import FeaturedProjects from "../components/sections/Projects.jsx";
 import Testimonials from "../components/sections/Testimonials.jsx";
 import BrandWall from "../components/sections/BrandWall.jsx";
@@ -29,6 +30,7 @@ export default function Home() {
       <FleetGuide />
       <WayForward />
       <Milestones />
+      <Reels />
       <FeaturedProjects />
       <Testimonials />
       <BrandWall />

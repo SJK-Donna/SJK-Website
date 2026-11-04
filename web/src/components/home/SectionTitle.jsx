@@ -17,14 +17,15 @@ export default function SectionTitle({ eyebrow, title, lead, onDark = false, as:
 // The site's main layout device: heading in a narrow left column, content
 // to the right. `img` adds a supporting photo under the heading, with the
 // logo's diagonal corner cut; it stays in view beside long content.
-export function Margin({ id, eyebrow, title, lead, img, alt = "", onDark = false, className = "", children }) {
+// `media` replaces that photo with any element (e.g. the Our Story frame).
+export function Margin({ id, eyebrow, title, lead, img, alt = "", media, onDark = false, className = "", children }) {
   return (
     <section id={id} className={`px-6 py-20 lg:py-28 ${onDark ? "text-white" : ""} ${className}`}>
       <div className="mx-auto grid max-w-[1320px] gap-10 lg:grid-cols-12 lg:gap-12">
         <div className="lg:col-span-4">
           <div className="lg:sticky lg:top-28">
             <SectionTitle eyebrow={eyebrow} title={title} lead={lead} onDark={onDark} />
-            {img && <Photo src={img} alt={alt} className="cut mt-10 aspect-[4/3] w-full" />}
+            {media ?? (img && <Photo src={img} alt={alt} className="cut mt-10 aspect-[4/3] w-full" />)}
           </div>
         </div>
         <div className="lg:col-span-8">{children}</div>
