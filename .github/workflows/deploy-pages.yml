@@ -43,16 +43,9 @@ jobs:
         env:
           PAGES_BASE: ${{ steps.pages.outputs.base_path }}/
 
-      # Single-page app: give every page its own copy of index.html so links
-      # like /who-we-are load directly and return 200 (not 404) to visitors
-      # and search engines. 404.html covers any other address.
-      # Keep this list in step with the routes in src/App.jsx.
-      - run: |
-          for route in who-we-are brands-partners projects news contact; do
-            mkdir -p "dist/$route"
-            cp dist/index.html "dist/$route/index.html"
-          done
-          cp dist/index.html dist/404.html
+      # Each page's own HTML copy (with its own title and description),
+      # 404.html, sitemap.xml and robots.txt are written by the build itself
+      # (the "seo-pages" plugin in vite.config.js, from src/content/seo.js).
 
       - uses: actions/upload-pages-artifact@v3
         with:
