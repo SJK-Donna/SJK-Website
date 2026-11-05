@@ -18,7 +18,8 @@ export const COMPANY = {
     "To shape the future of outdoor mobility and landscape management in Southeast Asia by leading the adoption of innovative, sustainable machinery that works in harmony with people and enhances how outdoor environments are maintained, experienced and enjoyed.",
   // Contact details were not in the brief — fill these in before launch.
   phone: "",
-  email: ""
+  email: "",
+  facebook: "https://www.facebook.com/sjkguahanph/"
 };
 
 export const NAV = [
@@ -114,6 +115,20 @@ export const MILESTONES = [
   { value: "Global Partners", detail: "Representing leading international equipment and technology brands" },
   { value: "Local Technical Support", detail: "Service, parts and product support" }
 ];
+
+// Recognition from Club Car, newest first, as shown on the trophies.
+// `photo` is the award stage photo where one exists.
+export const AWARDS = [
+  { year: "2024", title: "Best Marketing Award", by: "Club Car Asia", photo: "/images/sjk/award-best-marketing.jpg", alt: "The SJK team on stage receiving the 2024 Club Car Asia Best Marketing Award" },
+  { year: "2024", title: "Excellent Performance Award – Utility Vehicles", by: "Club Car Asia", photo: "/images/sjk/award-excellent-performance.jpg", alt: "SJK receiving the 2024 Club Car Asia Excellent Performance Award alongside other Asia dealers" },
+  { year: "2023", title: "Black & Gold Partner", by: "Club Car" },
+  { year: "2022", title: "Breakthrough Award", by: "Club Car" }
+];
+
+export const AWARDS_PHOTOS = {
+  trophies: { src: "/images/sjk/club-car-awards.jpg", alt: "SJK Guahan's Club Car trophies: 2024 Best Marketing, 2024 Excellent Performance, 2022 Breakthrough and the 2023 Black & Gold Partner plaque" },
+  conference: { src: "/images/sjk/club-car-dealer-conference.jpg", alt: "SJK team at the 2025 Club Car Asia Dealer Conference", caption: "The team at the 2025 Club Car Asia Dealer Conference" }
+};
 
 // Brief §11 additional figures. `value` stays null until the number is
 // internally verified; only then does it appear on the public site.

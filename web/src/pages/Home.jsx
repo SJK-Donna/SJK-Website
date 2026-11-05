@@ -3,6 +3,7 @@ import Intro from "../components/sections/Intro.jsx";
 import Businesses from "../components/sections/Businesses.jsx";
 import WayForward from "../components/sections/WayForward.jsx";
 import Milestones from "../components/sections/Milestones.jsx";
+import Awards from "../components/sections/Awards.jsx";
 import Reels from "../components/sections/Reels.jsx";
 import FeaturedProjects from "../components/sections/Projects.jsx";
 import Testimonials from "../components/sections/Testimonials.jsx";
@@ -30,6 +31,7 @@ export default function Home() {
       <Slant from={NAVY} to={MIST} />
       <WayForward />
       <Milestones />
+      <Awards />
       <Reels />
       <FeaturedProjects />
       <Testimonials />

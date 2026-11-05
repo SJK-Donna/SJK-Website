@@ -3,7 +3,7 @@
 // and link previews see them without running JavaScript) and in the browser
 // (components/home/Layout.jsx updates them on in-site navigation).
 // Keep titles under ~60 characters and descriptions under ~160.
-import { LOCATIONS } from "./site.js";
+import { COMPANY, LOCATIONS } from "./site.js";
 
 export const SITE_URL = "https://sjkguahan.com";
 export const SITE_NAME = "SJK Guahan Inc.";
@@ -18,7 +18,7 @@ export const PAGES = {
   "/who-we-are": {
     title: "Who We Are | SJK Guahan Inc.",
     description:
-      "An equipment, mobility and solutions company in the Philippines since 2017, operating Golfcarts.ph and Groundmasters.ph with branches in Metro Manila, Cebu, Santa Rosa and Clark."
+      "An equipment, mobility and solutions company in the Philippines since 2017 and award-winning Club Car partner, operating Golfcarts.ph and Groundmasters.ph with four branches nationwide."
   },
   "/brands-partners": {
     title: "Brands & Partners: Club Car, Jacobsen & more | SJK Guahan",
@@ -67,7 +67,13 @@ export const ORGANIZATION_LD = {
     { "@type": "Brand", name: "Golfcarts.ph" },
     { "@type": "Brand", name: "Groundmasters.ph" }
   ],
-  sameAs: ["https://golfcarts.ph"],
+  sameAs: [COMPANY.facebook, "https://golfcarts.ph"],
+  award: [
+    "2024 Club Car Asia Best Marketing Award",
+    "2024 Club Car Asia Excellent Performance Award – Utility Vehicles",
+    "2023 Club Car Black & Gold Partner",
+    "2022 Club Car Breakthrough Award"
+  ],
   department: LOCATIONS.map((l) => ({
     "@type": "LocalBusiness",
     name: `${SITE_NAME} – ${l.name}`,

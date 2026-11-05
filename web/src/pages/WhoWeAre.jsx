@@ -2,6 +2,7 @@ import PageHeader from "../components/home/PageHeader.jsx";
 import SectionTitle, { Margin } from "../components/home/SectionTitle.jsx";
 import FinalCta from "../components/sections/FinalCta.jsx";
 import OurStory from "../components/sections/StoryTimeline.jsx";
+import Awards from "../components/sections/Awards.jsx";
 import Photo from "../components/ui/Photo.jsx";
 import Reveal from "../components/ui/Reveal.jsx";
 import { BUSINESSES, COMPANY, CORE_MESSAGES, PRINCIPLES, TEAM, WHO_WE_ARE } from "../content/site.js";
@@ -106,6 +107,8 @@ export default function WhoWeAre() {
       </Margin>
 
       <OurStory />
+
+      <Awards />
 
       {/* What we stand for: five cards on navy-2. */}
       <section className="bg-forest-deep px-6 py-20 text-white lg:py-28">
