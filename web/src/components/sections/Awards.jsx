@@ -4,8 +4,10 @@ import Reveal from "../ui/Reveal.jsx";
 import { AWARDS, AWARDS_PHOTOS } from "../../content/site.js";
 
 // Awards & Recognition: the Club Car awards as a dated list beside the
-// trophies, with the award-night and dealer-conference photos below as a
-// row (a swipeable strip on phones). Third-party recognition backs up the
+// trophies, with the award-night and dealer-conference photos below in a
+// fixed grid: two side by side with the conference photo full width on
+// phones, three across from tablets up. The photos stay still (no parallax)
+// so the section reads as a calm record. Third-party recognition backs up the
 // brief's "trusted partner" message without exaggerated claims.
 export default function Awards() {
   const stage = [
@@ -41,14 +43,14 @@ export default function Awards() {
 
         <div className="lg:col-span-7">
           <Reveal>
-            <Photo src={AWARDS_PHOTOS.trophies.src} alt={AWARDS_PHOTOS.trophies.alt} position="50% 45%" className="cut cut-lg aspect-[4/3] w-full" />
+            <Photo src={AWARDS_PHOTOS.trophies.src} alt={AWARDS_PHOTOS.trophies.alt} position="50% 45%" parallax={false} className="cut cut-lg aspect-[4/3] w-full" />
           </Reveal>
-          <ul className="-mx-6 mt-4 flex snap-x snap-mandatory scroll-px-6 gap-4 overflow-x-auto px-6 pb-2 sm:mx-0 sm:grid sm:grid-cols-3 sm:overflow-visible sm:px-0">
+          <ul className="mt-4 grid grid-cols-2 gap-x-3 gap-y-5 sm:grid-cols-3 sm:gap-4">
             {stage.map((p, i) => (
-              <Reveal as="li" key={p.src} delay={i * 90} className="w-[78%] shrink-0 snap-start sm:w-auto">
+              <Reveal as="li" key={p.src} delay={i * 90} className={i === 2 ? "col-span-2 sm:col-span-1" : ""}>
                 <figure>
-                  <Photo src={p.src} alt={p.alt} className="cut cut-sm aspect-[4/3] w-full" />
-                  <figcaption className="mt-2 text-[14px] leading-snug text-ink/65">{p.caption}</figcaption>
+                  <Photo src={p.src} alt={p.alt} parallax={false} className={`cut cut-sm w-full ${i === 2 ? "aspect-[16/9] sm:aspect-[4/3]" : "aspect-[4/3]"}`} />
+                  <figcaption className="mt-2 text-[13px] leading-snug text-ink/65 sm:text-[14px]">{p.caption}</figcaption>
                 </figure>
               </Reveal>
             ))}

@@ -30,7 +30,7 @@ const COLUMNS = [
   }
 ];
 
-const heading = "eyebrow mb-4 whitespace-nowrap text-[11px] text-info";
+const heading = "eyebrow mb-4 whitespace-nowrap text-[11px] text-info max-sm:whitespace-normal";
 
 // Navy footer: the logo and positioning line, link columns, operating
 // locations, then a legal line.
@@ -55,7 +55,7 @@ export default function SiteFooter() {
               <span className="sr-only"> (opens in a new tab)</span>
             </a>
           </div>
-          <div className="grid grid-cols-2 gap-8 sm:grid-cols-4 lg:col-span-8">
+          <div className="grid grid-cols-2 gap-x-5 gap-y-8 sm:grid-cols-4 sm:gap-8 lg:col-span-8">
             {COLUMNS.map((col) => (
               <div key={col.title}>
                 <h3 className={heading}>{col.title}</h3>
