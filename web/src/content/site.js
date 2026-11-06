@@ -268,8 +268,13 @@ export const TEAM = {
     "Our company is built around people with backgrounds in sales, engineering, operations, service, finance and customer support.",
     "Together, our team works across different industries with one objective — ensuring that the solutions we provide continue performing long after delivery."
   ],
-  img: "/images/sjk/team-warehouse.jpg",
-  alt: "The SJK Guahan team with new course care equipment in the warehouse",
+  // Team collage on Who We Are: the first photo runs full width, the rest
+  // sit side by side beneath it.
+  photos: [
+    { src: "/images/sjk/team-office.jpg", alt: "The SJK Guahan office team gathered in the showroom in front of Club Car golf cart roofs", caption: "Sales, admin and customer support" },
+    { src: "/images/sjk/team-warehouse-crew.jpg", alt: "The SJK Guahan warehouse and operations crew in front of stocked shelving", caption: "Warehouse and operations" },
+    { src: "/images/sjk/team-warehouse.jpg", alt: "The SJK Guahan technical team with new course care equipment in the warehouse", caption: "Technical and service" }
+  ],
   // { name: "…", position: "…", photo: "/images/team/….jpg" }
   members: []
 };

@@ -128,8 +128,8 @@ export default function WhoWeAre() {
 
       {/* The team: full-width photo with the intro beside it. */}
       <section id="people" className="bg-surface px-6 py-20 lg:py-28">
-        <div className="mx-auto grid max-w-[1320px] items-center gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-5">
+        <div className="mx-auto grid max-w-[1320px] items-start gap-12 lg:grid-cols-12">
+          <div className="lg:sticky lg:top-28 lg:col-span-5">
             <SectionTitle eyebrow="Our People" title="The Team Behind the Business" />
             <Reveal delay={100}>
               {TEAM.intro.map((p, i) => (
@@ -137,7 +137,26 @@ export default function WhoWeAre() {
               ))}
             </Reveal>
           </div>
-          {TEAM.img && <Photo src={TEAM.img} alt={TEAM.alt} className="cut cut-lg aspect-[4/3] w-full lg:col-span-7" />}
+          {/* Collage: one wide group photo over two side by side. Kept still
+              (no parallax) so the faces stay steady while scrolling. */}
+          <ul className="grid grid-cols-2 gap-3 sm:gap-4 lg:col-span-7">
+            {TEAM.photos.map((p, i) => (
+              <Reveal as="li" key={p.src} delay={i * 90} className={i === 0 ? "col-span-2" : ""}>
+                <figure>
+                  <Photo
+                    src={p.src}
+                    alt={p.alt}
+                    parallax={false}
+                    className={`cut w-full ${i === 0 ? "cut-lg aspect-[16/9]" : "cut-sm aspect-[4/3]"}`}
+                  />
+                  <figcaption className="mt-2 flex items-start gap-2 text-[13px] leading-snug text-ink/65 sm:text-[14px]">
+                    <span className="flag mt-[3px] h-2.5 w-2.5 shrink-0" aria-hidden="true" />
+                    {p.caption}
+                  </figcaption>
+                </figure>
+              </Reveal>
+            ))}
+          </ul>
         </div>
         {TEAM.members.length > 0 && (
           <ul className="mx-auto mt-16 grid max-w-[1320px] gap-x-6 gap-y-10 sm:grid-cols-3">
