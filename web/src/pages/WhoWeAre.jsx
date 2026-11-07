@@ -71,7 +71,7 @@ export default function WhoWeAre() {
           ))}
           <div className="grid gap-8 border-t border-white/15 pt-10 md:grid-cols-3 lg:ml-[25%]">
             {[
-              { name: "SJK Guahan", vision: "Shape the future of outdoor mobility and landscape management in Southeast Asia." },
+              { name: "SJK Guahan", vision: "Become a leading provider of electric mobility and landscape management solutions in the Philippines and beyond." },
               ...BUSINESSES
             ].map((b, i) => (
               <Reveal key={b.name} delay={i * 100}>

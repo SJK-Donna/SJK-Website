@@ -13,9 +13,9 @@ export const COMPANY = {
   positioning:
     "SJK Guahan provides mobility, golf course care, grounds management and specialized equipment solutions supported by trusted global brands, local expertise and dependable after-sales service.",
   mission:
-    "Enhancing the enjoyment of being outdoors through products you can afford, trust and rely on — supported by strong service and long-term customer care.",
+    "Enhancing the enjoyment of being outdoors through products you can afford and trust, supported by exceptional service and long-term customer care.",
   vision:
-    "To shape the future of outdoor mobility and landscape management in Southeast Asia by leading the adoption of innovative, sustainable machinery that works in harmony with people and enhances how outdoor environments are maintained, experienced and enjoyed.",
+    "To become a leading provider of innovative and sustainable electric mobility and landscape management solutions in the Philippines and beyond, enhancing how outdoor spaces are maintained and enjoyed.",
   // Contact details were not in the brief — fill these in before launch.
   phone: "",
   email: "",
