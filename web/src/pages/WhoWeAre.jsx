@@ -7,11 +7,12 @@ import Photo from "../components/ui/Photo.jsx";
 import Reveal from "../components/ui/Reveal.jsx";
 import { BUSINESSES, COMPANY, CORE_MESSAGES, PRINCIPLES, TEAM, WHO_WE_ARE } from "../content/site.js";
 
-// The three areas the company works across, one photo each.
+// The four areas the company works across, one photo each.
 const AREAS = [
   ["/images/brands/golf-cart-course.jpg", "Electric golf cart on a golf course at dawn", "Mobility"],
   ["/images/brands/jacobsen-bunker.jpg", "Fairway mower maintaining a golf course beside sand bunkers", "Course Care & Grounds"],
-  ["/images/carousel/slide-4.jpg", "Compact excavator digging on a property site", "Compact Equipment"]
+  ["/images/carousel/slide-4.jpg", "Compact excavator digging on a property site", "Compact Equipment"],
+  ["/images/carousel/slide-3.jpg", "Wide-area mower cutting a green lawn beside mature trees", "Lawn & Turf Care"]
 ];
 
 // Brief §19–21: history, mission, vision, philosophy, story and people.
@@ -26,7 +27,7 @@ export default function WhoWeAre() {
         alt="Fleet of black Club Car golf carts lined up beside a tropical course"
       />
 
-      {/* Since 2017, with the three areas of work as tall photo panels. */}
+      {/* Since 2017, with the four areas of work as photo panels. */}
       <section className="bg-surface px-6 pb-20 pt-12 lg:pb-28 lg:pt-16">
         <div className="mx-auto max-w-[1320px]">
           <div className="grid gap-10 lg:grid-cols-12">
@@ -37,14 +38,14 @@ export default function WhoWeAre() {
               ))}
             </Reveal>
           </div>
-          <ul className="mt-16 grid gap-4 sm:grid-cols-3">
+          <ul className="mt-16 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
             {AREAS.map(([src, alt, label], i) => (
               <li key={src} className="group">
-                <Photo src={src} alt={alt} className="cut aspect-[4/3] w-full">
-                  <div className="absolute inset-0 bg-gradient-to-t from-control/85 via-control/10 to-transparent" />
-                  <p className="absolute bottom-0 left-0 p-6 text-white">
+                <Photo src={src} alt={alt} className="cut aspect-square w-full sm:aspect-[4/3]">
+                  <div className="absolute inset-0 bg-gradient-to-t from-control/90 via-control/30 to-transparent" />
+                  <p className="absolute bottom-0 left-0 p-4 text-white sm:p-6">
                     <span className="eyebrow block text-[11px] text-info">{String(i + 1).padStart(2, "0")}</span>
-                    <span className="wide mt-2 block font-sans text-[21px] font-extrabold">{label}</span>
+                    <span className="wide mt-1.5 block font-sans text-[15px] font-extrabold leading-tight sm:mt-2 sm:text-[20px]">{label}</span>
                   </p>
                 </Photo>
               </li>
