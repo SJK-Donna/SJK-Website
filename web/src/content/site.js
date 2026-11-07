@@ -290,7 +290,7 @@ export const REELS = [
   { title: "Fleets in Play", tag: "Golfcarts.ph", src: "/images/videos/fleet-on-course.mp4", poster: "/images/videos/fleet-on-course.jpg", alt: "Golfers and caddies boarding a fleet of white golf carts beside the fairway" },
   { title: "On the Cart Path", tag: "Golfcarts.ph", src: "/images/videos/cart-path.mp4", poster: "/images/videos/cart-path.jpg", alt: "A golf cart driving toward the camera along a tree-lined cart path" },
   { title: "Custom Upgrades", tag: "Accessories", src: "/images/videos/custom-wheels.mp4", poster: "/images/videos/custom-wheels.jpg", alt: "Close-up of a customised golf cart with lifted fenders and alloy wheels" },
-  { title: "At Industry Events", tag: "SJK Guahan", src: "/images/videos/conference-booth.mp4", poster: "/images/videos/conference-booth.jpg", alt: "The SJK Guahan and Groundmasters.ph booth at a golf course management conference" }
+  { title: "At Industry Events", tag: "Groundmasters.ph", src: "/images/videos/conference-booth.mp4", poster: "/images/videos/conference-booth.jpg", alt: "The SJK Guahan and Groundmasters.ph booth at a golf course management conference" }
 ];
 
 export const TEAM = {
