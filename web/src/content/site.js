@@ -75,8 +75,10 @@ export const BUSINESSES = [
     tagline: "Course Care, Grounds & Equipment Solutions",
     logo: "/images/brands/groundmasters-ph-logo.png",
     body: "Groundmasters.ph provides professional equipment and solutions for golf courses, sports fields, landscaping, grounds maintenance and compact equipment applications.",
-    img: "/images/sjk/campey-assembly.jpg",
-    alt: "SJK team assembling Campey fertilizer spreaders in the warehouse",
+    img: "/images/brands/jacobsen-mower.jpg",
+    alt: "Operator driving a Jacobsen wide-area mower across a golf course",
+    // Anchored right so the Jacobsen logo in the photo's corner is never cropped.
+    imgPosition: "100% 50%",
     cta: "Explore Groundmasters.ph",
     // Website address not confirmed in the brief — set it here when known.
     // Until then the button opens the Groundmasters.ph section of Brands & Partners.
@@ -159,6 +161,34 @@ export const BRAND_GROUPS = [
       { group: "Specialized Grounds Equipment", brands: ["Dakota"] }
     ]
   }
+];
+
+// Official brand logos, from each manufacturer's own website. Replace with
+// the files the brands supply if they differ.
+export const BRAND_LOGOS = {
+  "Club Car": "/images/brands/logos/club-car.png",
+  Jacobsen: "/images/brands/logos/jacobsen.svg",
+  Smithco: "/images/brands/logos/smithco.svg",
+  Iseki: "/images/brands/logos/iseki.svg",
+  Campey: "/images/brands/logos/campey.png",
+  Dakota: "/images/brands/logos/dakota.png",
+  Trimax: "/images/brands/logos/trimax.png",
+  "Wacker Neuson": "/images/brands/logos/wacker-neuson.svg"
+};
+
+// Brands & Partners: what Golfcarts.ph offers with Club Car, one tile each.
+export const GOLFCARTS_SHOWCASE = [
+  { src: "/images/sjk/fleet-course.jpg", alt: "Black Club Car golf carts lined up beside a tropical course", title: "Fleet", body: "Golf course, resort and commercial fleets." },
+  { src: "/images/videos/custom-wheels.jpg", alt: "Golf cart fitted with custom black alloy wheels and wheel arches", position: "50% 70%", title: "Customization", body: "Colors, branding, seating and add-ons." },
+  { src: "/images/sjk/battery-service.jpg", alt: "Technician working on a golf cart battery", title: "Parts", body: "Local parts, with lithium and lead-acid battery options." },
+  { src: "/images/sjk/club-car-service.jpg", alt: "Golfcarts.ph technicians servicing a Club Car on site", title: "Service", body: "Maintenance contracts and technical service." }
+];
+
+// Brands & Partners: Groundmasters.ph brands at work.
+export const GROUNDMASTERS_SHOWCASE = [
+  { src: "/images/brands/smithco-bunker-rake.jpg", alt: "Operator raking a golf course bunker with a Smithco bunker rake", position: "30% 50%", title: "Smithco bunker rake" },
+  { src: "/images/brands/campey.jpg", alt: "Blue tractor with a Campey machine working a sports field", title: "Campey groundcare equipment" },
+  { src: "/images/brands/wacker-neuson-mountain.jpg", alt: "Wacker Neuson excavator on a mound of gravel", title: "Wacker Neuson excavator" }
 ];
 
 // Customers and partners carried over from the previous site.

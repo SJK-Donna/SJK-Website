@@ -1,36 +1,21 @@
 import { Link } from "react-router-dom";
 import PillLinks from "../home/PillLinks.jsx";
 import SectionTitle from "../home/SectionTitle.jsx";
-import { BRAND_GROUPS } from "../../content/site.js";
+import { BRAND_GROUPS, BRAND_LOGOS } from "../../content/site.js";
 
-// Brand names as a typographic roster, grouped by the business that
-// represents them (used on Brands & Partners). Until the logo files
-// arrive, names stand in for logos.
-export function BrandGroups({ groups = BRAND_GROUPS }) {
-  return (
-    <div className="space-y-12">
-      {groups.map((g) => (
-        <div key={g.group}>
-          <h3 className="eyebrow text-[12px] text-ink/60">{g.group}</h3>
-          <ul className="mt-3 flex flex-wrap gap-x-8 gap-y-1">
-            {g.brands.map((b) => (
-              <li key={b} className="wide font-sans text-[26px] font-extrabold leading-[1.25] tracking-[-0.015em] text-ink lg:text-[34px]">
-                {b}
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
-    </div>
-  );
+// One brand's logo, sized to sit evenly beside the others. Falls back to the
+// name in type for a brand without a logo file.
+export function BrandLogo({ name }) {
+  const src = BRAND_LOGOS[name];
+  if (!src) return <span className="wide font-sans text-[18px] font-black tracking-[-0.01em] text-ink lg:text-[22px]">{name}</span>;
+  return <img src={src} alt={`${name} logo`} loading="lazy" className="max-h-14 w-full max-w-[170px] object-contain lg:max-h-16" />;
 }
 
 // Brief §14 — "a clean logo wall", grouped as the brief groups it: each
 // business opens with a navy label tile, followed by one tile per brand it
 // represents. A closing "Other approved partners" tile (the brief's own
 // last entry) links to the full page; it is two cells wide so that, with
-// ten single tiles before it, every row is full at 2, 3 and 4 columns. Brand names stand in for logos until
-// the logo files are supplied.
+// ten single tiles before it, every row is full at 2, 3 and 4 columns.
 const BUSINESS_LABEL = { "Golfcarts.ph": "Golf & Mobility", "Groundmasters.ph": "Course Care, Grounds & Equipment" };
 
 function LogoWall() {
@@ -45,7 +30,7 @@ function LogoWall() {
         ...g.brands.map((b) => (
           <li key={b} className="group relative flex min-h-[120px] items-center justify-center bg-surface p-5 text-center transition-colors hover:bg-nav lg:min-h-[150px]">
             <span className="flag absolute left-0 top-0 h-3 w-3 scale-0 transition-transform duration-300 group-hover:scale-100" aria-hidden="true" />
-            <span className="wide font-sans text-[18px] font-black tracking-[-0.01em] text-ink lg:text-[22px]">{b}</span>
+            <BrandLogo name={b} />
           </li>
         ))
       ])}
