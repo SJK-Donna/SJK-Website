@@ -16,8 +16,7 @@ const LABEL = {
 
 const linkClass = "text-control underline decoration-control/40 underline-offset-4 hover:decoration-control";
 
-// Brief §17 — a clean Philippine map with markers. The numbers are the map
-// legend: each branch's number matches its marker.
+// Brief §17 — a clean Philippine map with a labelled marker per branch.
 export default function Locations() {
   // Branch markers drop in one by one, each with a single amber pulse,
   // the first time the map scrolls into view.
@@ -28,12 +27,9 @@ export default function Locations() {
         <div className="lg:col-span-7">
           <SectionTitle id="locations-title" eyebrow="Our Locations" title="Supporting Customers Across the Philippines" />
           <ol className="mt-12 grid gap-x-10 gap-y-10 sm:grid-cols-2">
-            {LOCATIONS.map((l, i) => (
+            {LOCATIONS.map((l) => (
               <li key={l.id} className="border-t-4 border-info pt-5 text-[16px] leading-relaxed text-ink/80">
-                <h3 className="wide font-sans text-[20px] font-extrabold text-ink">
-                  <span className="mr-2 text-control">{i + 1}</span>
-                  {l.name}
-                </h3>
+                <h3 className="wide font-sans text-[20px] font-extrabold text-ink">{l.name}</h3>
                 {l.role && <p className="font-sans text-[15px] font-semibold text-control">{l.role}</p>}
                 <address className="mt-2 not-italic">{l.address}</address>
                 {l.phones.length > 0 ? (
@@ -76,7 +72,7 @@ export default function Locations() {
                   )}
                   <circle cx={p.x} cy={p.y} r="6" fill="#0d1c2c" stroke="#f9b200" strokeWidth="2.5" />
                   <text x={p.x + lab.dx} y={p.y + lab.dy} textAnchor={lab.anchor} fontFamily="Archivo, sans-serif" fontSize="15" fontWeight="600" fill="#0d1c2c" style={{ paintOrder: "stroke" }} stroke="#eef1f5" strokeWidth="4">
-                    {i + 1} {l.name}
+                    {l.name}
                   </text>
                 </g>
               );
