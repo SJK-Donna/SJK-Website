@@ -11,7 +11,7 @@ const prefersReducedMotion = () => window.matchMedia("(prefers-reduced-motion: r
 //  • Hover — inside a `group` (e.g. a card link) it pushes in slowly.
 // Everything is skipped under reduced motion. `className` styles the frame
 // (size, aspect ratio, `cut` corners); `position` is the object-position.
-export default function Photo({ src, alt = "", position, className = "", imgClassName = "", parallax = true, eager = false, children }) {
+export default function Photo({ src, alt = "", position, className = "", imgClassName = "", parallax = true, eager = false, style, fit = "cover", children }) {
   const frame = useRef(null);
   const layer = useRef(null);
   const [inView, setInView] = useState(prefersReducedMotion);
@@ -59,14 +59,19 @@ export default function Photo({ src, alt = "", position, className = "", imgClas
   }, [parallax]);
 
   return (
-    <div ref={frame} className={`photo relative overflow-hidden bg-control ${inView ? "is-in" : ""} ${className}`}>
+    <div ref={frame} style={style} className={`photo relative overflow-hidden bg-control ${inView ? "is-in" : ""} ${className}`}>
       <div ref={layer} className={`photo-layer absolute inset-x-0 ${parallax ? "-inset-y-[8%]" : "inset-y-0"}`}>
+        {/* fit="contain" shows the whole image (e.g. a banner with text built
+            in); a blurred copy fills the space around it instead of bars. */}
+        {fit === "contain" && (
+          <img src={src} alt="" aria-hidden="true" loading={eager ? "eager" : "lazy"} className="absolute inset-0 h-full w-full scale-110 object-cover opacity-60 blur-xl" />
+        )}
         <img
           src={src}
           alt={alt}
           loading={eager ? "eager" : "lazy"}
           style={{ objectPosition: position }}
-          className={`photo-img h-full w-full object-cover ${imgClassName}`}
+          className={`photo-img relative h-full w-full ${fit === "contain" ? "object-contain" : "object-cover"} ${imgClassName}`}
         />
       </div>
       {children}

@@ -95,7 +95,11 @@ export default function BrandsPartners() {
                 )}
                 {ownSite && <PillLinks primary={ownSite} className="mt-9" />}
               </Reveal>
-              <Photo src={b.img} alt={b.alt} position={b.imgPosition} className={`cut cut-lg aspect-[4/3] w-full lg:col-span-7 ${flip ? "lg:order-1" : ""}`} />
+              {b.imgAspect ? (
+                <Photo src={b.img} alt={b.alt} fit={b.imgFit} parallax={false} className={`cut cut-sm w-full lg:col-span-7 ${flip ? "lg:order-1" : ""}`} style={{ aspectRatio: b.imgAspect }} />
+              ) : (
+                <Photo src={b.img} alt={b.alt} position={b.imgPosition} className={`cut cut-lg aspect-[4/3] w-full lg:col-span-7 ${flip ? "lg:order-1" : ""}`} />
+              )}
             </div>
 
             {b.id === "golf-carts-ph" && (

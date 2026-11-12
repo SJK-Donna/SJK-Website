@@ -50,8 +50,19 @@ export const INTRO = {
     "Over the years, our business has grown across golf, resorts, property development, landscaping, golf course and grounds management, specialized mobility and compact equipment."
   ],
   philosophy: "Represent good products. Support them properly. Build long-term relationships with our customers.",
-  img: "/images/sjk/fleet-delivery.jpg",
-  alt: "Rows of new white golf carts, still in protective wrap, ready for delivery"
+  // One wide lineup photo per business, stacked beside the text. Both are
+  // 3200 × 1344 and shown whole so no machine is cut off.
+  images: [
+    {
+      src: "/images/sjk/golfcart-all.jpg",
+      alt: "The Club Car lineup parked side by side on a palm-lined course: golf carts in white, champagne, silver, black and green, and an enclosed shuttle"
+    },
+    {
+      src: "/images/sjk/groundmasters-all.jpg",
+      alt: "Groundmasters.ph equipment lined up on a golf course fairway: a Jacobsen reel mower, Iseki tractor with loader, Husqvarna zero-turn mower, Wacker Neuson mini excavator, Smithco utility vehicle and Campey aerator"
+    }
+  ],
+  imgAspect: "3200 / 1344"
 };
 
 export const BUSINESSES = [
@@ -61,9 +72,11 @@ export const BUSINESSES = [
     tagline: "Mobility Solutions",
     logo: "/images/brands/golfcarts-ph-logo.png",
     body: "Golfcarts.ph provides golf, resort, commercial and specialized low-speed electric mobility solutions supported by local parts, technical service and fleet management expertise.",
-    img: "/images/sjk/vista-fleet.jpg",
-    alt: "White Club Car golf carts on the cart path at a country club course",
-    imgPosition: "100% 50%",
+    img: "/images/sjk/golfcarts.jpg",
+    alt: "Golfcarts.ph banner: Drive the Standard of Excellence. The full Club Car lineup parked in a row beside a seaside golf course, with the Club Car Official Partner badge",
+    // Wide banner with text and logos built in: shown whole at its own shape
+    // (3200 × 1344), never cropped.
+    imgAspect: "3200 / 1344",
     cta: "Explore Golfcarts.ph",
     // The brief names the domain ("Visit Golfcarts.ph").
     url: "https://golfcarts.ph",
@@ -75,10 +88,13 @@ export const BUSINESSES = [
     tagline: "Course Care, Grounds & Equipment Solutions",
     logo: "/images/brands/groundmasters-ph-logo.png",
     body: "Groundmasters.ph provides professional equipment and solutions for golf courses, sports fields, landscaping, grounds maintenance and compact equipment applications.",
-    img: "/images/brands/jacobsen-mower.jpg",
-    alt: "Operator driving a Jacobsen wide-area mower across a golf course",
-    // Anchored right so the Jacobsen logo in the photo's corner is never cropped.
-    imgPosition: "100% 50%",
+    img: "/images/sjk/groundmasters.jpg",
+    alt: "Groundmasters.ph banner: Authorized Dealer & After-Sales Service. Jacobsen, Iseki, Husqvarna, Wacker Neuson, Smithco and Campey machines lined up on a golf course, with the partner brand logos",
+    // Wide banner with text and logos built in, shown whole. Its card matches
+    // the Golfcarts.ph card's shape so the two line up; the banner is wider
+    // (3712 × 1152), so it is fitted inside rather than cropped.
+    imgAspect: "3200 / 1344",
+    imgFit: "contain",
     cta: "Explore Groundmasters.ph",
     // Website address not confirmed in the brief — set it here when known.
     // Until then the button opens the Groundmasters.ph section of Brands & Partners.
